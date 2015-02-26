@@ -24,8 +24,6 @@ public class lcomment_detail extends Activity{
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(lcomment_detail.this,select_store.class);
-				startActivity(i);
 				finish();
 			}
         });

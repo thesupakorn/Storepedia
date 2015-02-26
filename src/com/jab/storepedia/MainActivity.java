@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this,select_location.class);
                 startActivity(i);
-                finish();
+                //finish();
 			}
         });
 	}

@@ -75,6 +75,7 @@ public class show_lcomment extends Activity {
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				startActivity(i);
+				finish();
 			}
         });
         final TextView text = (TextView)findViewById(R.id.status); 

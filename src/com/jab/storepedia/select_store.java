@@ -118,7 +118,6 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     finish();
     			}
             });
-            
             store_list.setOnItemClickListener(new OnItemClickListener(){
             	@Override
             	public void onItemClick(AdapterView<?> parent, View view,
