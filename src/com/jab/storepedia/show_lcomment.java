@@ -118,7 +118,8 @@ public class show_lcomment extends Activity {
                 }catch(JSONException e){
                 	e.printStackTrace();
                 	text.setText("FAIL");
-                }                       
+                }      
+                
         lcomment_list.setOnItemClickListener(new OnItemClickListener(){
         	@Override
         	public void onItemClick(AdapterView<?> parent, View view,

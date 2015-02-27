@@ -1,5 +1,7 @@
 package com.jab.storepedia;
 
+import com.facebook.Session;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,5 +31,13 @@ public class lcomment_detail extends Activity{
         });
         Intent intent = getIntent();
         final int CPID = intent.getIntExtra("CPID", -1);
-	}
+        if(isLoggedIn())
+        {
+        	
+        }
+    }
+	public static boolean isLoggedIn() {
+        Session session = Session.getActiveSession();
+        return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
+    }
 }
