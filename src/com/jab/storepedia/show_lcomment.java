@@ -83,8 +83,11 @@ public class show_lcomment extends Activity {
         final ListView lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
         final TextView store_name_textview = (TextView)findViewById(R.id.textView1); 
         ImageButton write_comment = (ImageButton) findViewById(R.id.comment_button);
-        if(!isLoggedIn())
+        final TextView write_comment_text = (TextView)findViewById(R.id.textView2); 
+        if(!isLoggedIn()){
         	write_comment.setVisibility(View.GONE);
+        	write_comment_text.setText("");
+        }
         
         adapter = new Lcomment_adapter(show_lcomment.this,lcommentList);
         lcomment_list.setAdapter(adapter);
@@ -120,7 +123,7 @@ public class show_lcomment extends Activity {
         	@Override
         	public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id){
-        		Intent intent = new Intent(show_lcomment.this, store_detail.class);
+        		Intent intent = new Intent(show_lcomment.this, lcomment_detail.class);
         		int CPID = lcommentList.get(position).getCPID();
         		intent.putExtra("CPID", CPID);
                 startActivity(intent);

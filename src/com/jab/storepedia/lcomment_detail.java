@@ -13,7 +13,7 @@ public class lcomment_detail extends Activity{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.store_detail);
+        setContentView(R.layout.lcomment_detail);
 
         // Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
