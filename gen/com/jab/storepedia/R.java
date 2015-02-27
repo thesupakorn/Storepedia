@@ -1347,7 +1347,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02006c;
         public static final int com_facebook_loginbutton_silver=0x7f02006d;
         public static final int com_facebook_logo=0x7f02006e;
-        public static final int com_facebook_picker_default_separator_color=0x7f020095;
+        public static final int com_facebook_picker_default_separator_color=0x7f020096;
         public static final int com_facebook_picker_item_background=0x7f02006f;
         public static final int com_facebook_picker_list_focused=0x7f020070;
         public static final int com_facebook_picker_list_longpressed=0x7f020071;
@@ -1372,20 +1372,21 @@ containing a value of this type.
         public static final int com_facebook_top_background=0x7f020084;
         public static final int com_facebook_top_button=0x7f020085;
         public static final int com_facebook_usersettingsfragment_background_gradient=0x7f020086;
-        public static final int gallery=0x7f020087;
-        public static final int ic_launcher=0x7f020088;
-        public static final int information=0x7f020089;
-        public static final int list_row_bg=0x7f02008a;
-        public static final int list_row_bg_hover=0x7f02008b;
-        public static final int list_row_selector=0x7f02008c;
-        public static final int main_background=0x7f02008d;
-        public static final int review=0x7f02008e;
-        public static final int store_icon2=0x7f02008f;
-        public static final int store_icon3=0x7f020090;
-        public static final int vote_down=0x7f020091;
-        public static final int vote_icon=0x7f020092;
-        public static final int vote_up=0x7f020093;
-        public static final int where=0x7f020094;
+        public static final int comment_write=0x7f020087;
+        public static final int gallery=0x7f020088;
+        public static final int ic_launcher=0x7f020089;
+        public static final int information=0x7f02008a;
+        public static final int list_row_bg=0x7f02008b;
+        public static final int list_row_bg_hover=0x7f02008c;
+        public static final int list_row_selector=0x7f02008d;
+        public static final int main_background=0x7f02008e;
+        public static final int review=0x7f02008f;
+        public static final int store_icon2=0x7f020090;
+        public static final int store_icon3=0x7f020091;
+        public static final int vote_down=0x7f020092;
+        public static final int vote_icon=0x7f020093;
+        public static final int vote_up=0x7f020094;
+        public static final int where=0x7f020095;
     }
     public static final class id {
         public static final int action_bar=0x7f050027;
@@ -1399,7 +1400,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050021;
         public static final int action_menu_presenter=0x7f050022;
         public static final int action_mode_close_button=0x7f05002f;
-        public static final int action_settings=0x7f050087;
+        public static final int action_settings=0x7f050088;
         public static final int activity_chooser_view_content=0x7f050030;
         public static final int agreed=0x7f050069;
         public static final int always=0x7f050016;
@@ -1441,6 +1442,7 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_logo_image=0x7f050062;
         public static final int com_facebook_usersettingsfragment_profile_name=0x7f050063;
         public static final int comment=0x7f050066;
+        public static final int comment_button=0x7f050086;
         public static final int default_activity_button=0x7f050033;
         public static final int dialog=0x7f050019;
         public static final int disableHome=0x7f050013;
@@ -1462,7 +1464,7 @@ containing a value of this type.
         public static final int info_button=0x7f050075;
         public static final int inline=0x7f050007;
         public static final int large=0x7f050002;
-        public static final int lcomment_list=0x7f050086;
+        public static final int lcomment_list=0x7f050087;
         public static final int left=0x7f05000a;
         public static final int listMode=0x7f05000c;
         public static final int list_item=0x7f050034;

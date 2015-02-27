@@ -1,5 +1,6 @@
 package com.jab.storepedia;
 
+import com.facebook.Session;
 import com.jab.storepedia.R.string;
 import com.jab.storepedia.adater.Lcomment_adapter;
 import com.jab.storepedia.adater.Location_Adapter;
@@ -81,6 +82,9 @@ public class show_lcomment extends Activity {
         final TextView text = (TextView)findViewById(R.id.status); 
         final ListView lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
         final TextView store_name_textview = (TextView)findViewById(R.id.textView1); 
+        ImageButton write_comment = (ImageButton) findViewById(R.id.comment_button);
+        if(!isLoggedIn())
+        	write_comment.setVisibility(View.GONE);
         
         adapter = new Lcomment_adapter(show_lcomment.this,lcommentList);
         lcomment_list.setAdapter(adapter);
@@ -124,7 +128,10 @@ public class show_lcomment extends Activity {
         	}
         }); 
     }
-
+    public static boolean isLoggedIn() {
+        Session session = Session.getActiveSession();
+        return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
+    }
 	public String getHttpPost(String url,List<NameValuePair> params) {
 		StringBuilder str = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();

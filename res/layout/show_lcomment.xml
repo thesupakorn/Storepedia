@@ -10,11 +10,19 @@
         android:layout_height="wrap_content"
         layout="@layout/top_action_bar" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp" >
+        android:layout_height="match_parent">" >
+
+        <ImageButton
+            android:id="@+id/comment_button"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:paddingTop="5dp"
+            android:layout_toRightOf="@+id/textView1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/comment_write" />
 
         <TextView
             android:id="@+id/textView1"
@@ -24,7 +32,8 @@
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+            android:layout_below="@+id/textView1"/>
 
         <ListView
             android:id="@+id/lcomment_list"
@@ -32,8 +41,20 @@
             android:layout_height="wrap_content"
             android:divider="@color/list_divider"
             android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_row_selector" >
+            android:listSelector="@drawable/list_row_selector"
+            android:layout_below="@+id/status" >
         </ListView>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textView1"
+            android:textSize="8sp"
+            android:paddingTop="8dp"
+            android:paddingLeft="53dp"
+            android:text="Write a comment" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -75,6 +75,7 @@ public class MainActivity extends ActionBarActivity {
 			}
         });
 	}
+	
 	private Session.StatusCallback statusCallback = new Session.StatusCallback() {
 		@Override
 		public void call(Session session, SessionState state,
