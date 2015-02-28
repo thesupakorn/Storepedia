@@ -3,12 +3,8 @@ package com.jab.storepedia;
 import com.facebook.Session;
 import com.jab.storepedia.R.string;
 import com.jab.storepedia.adater.Lcomment_adapter;
-import com.jab.storepedia.adater.Location_Adapter;
-import com.jab.storepedia.adater.Store_Adapter;
 import com.jab.storepedia.app.AppController;
 import com.jab.storepedia.model.Lcomment;
-import com.jab.storepedia.model.Location;
-import com.jab.storepedia.model.Store;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -107,6 +103,7 @@ public class show_lcomment extends Activity {
                 	for(int i = 0; i < data.length(); i++){
                 	JSONObject c = data.getJSONObject(i);
                 	Lcomment lcomment = new Lcomment();
+                	lcomment.setPCID(c.getInt("PCID"));
                 	lcomment.setUsername(c.getString("username"));
                 	lcomment.setThumbnailUrl(c.getString("image"));
                 	lcomment.setagreed(c.getInt("agreed"));
@@ -127,8 +124,8 @@ public class show_lcomment extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id){
         		Intent intent = new Intent(show_lcomment.this, lcomment_detail.class);
-        		int CPID = lcommentList.get(position).getCPID();
-        		intent.putExtra("CPID", CPID);
+        		int PCID = lcommentList.get(position).getPCID();
+        		intent.putExtra("PCID", PCID);
         		intent.putExtra("UID", UID);
                 startActivity(intent);
                 finish();

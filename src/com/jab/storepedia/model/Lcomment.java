@@ -4,13 +4,13 @@ import java.util.ArrayList;
  
 public class Lcomment {
     private String username, thumbnailUrl, comment;
-	private int agreed, disagreed, cpid;
+	private int agreed, disagreed, PCID;
  
     public Lcomment() {
     }
  
-    public Lcomment(int cpid, String username, String thumbnailUrl, int agreed, int disagreed, String comment) {
-        this.cpid = cpid;
+    public Lcomment(int PCID, String username, String thumbnailUrl, int agreed, int disagreed, String comment) {
+        this.PCID = PCID;
     	this.username = username;
         this.agreed = agreed;
         this.disagreed = disagreed;
@@ -18,12 +18,12 @@ public class Lcomment {
         this.thumbnailUrl = thumbnailUrl;
     }
  
-    public int getCPID() {
-        return cpid;
+    public int getPCID() {
+        return PCID;
     }
  
-    public void setCPID(int cpid) {
-        this.cpid = cpid;
+    public void setPCID(int PCID) {
+        this.PCID = PCID;
     }
     
     public String getUsername() {

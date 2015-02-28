@@ -19,8 +19,8 @@
             android:layout_width="166dp"
             android:layout_height="200dp" >
 
-        <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/thumbnail"
+        <ImageView
+        android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"/>
@@ -41,8 +41,16 @@
                 android:text="User Name"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <ImageView
+    <ImageView
         android:id="@+id/vote_up"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/user_name"       
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/vote_up" />
+    <ImageView
+        android:id="@+id/current_vote_up"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"       
@@ -63,6 +71,15 @@
 
     <ImageView
         android:id="@+id/vote_down"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/user_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/agreed"
+        android:src="@drawable/vote_down" />
+    <ImageView
+        android:id="@+id/current_vote_down"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"

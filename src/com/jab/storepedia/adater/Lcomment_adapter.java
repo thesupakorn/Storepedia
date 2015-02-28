@@ -7,8 +7,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.jab.storepedia.R;
 import com.jab.storepedia.app.AppController;
 import com.jab.storepedia.model.Lcomment;
-import com.jab.storepedia.model.Location;
-import com.jab.storepedia.model.Store;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,11 +46,12 @@ public class Lcomment_adapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (inflater == null)
-            inflater = (LayoutInflater) activity
+		
+        if (convertView == null){
+        	inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null)
             convertView = inflater.inflate(R.layout.lcomment, null);
+        }
  
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
