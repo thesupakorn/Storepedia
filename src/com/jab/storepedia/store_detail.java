@@ -54,6 +54,7 @@ public class store_detail extends Activity{
         }
         Intent intent = getIntent();
         final int SID = intent.getIntExtra("SID", -1);
+        final int UID = intent.getIntExtra("UID", -1);
         final String store_name = intent.getStringExtra("store_name");
 		ImageView store_image_view = (ImageView) findViewById(R.id.store_image);
 		ImageView category_image_view = (ImageView) findViewById(R.id.category_image);
@@ -69,6 +70,7 @@ public class store_detail extends Activity{
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(store_detail.this,select_store.class);
+				i.putExtra("UID", UID);
 				startActivity(i);
 				finish();
 			}
@@ -104,6 +106,7 @@ public class store_detail extends Activity{
     		public void onClick(View v) {
     			Intent i = new Intent(store_detail.this,show_lcomment.class);
         		i.putExtra("SID", SID);
+        		i.putExtra("UID", UID);
         		i.putExtra("store_name",store_name);
     			startActivity(i);
     			finish();

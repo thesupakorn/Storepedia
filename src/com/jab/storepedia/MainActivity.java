@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,12 +19,17 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.LoginButton.UserInfoChangedCallback;
+import com.facebook.widget.ProfilePictureView;
 import com.facebook.model.GraphUser;
 
 
@@ -34,14 +40,19 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 
@@ -49,25 +60,53 @@ public class MainActivity extends ActionBarActivity {
 
 	SQLiteDatabase db;
 	private UiLifecycleHelper uiHelper;
+	private ProfilePictureView profilePictureView;
+	public int UID;
 
+	@SuppressLint("NewApi")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);;
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         uiHelper = new UiLifecycleHelper(this, statusCallback);
         uiHelper.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_main);
-        final TextView fb_status = (TextView) findViewById(R.id.fb_status_text);
+        final TextView fb_status = (TextView) findViewById(R.id.fb_status_text);               
         LoginButton loginBtn = (LoginButton) findViewById(R.id.fb_login_button);
         loginBtn.setReadPermissions(Arrays.asList("email"));
         loginBtn.setReadPermissions(Arrays.asList("public_profile"));
+        profilePictureView = (ProfilePictureView) findViewById(R.id.selection_profile_pic);
+        profilePictureView.setCropped(true);
         loginBtn.setUserInfoChangedCallback(new UserInfoChangedCallback() {
         	@Override
         	public void onUserInfoFetched(GraphUser user) {
         		if (user != null) {
         			fb_status.setText("You are currently logged in as " + user.getName());
+        			profilePictureView.setProfileId(user.getId());
+        			
+        			String url = "http://122.155.187.27:9876/add_user.php";
+        			List<NameValuePair> params = new ArrayList<NameValuePair>();
+        			params.add(new BasicNameValuePair("username",user.getName().toString()));
+        	        params.add(new BasicNameValuePair("email",user.getProperty("email").toString()));
+        	        params.add(new BasicNameValuePair("image",user.getId().toString()));
+        	        try{
+                    	JSONArray data = new JSONArray(getHttpPost(url,params));
+                    	JSONObject c = data.getJSONObject(0);
+                    	UID = c.getInt("UID");
+                    	//fb_status.setText(String.valueOf(UID));
+                    	//fb_status.setText("SUCCESS");
+        	        }catch(JSONException e){
+                    	e.printStackTrace();
+                    	fb_status.setText("ERROR");
+                    }   
+        	             	        
         		} else {
         			fb_status.setText("You are not logged in.");
+        			profilePictureView.setVisibility(View.GONE);
         		}
         	}
         });
@@ -86,12 +125,13 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this,select_location.class);
+				i.putExtra("UID", UID);
                 startActivity(i);
-                //finish();
+                finish();
 			}
-        });
+        }); 
+        
 	}
-	
 	private Session.StatusCallback statusCallback = new Session.StatusCallback() {
 		@Override
 		public void call(Session session, SessionState state,
@@ -146,8 +186,7 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-    
+    }   
     public String getHttpPost(String url,List<NameValuePair> params) {
 		StringBuilder str = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();

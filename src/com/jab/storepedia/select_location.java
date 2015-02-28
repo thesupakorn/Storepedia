@@ -62,8 +62,10 @@ public class select_location extends Activity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        
-        final TextView text = (TextView)findViewById(R.id.status); 
+        Intent intent = getIntent();
+		final int UID = intent.getIntExtra("UID" , -1);
+		final TextView text = (TextView)findViewById(R.id.status);
+		//text.setText(String.valueOf(UID));       
         final EditText input = (EditText)findViewById(R.id.place_name); 
         final ListView location_list = (ListView)findViewById(R.id.location_list); 
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
@@ -137,6 +139,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
         		int LID = locationList.get(position).getLID();
         		String place_name = locationList.get(position).getTitle();
         		intent.putExtra("LID", LID);
+        		intent.putExtra("UID", UID);
         		intent.putExtra("place_name", place_name);
                 startActivity(intent);
                 finish();

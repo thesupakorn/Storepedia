@@ -18,17 +18,6 @@
         android:layout_marginTop="52dp"
         android:text="@string/hello_world"
         android:textSize="30sp" />
-
-    <com.facebook.widget.LoginButton
-        android:id="@+id/fb_login_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        facebook:confirm_logout="false"
-        facebook:fetch_user_info="true" />
-
     <Button
         android:id="@+id/select_location_button"
         android:layout_width="wrap_content"
@@ -42,9 +31,32 @@
         android:id="@+id/fb_status_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/fb_login_button"
+        android:layout_marginBottom="10dp"
+         android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/selection_profile_pic"
+        android:layout_centerHorizontal="true" />
+
+    <com.facebook.widget.ProfilePictureView
+        android:id="@+id/selection_profile_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fb_status_text"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="25dp"
+        android:layout_above="@+id/fb_login_button"
+        android:gravity="center_horizontal"
+        facebook:preset_size="small" >
+    </com.facebook.widget.ProfilePictureView>
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:text="" />
+        android:layout_marginBottom="18dp"
+        facebook:confirm_logout="false"
+        facebook:fetch_user_info="true" />
 
 </RelativeLayout>

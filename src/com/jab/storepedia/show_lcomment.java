@@ -67,6 +67,7 @@ public class show_lcomment extends Activity {
         }
         Intent intent = getIntent();
 		final int SID = intent.getIntExtra("SID" , -1);
+		final int UID = intent.getIntExtra("UID" , -1);
 		final String store_name = intent.getStringExtra("store_name");
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +76,7 @@ public class show_lcomment extends Activity {
 				Intent i = new Intent(show_lcomment.this,select_store.class);
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
+				i.putExtra("UID", UID);
 				startActivity(i);
 				finish();
 			}
@@ -127,6 +129,7 @@ public class show_lcomment extends Activity {
         		Intent intent = new Intent(show_lcomment.this, lcomment_detail.class);
         		int CPID = lcommentList.get(position).getCPID();
         		intent.putExtra("CPID", CPID);
+        		intent.putExtra("UID", UID);
                 startActivity(intent);
                 finish();
         	}

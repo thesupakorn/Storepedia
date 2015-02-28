@@ -31,6 +31,7 @@ public class lcomment_detail extends Activity{
         });
         Intent intent = getIntent();
         final int CPID = intent.getIntExtra("CPID", -1);
+        final int UID = intent.getIntExtra("UID" , -1);
         if(isLoggedIn())
         {
         	

@@ -67,14 +67,7 @@
                 <category  android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".store_search_result"
-            android:label="@string/app_name">
-            <intent-filter >
-                <action  android:name="in.wptrafficanalyzer.store_search_result"/>
-                <category  android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+       
         <activity
             android:name=".select_categories"
             android:label="@string/app_name">
