@@ -1051,11 +1051,12 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f0a0002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f070017;
+        public static final int abc_search_url_text_holo=0x7f07001a;
         public static final int abc_search_url_text_normal=0x7f07000b;
         public static final int abc_search_url_text_pressed=0x7f07000d;
         public static final int abc_search_url_text_selected=0x7f07000c;
         public static final int black=0x7f070015;
+        public static final int blue=0x7f070019;
         public static final int com_facebook_blue=0x7f070002;
         public static final int com_facebook_likeboxcountview_border_color=0x7f070009;
         public static final int com_facebook_likeboxcountview_text_color=0x7f07000a;
@@ -1068,12 +1069,14 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f070003;
         public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f070005;
         public static final int genre=0x7f07000e;
+        public static final int green=0x7f070018;
         public static final int grey=0x7f070016;
         public static final int list_divider=0x7f070010;
         public static final int list_row_end_color=0x7f070012;
         public static final int list_row_hover_end_color=0x7f070014;
         public static final int list_row_hover_start_color=0x7f070013;
         public static final int list_row_start_color=0x7f070011;
+        public static final int red=0x7f070017;
         public static final int year=0x7f07000f;
     }
     public static final class dimen {

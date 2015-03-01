@@ -65,9 +65,7 @@ public class Lcomment_adapter extends BaseAdapter{
         thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
         username.setText(m.getUsername()); 
         agreed.setText(String.valueOf(m.getagreed()));
-        agreed.setTextColor(Color.GREEN);
         disagreed.setText(String.valueOf(m.getdisagreed()));
-        disagreed.setTextColor(Color.RED);
         comment.setText(m.getcomment());
 		return convertView;
 	}

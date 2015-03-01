@@ -60,16 +60,20 @@ public class lcomment_detail extends Activity{
         TextView disagreed = (TextView) findViewById(R.id.disagreed);
         TextView comment = (TextView) findViewById(R.id.comment);
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-        });       
         Intent intent = getIntent();
         final int PCID = intent.getIntExtra("PCID", -1);
         final int UID = intent.getIntExtra("UID" , -1);
+        back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
+				i.putExtra("UID", UID);
+				finish();
+			}
+        });       
         
+        vote_up.setVisibility(View.GONE);
+		vote_down.setVisibility(View.GONE);
         String url = "http://122.155.187.27:9876/lcomment_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
@@ -82,23 +86,64 @@ public class lcomment_detail extends Activity{
         	agreed.setText(c.getString("agreed"));
         	disagreed.setText(c.getString("disagreed"));
         	comment.setText(c.getString("comment"));
+        	//comment.setText(Integer.toString(UID));
         }catch(JSONException e){
         	e.printStackTrace();
-        	user_name.setText("FAIL"+PCID+" "+UID);
+        	user_name.setText("FAIL");
         } catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}      
-        if(isLoggedIn())
+		}  
+        if(UID!=-1)
         {
-        	//String url2 = "http://122.155.187.27:9876/store_detail.php";
+        	String url2 = "http://122.155.187.27:9876/check_vote.php";
 
-            //List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-            //params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-            //params2.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+            List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+            params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+            params2.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+            try{
+            	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+            	JSONObject c = data.getJSONObject(0);
+            	String vote = c.getString("vote");
+            	if(vote.equals("0"))
+            	{
+            		current_vote_up.setVisibility(View.GONE);
+            		current_vote_down.setVisibility(View.GONE);
+            		vote_down.setVisibility(View.VISIBLE);
+            		vote_up.setVisibility(View.VISIBLE);
+            		//user_name.setText("NOT VOTE");
+            	}
+            	else if(vote.equals("1"))
+            	{
+            		current_vote_up.setVisibility(View.VISIBLE);
+            		current_vote_down.setVisibility(View.GONE);
+            		vote_down.setVisibility(View.VISIBLE);
+            		vote_up.setVisibility(View.GONE); 
+            		//user_name.setText("VOTED UP");
+            	}
+            	else if(vote.equals("-1"))
+            	{
+            		current_vote_up.setVisibility(View.GONE);
+            		current_vote_down.setVisibility(View.VISIBLE);
+            		vote_down.setVisibility(View.GONE);
+            		vote_up.setVisibility(View.VISIBLE);
+            		//user_name.setText("VOTED DOWN");
+            	}
+            }catch(JSONException e){
+            	e.printStackTrace();
+            	user_name.setText("FAIL at LoggedIn()");
+            }
+        }
+        else if(UID==-1)
+        {
+        	current_vote_up.setVisibility(View.VISIBLE);
+    		current_vote_down.setVisibility(View.VISIBLE);
+    		vote_down.setVisibility(View.GONE);
+    		vote_up.setVisibility(View.GONE);
+    		//user_name.setText("NOT LOGGED IN");
         }
     }
 	public static boolean isLoggedIn() {

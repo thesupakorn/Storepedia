@@ -86,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
         	public void onUserInfoFetched(GraphUser user) {
         		if (user != null) {
         			fb_status.setText("You are currently logged in as " + user.getName());
+        			profilePictureView.setVisibility(View.VISIBLE);
         			profilePictureView.setProfileId(user.getId());
         			
         			String url = "http://122.155.187.27:9876/add_user.php";
@@ -107,6 +108,7 @@ public class MainActivity extends ActionBarActivity {
         		} else {
         			fb_status.setText("You are not logged in.");
         			profilePictureView.setVisibility(View.GONE);
+        			UID = -1;
         		}
         	}
         });
