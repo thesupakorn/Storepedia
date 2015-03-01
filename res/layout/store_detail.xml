@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="230dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -31,7 +31,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="230dp" >
 
             <TextView
                 android:id="@+id/store_name"
@@ -63,25 +63,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:layout_alignParentBottom="true">
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" >
 
                 <ImageView
                     android:id="@+id/category_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/list_row_selector"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/list_row_selector" />
 
                 <TextView
                     android:id="@+id/category_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category" 
                     android:layout_below="@+id/score"
                     android:layout_centerInParent="true"
                     android:paddingLeft="10dp"
-                    android:paddingTop="10dp"/>
+                    android:paddingTop="10dp"
+                    android:text="Category" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -104,17 +105,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="155dp"
+            android:layout_gravity="bottom"
             android:orientation="vertical"
-            android:paddingLeft="12dp"
             android:paddingBottom="20dp"
-            android:paddingRight="12dp"
-            android:layout_gravity="bottom" >
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp" >
 
             <ImageButton
                 android:id="@+id/info_button"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/information"
@@ -122,22 +123,22 @@
 
             <ImageButton
                 android:id="@+id/review_button"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/review" 
-                android:paddingTop="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center"/>
 
             <ImageButton
                 android:id="@+id/gallery_button"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+                android:layout_width="90dp"
+                android:layout_height="45dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/gallery" 
-                android:paddingTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

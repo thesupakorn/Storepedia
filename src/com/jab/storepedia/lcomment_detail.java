@@ -50,6 +50,7 @@ public class lcomment_detail extends Activity{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        String vote = "0";
         ImageView image = (ImageView) findViewById(R.id.image);
         ImageView vote_up = (ImageView) findViewById(R.id.vote_up);
         ImageView current_vote_up = (ImageView) findViewById(R.id.current_vote_up);
@@ -97,7 +98,7 @@ public class lcomment_detail extends Activity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
-        if(UID!=-1)
+        if(isLoggedIn())
         {
         	String url2 = "http://122.155.187.27:9876/check_vote.php";
 
@@ -107,16 +108,8 @@ public class lcomment_detail extends Activity{
             try{
             	JSONArray data = new JSONArray(getHttpPost(url2,params2));
             	JSONObject c = data.getJSONObject(0);
-            	String vote = c.getString("vote");
-            	if(vote.equals("0"))
-            	{
-            		current_vote_up.setVisibility(View.GONE);
-            		current_vote_down.setVisibility(View.GONE);
-            		vote_down.setVisibility(View.VISIBLE);
-            		vote_up.setVisibility(View.VISIBLE);
-            		//user_name.setText("NOT VOTE");
-            	}
-            	else if(vote.equals("1"))
+            	vote = c.getString("vote");
+            	if(vote.equals("1"))
             	{
             		current_vote_up.setVisibility(View.VISIBLE);
             		current_vote_down.setVisibility(View.GONE);
@@ -134,10 +127,13 @@ public class lcomment_detail extends Activity{
             	}
             }catch(JSONException e){
             	e.printStackTrace();
-            	user_name.setText("FAIL at LoggedIn()");
+            	current_vote_up.setVisibility(View.GONE);
+        		current_vote_down.setVisibility(View.GONE);
+        		vote_down.setVisibility(View.VISIBLE);
+        		vote_up.setVisibility(View.VISIBLE);
             }
         }
-        else if(UID==-1)
+        else if(!isLoggedIn())
         {
         	current_vote_up.setVisibility(View.VISIBLE);
     		current_vote_down.setVisibility(View.VISIBLE);
@@ -145,7 +141,57 @@ public class lcomment_detail extends Activity{
     		vote_up.setVisibility(View.GONE);
     		//user_name.setText("NOT LOGGED IN");
         }
+        
+        final String vote2 = vote; 
+        //user_name.setText(vote2);
+        vote_up.setOnClickListener(new View.OnClickListener() {
+    		@Override
+    		public void onClick(View v) {
+    			String url3 = "http://122.155.187.27:9876/vote.php";
+    			List<NameValuePair> params3 = new ArrayList<NameValuePair>();
+    			params3.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+    			params3.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+    			params3.add(new BasicNameValuePair("vote", "1"));
+    			params3.add(new BasicNameValuePair("voted",vote2));
+    			 try{
+    	            	JSONArray data = new JSONArray(getHttpPost(url3,params3));
+    			 }catch(JSONException e){
+    	            	e.printStackTrace();
+    	         }
+     			refresh();
+    		}
+        }); 
+        
+        vote_down.setOnClickListener(new View.OnClickListener() {
+    		@Override
+    		public void onClick(View v) {
+    			String url4 = "http://122.155.187.27:9876/vote.php";
+    			List<NameValuePair> params4 = new ArrayList<NameValuePair>();
+    			params4.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+    			params4.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+    			params4.add(new BasicNameValuePair("vote", "-1"));
+    			params4.add(new BasicNameValuePair("voted",vote2));
+    			try{
+	            	JSONArray data = new JSONArray(getHttpPost(url4,params4));
+			 }catch(JSONException e){
+	            	e.printStackTrace();
+	         }
+ 			refresh();
+    		}
+        }); 
     }
+	
+	
+	public void refresh(){
+		
+		Intent intent = getIntent();
+		overridePendingTransition(0, 0);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	    finish();
+	    
+	    overridePendingTransition(0, 0);
+	    startActivity(intent);
+	}
 	public static boolean isLoggedIn() {
         Session session = Session.getActiveSession();
         return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
