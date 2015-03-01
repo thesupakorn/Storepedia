@@ -62,13 +62,24 @@ public class lcomment_detail extends Activity{
         TextView comment = (TextView) findViewById(R.id.comment);
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         Intent intent = getIntent();
+        
         final int PCID = intent.getIntExtra("PCID", -1);
         final int UID = intent.getIntExtra("UID" , -1);
+        final int SID = intent.getIntExtra("SID" , -1);
+        final int LID = intent.getIntExtra("LID" , -1);
+        final String store_name = intent.getStringExtra("store_name");
+        final String place_name = intent.getStringExtra("place_name");
+        
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
 				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+				startActivity(i);
 				finish();
 			}
         });       

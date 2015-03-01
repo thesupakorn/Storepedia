@@ -64,6 +64,7 @@ public class select_location extends Activity {
         }
         Intent intent = getIntent();
 		final int UID = intent.getIntExtra("UID" , -1);
+		
 		final TextView text = (TextView)findViewById(R.id.status);
 		//text.setText(String.valueOf(UID));       
         final EditText input = (EditText)findViewById(R.id.place_name); 

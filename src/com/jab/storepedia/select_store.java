@@ -50,10 +50,12 @@ public class select_store extends Activity{
             final TextView text2 = (TextView)findViewById(R.id.textView4); 
             final ListView store_list = (ListView)findViewById(R.id.store_list); 
             final TextView placename = (TextView)findViewById(R.id.textView2); 
-            final EditText input = (EditText)findViewById(R.id.store_search);           
+            final EditText input = (EditText)findViewById(R.id.store_search);  
+            
             final String place_name = intent.getStringExtra("place_name");
             final int LID = intent.getIntExtra("LID", -1);
             final int UID = intent.getIntExtra("UID" , -1);
+            
             placename.setText(place_name);
            
             adapter = new Store_Adapter(select_store.this,storeList);
@@ -116,6 +118,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
     			public void onClick(View v) {
     				Intent i = new Intent(select_store.this,select_location.class);
     				i.putExtra("UID", UID);
+    				i.putExtra("LID", LID);
                     startActivity(i);
                     finish();
     			}
@@ -131,6 +134,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
             		intent.putExtra("LID", LID);
             		intent.putExtra("UID", UID);
             		intent.putExtra("store_name", store_name);
+            		intent.putExtra("place_name", place_name);
                     startActivity(intent);
                     finish();
             	}

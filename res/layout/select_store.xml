@@ -28,7 +28,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Store Name" />
+            android:text="Enter Store Name" />
 
         <EditText
             android:id="@+id/store_search"

@@ -63,8 +63,11 @@ public class show_lcomment extends Activity {
         }
         Intent intent = getIntent();
 		final int SID = intent.getIntExtra("SID" , -1);
+		final int LID = intent.getIntExtra("LID" , -1);
 		final int UID = intent.getIntExtra("UID" , -1);
 		final String store_name = intent.getStringExtra("store_name");
+		final String place_name = intent.getStringExtra("place_name");
+		
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -73,7 +76,10 @@ public class show_lcomment extends Activity {
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
 				startActivity(i);
 				finish();
 			}
@@ -127,7 +133,11 @@ public class show_lcomment extends Activity {
         		Intent intent = new Intent(show_lcomment.this, lcomment_detail.class);
         		int PCID = lcommentList.get(position).getPCID();
         		intent.putExtra("PCID", PCID);
+        		intent.putExtra("SID", SID);
+        		intent.putExtra("LID", LID);
+        		intent.putExtra("place_name", place_name);
         		intent.putExtra("UID", UID);
+        		intent.putExtra("store_name", store_name);
                 startActivity(intent);
                 finish();
         	}
