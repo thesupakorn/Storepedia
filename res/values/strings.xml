@@ -8,5 +8,7 @@
     <string name="back">Back</string>
     <string name="search">Search</string>
     <string name="facebook_app_id">"1416493788646325"</string>
+    <string name="com_facebook_loginview_log_in_button">Log in</string>
+    <string name="com_facebook_loginview_log_out_button">Log out</string>
 
 </resources>
