@@ -12,34 +12,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="120dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
-            android:layout_width="140dp"
-            android:layout_height="200dp" >
-
-        <ImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"/>
-
-		</RelativeLayout>
-
-        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp" >
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="5dp"
-                android:text="User Name"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_height="119dp" >
 
     <ImageView
         android:id="@+id/vote_up"
@@ -47,7 +25,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"       
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="80dp"
         android:src="@drawable/to_vote_up" />
     <ImageView
         android:id="@+id/current_vote_up"
@@ -55,7 +33,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"       
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="80dp"
         android:src="@drawable/vote_up" />
 
     <TextView
@@ -64,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_name"
         android:layout_marginTop="23dp"  
-        android:layout_marginLeft="35dp"  
+        android:layout_marginLeft="110dp"  
         android:text="yes" />
 
     <ImageView
@@ -72,7 +50,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"
-        android:layout_marginLeft="58dp"
+        android:layout_marginLeft="133dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/to_vote_down" />
     <ImageView
@@ -80,7 +58,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/user_name"
-        android:layout_marginLeft="58dp"
+        android:layout_marginLeft="133dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/vote_down" />
 
@@ -89,27 +67,79 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_name"
-        android:layout_marginLeft="90dp"
+        android:layout_marginLeft="165dp"
         android:layout_marginTop="23dp"
         android:text="no" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/image"
+        android:text="User Name"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="290dp"
         android:orientation="horizontal" >
-
+        
         <TextView
             android:id="@+id/comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+            android:layout_margin="30dp"
             android:text="Comment" />
+        <ImageView
+            android:id="@+id/pic1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp" 
+            android:layout_marginLeft="45dp"/> 
+            
+        <ImageView
+            android:id="@+id/pic2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp" 
+            android:layout_marginLeft="105dp"/> 
+            
+        <ImageView
+            android:id="@+id/pic3"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp" 
+            android:layout_marginLeft="165dp"/> 
+            
+        <ImageView
+            android:id="@+id/pic4"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp" 
+            android:layout_marginLeft="225dp"/> 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
