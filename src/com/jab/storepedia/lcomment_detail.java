@@ -56,6 +56,10 @@ public class lcomment_detail extends Activity{
         ImageView current_vote_up = (ImageView) findViewById(R.id.current_vote_up);
         ImageView vote_down = (ImageView) findViewById(R.id.vote_down);
         ImageView current_vote_down = (ImageView) findViewById(R.id.current_vote_down);
+        ImageView pic1 = (ImageView) findViewById(R.id.pic1);
+        ImageView pic2 = (ImageView) findViewById(R.id.pic2);
+        ImageView pic3 = (ImageView) findViewById(R.id.pic3);
+        ImageView pic4 = (ImageView) findViewById(R.id.pic4);
         TextView user_name = (TextView) findViewById(R.id.user_name);
         TextView agreed = (TextView) findViewById(R.id.agreed);
         TextView disagreed = (TextView) findViewById(R.id.disagreed);
