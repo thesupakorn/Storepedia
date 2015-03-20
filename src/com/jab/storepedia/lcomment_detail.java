@@ -33,6 +33,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -98,10 +99,6 @@ public class lcomment_detail extends Activity{
         
         vote_up.setVisibility(View.GONE);
 		vote_down.setVisibility(View.GONE);
-		pic1.setVisibility(View.GONE);
-		pic2.setVisibility(View.GONE);
-		pic3.setVisibility(View.GONE);
-		pic4.setVisibility(View.GONE);
         String url = "http://122.155.187.27:9876/lcomment_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
@@ -117,7 +114,6 @@ public class lcomment_detail extends Activity{
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
         		pic1.setImageBitmap(bitmap1);
-        		pic1.setVisibility(View.VISIBLE);
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
@@ -125,7 +121,6 @@ public class lcomment_detail extends Activity{
         	try{
         		Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
         		pic2.setImageBitmap(bitmap2);
-        		pic2.setVisibility(View.VISIBLE);
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
@@ -133,7 +128,6 @@ public class lcomment_detail extends Activity{
         	try{
         		Bitmap bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
         		pic3.setImageBitmap(bitmap3);
-        		pic3.setVisibility(View.VISIBLE);
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
@@ -141,7 +135,6 @@ public class lcomment_detail extends Activity{
         	try{
         		Bitmap bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
         		pic4.setImageBitmap(bitmap4);
-        		pic4.setVisibility(View.VISIBLE);
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
@@ -248,21 +241,114 @@ public class lcomment_detail extends Activity{
                     pic1layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                     pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     
-                    //pic2.setVisibility(View.GONE);
-                    //pic3.setVisibility(View.GONE);
-                    //pic4.setVisibility(View.GONE);
+                    pic2.setVisibility(View.VISIBLE);
+                    pic3.setVisibility(View.VISIBLE);
+                    pic4.setVisibility(View.VISIBLE);
                     
                     pic1.setLayoutParams(pic1layout);
                     pic1.setAdjustViewBounds(true);
                 }else{
                     isImageFitToScreen=true;
                     
-                   // pic2.setVisibility(View.VISIBLE);
-                   // pic3.setVisibility(View.VISIBLE);
-                   // pic4.setVisibility(View.VISIBLE);
+                    pic2.setVisibility(View.GONE);
+                    pic3.setVisibility(View.GONE);
+                    pic4.setVisibility(View.GONE);
                     
-                    pic1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    pic1.setLayoutParams(pic1layout);
                     pic1.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            }
+        });
+        pic2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;  
+                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(120,120);
+                    pic2layout.setMargins(220, 0, 0, 60);
+                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    
+                    pic1.setVisibility(View.VISIBLE);
+                    pic3.setVisibility(View.VISIBLE);
+                    pic4.setVisibility(View.VISIBLE);
+                    
+                    pic2.setLayoutParams(pic2layout);
+                    pic2.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    
+                    pic1.setVisibility(View.GONE);
+                    pic3.setVisibility(View.GONE);
+                    pic4.setVisibility(View.GONE);
+                    
+                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    pic2.setLayoutParams(pic2layout);
+                    pic2.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            }
+        });
+        pic3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;  
+                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(120,120);
+                    pic3layout.setMargins(344, 0, 0, 60);
+                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    
+                    pic2.setVisibility(View.VISIBLE);
+                    pic1.setVisibility(View.VISIBLE);
+                    pic4.setVisibility(View.VISIBLE);
+                    
+                    pic3.setLayoutParams(pic3layout);
+                    pic3.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    
+                    pic2.setVisibility(View.GONE);
+                    pic1.setVisibility(View.GONE);
+                    pic4.setVisibility(View.GONE);
+                    
+                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    pic3.setLayoutParams(pic3layout);
+                    pic3.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            }
+        });
+        pic4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;  
+                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(120,120);
+                    pic4layout.setMargins(468, 0, 0, 60);
+                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    
+                    pic2.setVisibility(View.VISIBLE);
+                    pic3.setVisibility(View.VISIBLE);
+                    pic1.setVisibility(View.VISIBLE);
+                    
+                    pic4.setLayoutParams(pic4layout);
+                    pic4.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    
+
+                    pic2.setVisibility(View.GONE);
+                    pic3.setVisibility(View.GONE);
+                    pic1.setVisibility(View.GONE);
+                    
+                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    pic4.setLayoutParams(pic4layout);
+                    pic4.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
             }
         });
