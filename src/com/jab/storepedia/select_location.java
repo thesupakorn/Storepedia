@@ -122,7 +122,7 @@ public class select_location extends Activity {
                 	adapter.notifyDataSetChanged();
                 }catch(JSONException e){
                 	e.printStackTrace();
-                	text.setText("FAIL");
+                	text.setText("Connection FAIL. Please check your internet connection!");
                 }  
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE); 

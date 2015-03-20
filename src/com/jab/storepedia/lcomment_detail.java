@@ -36,9 +36,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class lcomment_detail extends Activity{
+	boolean isImageFitToScreen;
+	ImageView pic1;
+	ImageView pic2;
+	ImageView pic3;
+	ImageView pic4;
 	@SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +62,10 @@ public class lcomment_detail extends Activity{
         ImageView current_vote_up = (ImageView) findViewById(R.id.current_vote_up);
         ImageView vote_down = (ImageView) findViewById(R.id.vote_down);
         ImageView current_vote_down = (ImageView) findViewById(R.id.current_vote_down);
-        ImageView pic1 = (ImageView) findViewById(R.id.pic1);
-        ImageView pic2 = (ImageView) findViewById(R.id.pic2);
-        ImageView pic3 = (ImageView) findViewById(R.id.pic3);
-        ImageView pic4 = (ImageView) findViewById(R.id.pic4);
+        pic1 = (ImageView) findViewById(R.id.pic1);
+        pic2 = (ImageView) findViewById(R.id.pic2);
+        pic3 = (ImageView) findViewById(R.id.pic3);
+        pic4 = (ImageView) findViewById(R.id.pic4);
         TextView user_name = (TextView) findViewById(R.id.user_name);
         TextView agreed = (TextView) findViewById(R.id.agreed);
         TextView disagreed = (TextView) findViewById(R.id.disagreed);
@@ -90,6 +96,10 @@ public class lcomment_detail extends Activity{
         
         vote_up.setVisibility(View.GONE);
 		vote_down.setVisibility(View.GONE);
+		pic1.setVisibility(View.GONE);
+		pic2.setVisibility(View.GONE);
+		pic3.setVisibility(View.GONE);
+		pic4.setVisibility(View.GONE);
         String url = "http://122.155.187.27:9876/lcomment_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
@@ -102,10 +112,42 @@ public class lcomment_detail extends Activity{
         	agreed.setText(c.getString("agreed"));
         	disagreed.setText(c.getString("disagreed"));
         	comment.setText(c.getString("comment"));
-        	//comment.setText(Integer.toString(UID));
+        	try{
+        		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
+        		pic1.setImageBitmap(bitmap1);
+        		pic1.setVisibility(View.VISIBLE);
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
+        	try{
+        		Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
+        		pic2.setImageBitmap(bitmap2);
+        		pic2.setVisibility(View.VISIBLE);
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
+        	try{
+        		Bitmap bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
+        		pic3.setImageBitmap(bitmap3);
+        		pic3.setVisibility(View.VISIBLE);
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
+        	try{
+        		Bitmap bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
+        		pic4.setImageBitmap(bitmap4);
+        		pic4.setVisibility(View.VISIBLE);
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
+        	comment.setText(Integer.toString(UID));
         }catch(JSONException e){
         	e.printStackTrace();
-        	user_name.setText("FAIL");
+        	user_name.setText("Connection FAIL. Please check your internet connection!");
         } catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -193,7 +235,21 @@ public class lcomment_detail extends Activity{
 	         }
  			refresh();
     		}
-        }); 
+        });        
+        pic1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;
+                    pic1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    pic1.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    pic1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    pic1.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            }
+        });
     }
 	
 	

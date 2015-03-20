@@ -123,7 +123,7 @@ public class show_lcomment extends Activity {
                 	adapter.notifyDataSetChanged();
                 }catch(JSONException e){
                 	e.printStackTrace();
-                	text.setText("FAIL");
+                	text.setText("Connection FAIL. Please check your internet connection!");
                 }      
                 
         lcomment_list.setOnItemClickListener(new OnItemClickListener(){

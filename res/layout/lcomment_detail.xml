@@ -106,8 +106,9 @@
             android:text="Comment" />
         <ImageView
             android:id="@+id/pic1"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp" 
@@ -115,8 +116,8 @@
             
         <ImageView
             android:id="@+id/pic2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp" 
@@ -124,8 +125,8 @@
             
         <ImageView
             android:id="@+id/pic3"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp" 
@@ -133,8 +134,8 @@
             
         <ImageView
             android:id="@+id/pic4"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp" 
