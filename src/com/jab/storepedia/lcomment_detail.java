@@ -37,6 +37,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class lcomment_detail extends Activity{
@@ -144,7 +146,7 @@ public class lcomment_detail extends Activity{
         	{
         		e.printStackTrace();
         	}
-        	comment.setText(Integer.toString(UID));
+        	//comment.setText(Integer.toString(UID));
         }catch(JSONException e){
         	e.printStackTrace();
         	user_name.setText("Connection FAIL. Please check your internet connection!");
@@ -240,12 +242,26 @@ public class lcomment_detail extends Activity{
             @Override
             public void onClick(View v) {
                 if(isImageFitToScreen) {
-                    isImageFitToScreen=false;
-                    pic1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    isImageFitToScreen=false;  
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(120,120);
+                    pic1layout.setMargins(76, 0, 0, 60);
+                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    
+                    //pic2.setVisibility(View.GONE);
+                    //pic3.setVisibility(View.GONE);
+                    //pic4.setVisibility(View.GONE);
+                    
+                    pic1.setLayoutParams(pic1layout);
                     pic1.setAdjustViewBounds(true);
                 }else{
                     isImageFitToScreen=true;
-                    pic1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    
+                   // pic2.setVisibility(View.VISIBLE);
+                   // pic3.setVisibility(View.VISIBLE);
+                   // pic4.setVisibility(View.VISIBLE);
+                    
+                    pic1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     pic1.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
             }
