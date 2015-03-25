@@ -79,6 +79,8 @@ public class show_lcomment extends Activity {
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
 				startActivity(i);
 				finish();
 			}

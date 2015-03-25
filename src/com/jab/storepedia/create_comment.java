@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class create_comment extends Activity {
 	String encodedString;
 	RequestParams params = new RequestParams();
 	String imgPath, fileName;
-	Bitmap bitmap;
+	Bitmap bitmap;	
 	private static int RESULT_LOAD_IMG = 1;
 
 	@Override
@@ -38,8 +39,30 @@ public class create_comment extends Activity {
 		prgDialog = new ProgressDialog(this);
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
+		
+		Intent intent = getIntent();
+		final int SID = intent.getIntExtra("SID" , -1);
+		final int LID = intent.getIntExtra("LID" , -1);
+		final int UID = intent.getIntExtra("UID" , -1);
+		final String store_name = intent.getStringExtra("store_name");
+		final String place_name = intent.getStringExtra("place_name");
+		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(create_comment.this,show_lcomment.class);
+				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+	            startActivity(i);
+	            finish();
+			}
+	    });
 	}
 
+	
 	public void loadImagefromGallery(View view) {
 		// Create intent to Open Image applications like Gallery, Google Photos
 		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -195,9 +218,8 @@ public class create_comment extends Activity {
 									.show();
 						}
 					}
-				});
-	}
-
+				});	
+}
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -205,6 +227,7 @@ public class create_comment extends Activity {
 		// Dismiss the progress bar when application is closed
 		if (prgDialog != null) {
 			prgDialog.dismiss();
-		}
+		}	
 	}
+	
 }
