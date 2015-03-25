@@ -86,6 +86,25 @@
             android:layout_marginTop="20dp"
             android:text="Write your comment here" />
 
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_alignRight="@+id/comment"
+            android:onClick="uploadImage"
+            android:text="Upload" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/comment"
+            android:layout_alignTop="@+id/comment"
+            android:onClick="loadImagefromGallery"
+            android:text="Choose image" />
+
     </RelativeLayout>
 
 </RelativeLayout>

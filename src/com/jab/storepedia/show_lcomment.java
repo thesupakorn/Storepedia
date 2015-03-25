@@ -69,6 +69,20 @@ public class show_lcomment extends Activity {
 		final String place_name = intent.getStringExtra("place_name");
 		
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+        ImageButton create_comment = (ImageButton) findViewById(R.id.comment_button);
+        create_comment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(show_lcomment.this,create_comment.class);
+                //i.putExtra("place_name", place_name);
+                //i.putExtra("LID", LID);
+				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				startActivity(i);
+				finish();
+			}
+        });
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
