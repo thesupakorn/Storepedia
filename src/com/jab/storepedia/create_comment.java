@@ -26,10 +26,11 @@ import com.loopj.android.http.RequestParams;
 @SuppressLint("NewApi")
 public class create_comment extends Activity {
 	ProgressDialog prgDialog;
-	String encodedString;
+	String encodedString1, encodedString2, encodedString3, encodedString4;
 	RequestParams params = new RequestParams();
-	String imgPath, fileName;
+	String imgPath1, imgPath2, imgPath3, imgPath4, fileName;
 	Bitmap bitmap;	
+	int imgFlag = 0;
 	private static int RESULT_LOAD_IMG = 1;
 
 	@Override
@@ -47,6 +48,7 @@ public class create_comment extends Activity {
 		final String store_name = intent.getStringExtra("store_name");
 		final String place_name = intent.getStringExtra("place_name");
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+		params.put("SID", SID);
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -63,14 +65,38 @@ public class create_comment extends Activity {
 	}
 
 	
-	public void loadImagefromGallery(View view) {
+	public void loadImagefromGallery1(View view) {
 		// Create intent to Open Image applications like Gallery, Google Photos
 		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
 				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		// Start the Intent
+		imgFlag = 1;
 		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
 	}
-
+	public void loadImagefromGallery2(View view) {
+		// Create intent to Open Image applications like Gallery, Google Photos
+		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		// Start the Intent
+		imgFlag = 2;
+		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+	}
+	public void loadImagefromGallery3(View view) {
+		// Create intent to Open Image applications like Gallery, Google Photos
+		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		// Start the Intent
+		imgFlag = 3;
+		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+	}
+	public void loadImagefromGallery4(View view) {
+		// Create intent to Open Image applications like Gallery, Google Photos
+		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		// Start the Intent
+		imgFlag = 4;
+		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+	}
 	// When Image is selected from Gallery
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,19 +116,56 @@ public class create_comment extends Activity {
 				// Move to first row
 				cursor.moveToFirst();
 
-				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				imgPath = cursor.getString(columnIndex);
+				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);				
+				if(imgFlag == 1){
+					imgPath1 = cursor.getString(columnIndex);
+				    ImageView imgView = (ImageView) findViewById(R.id.pic1);
+				    // Set the Image in ImageView
+				    imgView.setImageBitmap(BitmapFactory
+						    .decodeFile(imgPath1));
+				    // Get the Image's file name
+				    String fileNameSegments[] = imgPath1.split("/");
+				    fileName = fileNameSegments[fileNameSegments.length - 1];
+				    // Put file name in Async Http Post Param which will used in Php web app
+				params.put("filename1", fileName);
+				}
+				else if(imgFlag == 2){
+					imgPath2 = cursor.getString(columnIndex);
+					ImageView imgView = (ImageView) findViewById(R.id.pic2);
+					// Set the Image in ImageView
+					imgView.setImageBitmap(BitmapFactory
+							.decodeFile(imgPath2));
+					// Get the Image's file name
+					String fileNameSegments[] = imgPath2.split("/");
+					fileName = fileNameSegments[fileNameSegments.length - 1];
+					// Put file name in Async Http Post Param which will used in Php web app
+					params.put("filename2", fileName);
+					}
+				else if(imgFlag == 3){
+					imgPath3 = cursor.getString(columnIndex);
+					ImageView imgView = (ImageView) findViewById(R.id.pic3);
+					// Set the Image in ImageView
+					imgView.setImageBitmap(BitmapFactory
+							.decodeFile(imgPath3));
+					// Get the Image's file name
+					String fileNameSegments[] = imgPath3.split("/");
+					fileName = fileNameSegments[fileNameSegments.length - 1];
+					// Put file name in Async Http Post Param which will used in Php web app
+					params.put("filename3", fileName);
+					}
+				else if(imgFlag == 4){
+					imgPath4 = cursor.getString(columnIndex);
+					ImageView imgView = (ImageView) findViewById(R.id.pic4);
+					// Set the Image in ImageView
+					imgView.setImageBitmap(BitmapFactory
+							.decodeFile(imgPath4));
+					// Get the Image's file name
+					String fileNameSegments[] = imgPath4.split("/");
+					fileName = fileNameSegments[fileNameSegments.length - 1];
+					// Put file name in Async Http Post Param which will used in Php web app
+					params.put("filename4", fileName);
+					}
 				cursor.close();
-				ImageView imgView = (ImageView) findViewById(R.id.pic1);
-				// Set the Image in ImageView
-				imgView.setImageBitmap(BitmapFactory
-						.decodeFile(imgPath));
-				// Get the Image's file name
-				String fileNameSegments[] = imgPath.split("/");
-				fileName = fileNameSegments[fileNameSegments.length - 1];
-				// Put file name in Async Http Post Param which will used in Php web app
-				params.put("filename", fileName);
-
 			} else {
 				Toast.makeText(this, "You haven't picked Image",
 						Toast.LENGTH_LONG).show();
@@ -110,6 +173,7 @@ public class create_comment extends Activity {
 		} catch (Exception e) {
 			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
 					.show();
+			e.printStackTrace();
 		}
 
 	}
@@ -117,7 +181,7 @@ public class create_comment extends Activity {
 	// When Upload button is clicked
 	public void uploadImage(View v) {
 		// When Image is selected from Gallery
-		if (imgPath != null && !imgPath.isEmpty()) {
+		if ((imgPath1 != null && !imgPath1.isEmpty()) || (imgPath2 != null && !imgPath2.isEmpty()) || (imgPath3 != null && !imgPath3.isEmpty()) || (imgPath4 != null && !imgPath4.isEmpty())) {
 			prgDialog.setMessage("Converting Image to Binary Data");
 			prgDialog.show();
 			// Convert image to String using Base64
@@ -144,14 +208,50 @@ public class create_comment extends Activity {
 				BitmapFactory.Options options = null;
 				options = new BitmapFactory.Options();
 				options.inSampleSize = 3;
-				bitmap = BitmapFactory.decodeFile(imgPath,
+				if (imgPath1 != null && !imgPath1.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath1,
 						options);
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
 				byte[] byte_arr = stream.toByteArray();
 				// Encode Image to String
-				encodedString = Base64.encodeToString(byte_arr, 0);
+				encodedString1 = Base64.encodeToString(byte_arr, 0);
+				}
+				if (imgPath2 != null && !imgPath2.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath2,
+						options);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				// Must compress the Image to reduce image size to make upload easy
+				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
+				byte[] byte_arr = stream.toByteArray();
+				// Encode Image to String
+				encodedString2 = Base64.encodeToString(byte_arr, 0);
+				}
+				if (imgPath3 != null && !imgPath3.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath3,
+						options);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				// Must compress the Image to reduce image size to make upload easy
+				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
+				byte[] byte_arr = stream.toByteArray();
+				// Encode Image to String
+				encodedString3 = Base64.encodeToString(byte_arr, 0);
+				}
+				if (imgPath4 != null && !imgPath4.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath4,
+						options);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				// Must compress the Image to reduce image size to make upload easy
+				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
+				byte[] byte_arr = stream.toByteArray();
+				// Encode Image to String
+				encodedString4 = Base64.encodeToString(byte_arr, 0);
+				}
 				return "";
 			}
 
@@ -159,7 +259,18 @@ public class create_comment extends Activity {
 			protected void onPostExecute(String msg) {
 				prgDialog.setMessage("Calling Upload");
 				// Put converted Image string into Async Http Post param
-				params.put("image", encodedString);
+				if (imgPath1 != null && !imgPath1.isEmpty()){
+				    params.put("image1", encodedString1);
+				}
+				if (imgPath2 != null && !imgPath2.isEmpty()){
+				    params.put("image2", encodedString2);
+				}
+				if (imgPath3 != null && !imgPath3.isEmpty()){
+				    params.put("image3", encodedString3);
+				}
+				if (imgPath4 != null && !imgPath4.isEmpty()){
+				    params.put("image4", encodedString4);
+				}
 				// Trigger Image upload
 				triggerImageUpload();
 			}

@@ -27,7 +27,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="38dp"
             android:adjustViewBounds="true" 
-            android:onClick="loadImagefromGallery"
+            android:onClick="loadImagefromGallery1"
             android:src="@drawable/no_image"/>
 
         <ImageView
@@ -39,6 +39,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="110dp" 
             android:adjustViewBounds="true"
+            android:onClick="loadImagefromGallery2"
             android:src="@drawable/no_image"/>
 
         <ImageView
@@ -50,6 +51,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="172dp"
             android:adjustViewBounds="true" 
+            android:onClick="loadImagefromGallery3"
             android:src="@drawable/no_image"/>
 
         <ImageView
@@ -61,6 +63,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="234dp" 
             android:adjustViewBounds="true"
+            android:onClick="loadImagefromGallery4"
             android:src="@drawable/no_image"/>
 
         <TextView
