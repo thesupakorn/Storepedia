@@ -30,7 +30,7 @@ public class create_comment extends Activity {
 	ProgressDialog prgDialog;
 	String encodedString1, encodedString2, encodedString3, encodedString4;
 	RequestParams params = new RequestParams();
-	String imgPath1, imgPath2, imgPath3, imgPath4, fileName;
+	String imgPath1, imgPath2, imgPath3, imgPath4, fileName, place_name, store_name;
 	Bitmap bitmap;	
 	int imgFlag = 0, SID,LID,UID;
 	private static int RESULT_LOAD_IMG = 1;
@@ -306,6 +306,14 @@ public class create_comment extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
+						Intent i = new Intent(create_comment.this,show_lcomment.class);
+						i.putExtra("UID", UID);
+						i.putExtra("LID", LID);
+						i.putExtra("SID", SID);
+						i.putExtra("place_name", place_name);
+						i.putExtra("store_name", store_name);
+				        startActivity(i);
+				        finish();
 					}
 
 					// When the response returned by REST has Http
@@ -346,7 +354,7 @@ public class create_comment extends Activity {
 		// Dismiss the progress bar when application is closed
 		if (prgDialog != null) {
 			prgDialog.dismiss();
-		}	
+		}		
 	}
 	
 }
