@@ -15,8 +15,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,8 +32,9 @@ public class create_comment extends Activity {
 	RequestParams params = new RequestParams();
 	String imgPath1, imgPath2, imgPath3, imgPath4, fileName;
 	Bitmap bitmap;	
-	int imgFlag = 0;
+	int imgFlag = 0, SID,LID,UID;
 	private static int RESULT_LOAD_IMG = 1;
+	EditText comment_field;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +45,15 @@ public class create_comment extends Activity {
 		prgDialog.setCancelable(false);
 		
 		Intent intent = getIntent();
-		final int SID = intent.getIntExtra("SID" , -1);
-		final int LID = intent.getIntExtra("LID" , -1);
-		final int UID = intent.getIntExtra("UID" , -1);
+		SID = intent.getIntExtra("SID" , -1);
+		LID = intent.getIntExtra("LID" , -1);
+		UID = intent.getIntExtra("UID" , -1);
 		final String store_name = intent.getStringExtra("store_name");
 		final String place_name = intent.getStringExtra("place_name");
+		comment_field = (EditText) findViewById(R.id.comment);
+		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-		params.put("SID", SID);
+		debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -272,6 +277,9 @@ public class create_comment extends Activity {
 				    params.put("image4", encodedString4);
 				}
 				// Trigger Image upload
+				params.put("comment", comment_field.getText().toString());
+				params.put("SID", Integer.toString(SID));
+				params.put("UID", Integer.toString(UID));
 				triggerImageUpload();
 			}
 		}.execute(null, null, null);
