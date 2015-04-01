@@ -24,11 +24,11 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="80dp"
             android:layout_marginLeft="38dp"
             android:adjustViewBounds="true" 
             android:onClick="loadImagefromGallery1"
-            android:src="@drawable/no_image"/>
+            android:src="@drawable/insert_image_icon"/>
 
         <ImageView
             android:id="@+id/pic2"
@@ -36,11 +36,11 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="110dp" 
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="100dp" 
             android:adjustViewBounds="true"
             android:onClick="loadImagefromGallery2"
-            android:src="@drawable/no_image"/>
+            android:src="@drawable/insert_image_icon"/>
 
         <ImageView
             android:id="@+id/pic3"
@@ -48,11 +48,11 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="172dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="162dp"
             android:adjustViewBounds="true" 
             android:onClick="loadImagefromGallery3"
-            android:src="@drawable/no_image"/>
+            android:src="@drawable/insert_image_icon"/>
 
         <ImageView
             android:id="@+id/pic4"
@@ -60,11 +60,11 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="234dp" 
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="224dp" 
             android:adjustViewBounds="true"
             android:onClick="loadImagefromGallery4"
-            android:src="@drawable/no_image"/>
+            android:src="@drawable/insert_image_icon"/>
 
         <TextView
             android:id="@+id/textView1"
@@ -77,25 +77,26 @@
 
         <EditText
             android:id="@+id/comment"
-            android:inputType="textMultiLine"
-            android:lines="8"
-            android:gravity="top|left"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_below="@+id/textView1"
             android:layout_margin="30dp"
+            android:ems="10"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="8"
             android:scrollbars="vertical"
-            android:ems="10" />
+            android:hint="Write your comment here" />
 
         <Button
             android:id="@+id/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/pic1"
-            android:layout_alignLeft="@+id/pic1"
-            android:layout_marginLeft="14dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="115dp"
+            android:layout_marginBottom="25dp"
             android:onClick="uploadImage"
-            android:text="Upload" />
+            android:text="Submit" />
 
     </RelativeLayout>
 
