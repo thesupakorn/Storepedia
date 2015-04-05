@@ -49,26 +49,24 @@ import android.widget.TextView;
 public class select_location extends Activity {
 	
 	private Location_Adapter adapter;
-	private List<Location> locationList = new ArrayList<Location>();
-	
+	private List<Location> locationList = new ArrayList<Location>();	
     @SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_location);
-
+     
         // Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
         Intent intent = getIntent();
+        final ListView location_list = (ListView)findViewById(R.id.location_list);
 		final int UID = intent.getIntExtra("UID" , -1);
 		
-		final TextView text = (TextView)findViewById(R.id.status);
+		
 		//text.setText(String.valueOf(UID));       
-        final EditText input = (EditText)findViewById(R.id.place_name); 
-        final ListView location_list = (ListView)findViewById(R.id.location_list); 
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -83,55 +81,10 @@ public class select_location extends Activity {
     	
         // txtResult
         // btnGetData
-        final Button getData = (Button) findViewById(R.id.search);
+       // final ImageButton getData = (ImageButton) findViewById(R.id.search);
         // Perform action on click
-        getData.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	//String url = "http://10.0.2.2/Storepedia/select_location.php";
-            	String url = "http://122.155.187.27:9876/select_location.php";
-            	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
-            	locationList.clear();
-        		List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("strA", input.getText().toString()));
-                
-            	//String resultServer  = getHttpPost(url,params);
-            	//text.setText(resultServer);
-                try{
-                	JSONArray data = new JSONArray(getHttpPost(url,params));
-                	text.setText("Result Found: 0");
-                	for(int i = 0; i < data.length(); i++){
-                	JSONObject c = data.getJSONObject(i);
-                	Location location = new Location();
-                	location.setTitle(c.getString("Name"));
-                	location.setThumbnailUrl(c.getString("Image"));
-                	location.setLID(c.getInt("LID"));
-                	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-                   // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
-                    //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
-                    //JSONObject c2 = data2.getJSONObject(0);
-                    //location.setNum(c2.getInt("COUNT(*)"));
-                    
-                	//location.setNum(c.getInt("Number_of_store"));
-                	//text.setText(Integer.toString(c.getInt("LID")));
-                	//text.setText(c.getString("Name"));
-                	//text.setText("Result Found: " + (i+1));
-                	locationList.add(location);
-                	text.setText("Result Found: "+(i+1));
-                	} 
-                
-                	adapter.notifyDataSetChanged();
-                }catch(JSONException e){
-                	e.printStackTrace();
-                	text.setText("Connection FAIL. Please check your internet connection!");
-                }  
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE); 
-
-inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                           InputMethodManager.HIDE_NOT_ALWAYS);
-                           
-            }
-        });
+            
+        
         location_list.setOnItemClickListener(new OnItemClickListener(){
         	@Override
         	public void onItemClick(AdapterView<?> parent, View view,
@@ -148,6 +101,54 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
         });   
     }
 
+    public void search(View v) {
+    	final TextView text = (TextView)findViewById(R.id.status);
+    	final EditText input = (EditText)findViewById(R.id.place_name); 
+         
+    	//String url = "http://10.0.2.2/Storepedia/select_location.php";
+    	String url = "http://122.155.187.27:9876/select_location.php";
+    	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
+    	locationList.clear();
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("strA", input.getText().toString()));
+        
+    	//String resultServer  = getHttpPost(url,params);
+    	//text.setText(resultServer);
+        try{
+        	JSONArray data = new JSONArray(getHttpPost(url,params));
+        	text.setText("Result Found: 0");
+        	for(int i = 0; i < data.length(); i++){
+        	JSONObject c = data.getJSONObject(i);
+        	Location location = new Location();
+        	location.setTitle(c.getString("Name"));
+        	location.setThumbnailUrl(c.getString("Image"));
+        	location.setLID(c.getInt("LID"));
+        	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+           // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
+            //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
+            //JSONObject c2 = data2.getJSONObject(0);
+            //location.setNum(c2.getInt("COUNT(*)"));
+            
+        	//location.setNum(c.getInt("Number_of_store"));
+        	//text.setText(Integer.toString(c.getInt("LID")));
+        	//text.setText(c.getString("Name"));
+        	//text.setText("Result Found: " + (i+1));
+        	locationList.add(location);
+        	text.setText("Result Found: "+(i+1));
+        	} 
+        
+        	adapter.notifyDataSetChanged();
+        }catch(JSONException e){
+        	e.printStackTrace();
+        	text.setText("Connection FAIL. Please check your internet connection!");
+        }  
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE); 
+
+inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                   InputMethodManager.HIDE_NOT_ALWAYS);
+                   
+    }
 	public String getHttpPost(String url,List<NameValuePair> params) {
 		StringBuilder str = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
