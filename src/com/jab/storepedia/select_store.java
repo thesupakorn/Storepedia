@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,10 +47,10 @@ public class select_store extends Activity{
             setContentView(R.layout.select_store);
             ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
             Intent intent = getIntent();
-            final TextView text = (TextView)findViewById(R.id.textView3); 
-            final TextView text2 = (TextView)findViewById(R.id.textView4); 
+            final TextView status_text2 = (TextView)findViewById(R.id.status_text2); 
+            final TextView status_text = (TextView)findViewById(R.id.status_text); 
             final ListView store_list = (ListView)findViewById(R.id.store_list); 
-            final TextView placename = (TextView)findViewById(R.id.textView2); 
+            final TextView placename = (TextView)findViewById(R.id.placename); 
             final EditText input = (EditText)findViewById(R.id.store_search);  
             
             final String place_name = intent.getStringExtra("place_name");
@@ -60,12 +61,12 @@ public class select_store extends Activity{
            
             adapter = new Store_Adapter(select_store.this,storeList);
             store_list.setAdapter(adapter);
-            final Button getData = (Button) findViewById(R.id.search);
+            final ImageView getData = (ImageView) findViewById(R.id.search);
             
             getData.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	 final String store_search = input.getText().toString();
-                     text2.setText("Search Results From: "+place_name);
+                     status_text.setText("Search Results From: "+place_name);
                      String url = "http://122.155.187.27:9876/select_store.php";
                  	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
                  	storeList.clear();                 	
@@ -76,7 +77,7 @@ public class select_store extends Activity{
                  	//text.setText(resultServer);
                      try{
                      	JSONArray data = new JSONArray(getHttpPost(url,params));
-                     	text.setText("Result Found: 0");
+                     	status_text2.setText("Result Found: 0");
                      	for(int i = 0; i < data.length(); i++){
                      	JSONObject c = data.getJSONObject(i);
                      	Store store = new Store();
@@ -96,13 +97,13 @@ public class select_store extends Activity{
                      	//text.setText(c.getString("Name"));
                      	//text.setText("Result Found: " + (i+1));
                      	storeList.add(store);
-                     	text.setText("Result Found: "+(i+1));
+                     	status_text2.setText("Result Found: "+(i+1));
                      	} 
                      
                      	adapter.notifyDataSetChanged();
                      }catch(JSONException e){
                      	e.printStackTrace();
-                     	text.setText("Connection FAIL. Please check your internet connection!");
+                     	status_text.setText("Connection FAIL. Please check your internet connection!");
                      }                           
                      InputMethodManager inputManager = (InputMethodManager)
                              getSystemService(Context.INPUT_METHOD_SERVICE); 
@@ -141,7 +142,8 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
             });  
         }
 
-                
+       
+      
       public String getHttpPost(String url,List<NameValuePair> params) {
   		StringBuilder str = new StringBuilder();
   		HttpClient client = new DefaultHttpClient();
