@@ -66,7 +66,7 @@ public class select_store extends Activity{
             getData.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	 final String store_search = input.getText().toString();
-                     status_text.setText("Search Results From: "+place_name);
+                     //status_text.setText("Search Results From: "+place_name);
                      String url = "http://122.155.187.27:9876/select_store.php";
                  	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
                  	storeList.clear();                 	
@@ -77,7 +77,7 @@ public class select_store extends Activity{
                  	//text.setText(resultServer);
                      try{
                      	JSONArray data = new JSONArray(getHttpPost(url,params));
-                     	status_text2.setText("Result Found: 0");
+                     	//status_text2.setText("Result Found: 0");
                      	for(int i = 0; i < data.length(); i++){
                      	JSONObject c = data.getJSONObject(i);
                      	Store store = new Store();
@@ -97,7 +97,7 @@ public class select_store extends Activity{
                      	//text.setText(c.getString("Name"));
                      	//text.setText("Result Found: " + (i+1));
                      	storeList.add(store);
-                     	status_text2.setText("Result Found: "+(i+1));
+                     	//status_text2.setText("Result Found: "+(i+1));
                      	} 
                      
                      	adapter.notifyDataSetChanged();

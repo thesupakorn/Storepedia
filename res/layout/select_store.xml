@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,40 +13,55 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" 
-        android:paddingTop="15dp">
-
-        <TextView
-            android:id="@+id/placename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/place_image"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Place Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-
-        <EditText
-            android:id="@+id/store_search"
-            android:layout_width="268dp"
-            android:layout_height="wrap_content"
-            android:ems="10" 
-            android:inputType="text"
-            android:background="@drawable/border"
-            android:padding="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_below="@+id/place_image"
-            android:hint="  Search for Store"
-            >
-        </EditText>
+        android:background="@color/grey">
 
         <ImageView
             android:id="@+id/place_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:onClick="search"/>
+            android:onClick="search" />
+
+        <EditText
+            android:id="@+id/store_search"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/place_image"
+            android:layout_below="@+id/place_image"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:hint="  Search for Store"
+            android:inputType="text"
+            android:padding="8dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/placename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/place_image"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/place_image"
+            android:text="Place Name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_toRightOf="@+id/store_search"
+            android:layout_marginTop="70dp"
+            android:onClick="search"
+            android:src="@drawable/magnifying_glass113" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/status_text2"
@@ -58,28 +72,203 @@
         <TextView
             android:id="@+id/status_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+            android:text=""/>
 
         <ListView
             android:id="@+id/store_list"
             android:layout_width="250dp"
             android:layout_height="249dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:divider="@color/list_divider"
             android:dividerHeight="1dp"
-            android:layout_below="@+id/store_search"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
             android:listSelector="@drawable/list_row_selector" >
         </ListView>
 
         <ImageView
-            android:id="@+id/search"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/store_search"
-            android:layout_marginTop="68dp"
-            android:onClick="search"
-            android:src="@drawable/magnifying_glass113" />
+            android:id="@+id/all_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:paddingRight="1dp"
+            android:layout_alignTop="@+id/store_list"
+            android:layout_toLeftOf="@+id/store_list"
+            android:src="@drawable/all_no2" />
+        
+        <ImageView
+            android:id="@+id/all_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:paddingRight="1dp"
+            android:layout_alignTop="@+id/store_list"
+            android:layout_toLeftOf="@+id/store_list"
+            android:src="@drawable/all_yes2" />
+        <ImageView
+            android:id="@+id/food_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/all_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/food_no" />
+        
+        <ImageView
+            android:id="@+id/food_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/all_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/food_yes" />
+        
+        <ImageView
+            android:id="@+id/books_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/food_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/books_no" />
+        
+        <ImageView
+            android:id="@+id/books_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/food_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/books_yes" />
+        
+        <ImageView
+            android:id="@+id/clothings_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/books_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/clothings_no" />
+        
+        <ImageView
+            android:id="@+id/clothings_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/books_yes"
+            android:scaleType="fitXY"
+            android:src="@drawable/clothings_yes" />
+        
+        <ImageView
+            android:id="@+id/electronics_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/clothings_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/electronics_no" />
+        
+        <ImageView
+            android:id="@+id/electronics_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/clothings_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/electronics_yes" />
+        
+        <ImageView
+            android:id="@+id/entertainments_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/electronics_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/entertainments_no" />
+        
+        <ImageView
+            android:id="@+id/entertainments_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/electronics_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/entertainments_yes" />
+        
+        <ImageView
+            android:id="@+id/health_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/entertainments_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/health_no" />
+        
+        <ImageView
+            android:id="@+id/health_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/entertainments_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/health_yes" />
+        
+        <ImageView
+            android:id="@+id/others_no"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/health_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/others_no2" />
+        
+        <ImageView
+            android:id="@+id/others_yes"
+            android:layout_width="108dp"
+            android:layout_height="35dp"
+            android:adjustViewBounds="true"
+            android:paddingRight="1dp"
+            android:layout_toLeftOf="@+id/store_list"
+            android:layout_below="@+id/health_no"
+            android:scaleType="fitXY"
+            android:src="@drawable/others_yes2" />
+
+        <ImageView
+            android:id="@+id/line_horizontal"
+            android:layout_width="1500dp"
+            android:scaleType="fitXY"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/all_no"
+            android:layout_alignTop="@+id/all_no"
+            android:src="@drawable/line_horizontal" />
 
     </RelativeLayout>
 

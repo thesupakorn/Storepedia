@@ -53,7 +53,7 @@ public class create_comment extends Activity {
 		comment_field = (EditText) findViewById(R.id.comment);
 		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-		debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
+		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
