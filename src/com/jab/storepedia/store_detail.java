@@ -92,7 +92,7 @@ public class store_detail extends Activity{
         	store_name_view.setText(c.getString("Name"));
         	place_name_view.setText(c.getString("Location_Name"));
         	category_view.setText("Category: "+c.getString("Category"));
-        	score_view.setText("Rating: "+c.getString("Rating"));
+        	//score_view.setText("Rating: "+c.getString("Rating"));
         	//score_view.setText(c.getString("Image"));
         	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
         	store_image_view.setImageBitmap(bitmap);   	

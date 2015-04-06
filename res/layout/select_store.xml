@@ -19,8 +19,7 @@
             android:id="@+id/place_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:onClick="search" />
+            android:layout_margin="10dp" />
 
         <EditText
             android:id="@+id/store_search"
@@ -52,8 +51,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_toRightOf="@+id/store_search"
-            android:layout_marginTop="70dp"
-            android:onClick="search"
+            android:layout_marginTop="73dp"
             android:src="@drawable/magnifying_glass113" />
 
     </RelativeLayout>
@@ -78,7 +76,7 @@
         <ListView
             android:id="@+id/store_list"
             android:layout_width="250dp"
-            android:layout_height="249dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:divider="@color/list_divider"
@@ -114,7 +112,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/all_no"
+            android:layout_marginTop="35dp"
             android:scaleType="fitXY"
             android:src="@drawable/food_no" />
         
@@ -125,7 +123,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/all_no"
+            android:layout_marginTop="35dp"
             android:scaleType="fitXY"
             android:src="@drawable/food_yes" />
         
@@ -136,7 +134,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/food_no"
+            android:layout_marginTop="70dp"
             android:scaleType="fitXY"
             android:src="@drawable/books_no" />
         
@@ -147,7 +145,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/food_no"
+            android:layout_marginTop="70dp"
             android:scaleType="fitXY"
             android:src="@drawable/books_yes" />
         
@@ -158,7 +156,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/books_no"
+            android:layout_marginTop="105dp"
             android:scaleType="fitXY"
             android:src="@drawable/clothings_no" />
         
@@ -169,7 +167,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/books_yes"
+            android:layout_marginTop="105dp"
             android:scaleType="fitXY"
             android:src="@drawable/clothings_yes" />
         
@@ -180,7 +178,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/clothings_no"
+            android:layout_marginTop="140dp"
             android:scaleType="fitXY"
             android:src="@drawable/electronics_no" />
         
@@ -191,7 +189,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/clothings_no"
+            android:layout_marginTop="140dp"
             android:scaleType="fitXY"
             android:src="@drawable/electronics_yes" />
         
@@ -202,7 +200,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/electronics_no"
+            android:layout_marginTop="175dp"
             android:scaleType="fitXY"
             android:src="@drawable/entertainments_no" />
         
@@ -213,7 +211,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/electronics_no"
+            android:layout_marginTop="175dp"
             android:scaleType="fitXY"
             android:src="@drawable/entertainments_yes" />
         
@@ -224,7 +222,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/entertainments_no"
+            android:layout_marginTop="210dp"
             android:scaleType="fitXY"
             android:src="@drawable/health_no" />
         
@@ -235,7 +233,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/entertainments_no"
+            android:layout_marginTop="210dp"
             android:scaleType="fitXY"
             android:src="@drawable/health_yes" />
         
@@ -246,7 +244,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/health_no"
+            android:layout_marginTop="245dp"
             android:scaleType="fitXY"
             android:src="@drawable/others_no2" />
         
@@ -257,7 +255,7 @@
             android:adjustViewBounds="true"
             android:paddingRight="1dp"
             android:layout_toLeftOf="@+id/store_list"
-            android:layout_below="@+id/health_no"
+            android:layout_marginTop="245dp"
             android:scaleType="fitXY"
             android:src="@drawable/others_yes2" />
 

@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.jab.storepedia.adater.Store_Adapter;
+import com.jab.storepedia.model.Location;
 import com.jab.storepedia.model.Store;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +45,12 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 public class select_store extends Activity{
 	private Store_Adapter adapter;
+	int LID;
+	String cat ="all";
+	TextView status_text;
+	EditText input;
+	private ImageView all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
+	
 	private List<Store> storeList = new ArrayList<Store>();
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,41 @@ public class select_store extends Activity{
             setContentView(R.layout.select_store);
             ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
             Intent intent = getIntent();
+            
+            all_no = (ImageView) findViewById(R.id.all_no);
+            all_yes = (ImageView) findViewById(R.id.all_yes);
+            food_no = (ImageView) findViewById(R.id.food_no);
+            food_yes = (ImageView) findViewById(R.id.food_yes);
+            books_no = (ImageView) findViewById(R.id.books_no);
+            books_yes = (ImageView) findViewById(R.id.books_yes);
+            clothings_no = (ImageView) findViewById(R.id.clothings_no);
+            clothings_yes = (ImageView) findViewById(R.id.clothings_yes);
+            electronics_no = (ImageView) findViewById(R.id.electronics_no);
+            electronics_yes = (ImageView) findViewById(R.id.electronics_yes);
+            entertainments_no = (ImageView) findViewById(R.id.entertainments_no);
+            entertainments_yes = (ImageView) findViewById(R.id.entertainments_yes);
+            health_no = (ImageView) findViewById(R.id.health_no);
+            health_yes = (ImageView) findViewById(R.id.health_yes);
+            others_no = (ImageView) findViewById(R.id.others_no);
+            others_yes = (ImageView) findViewById(R.id.others_yes);
+            
+            all_no.setVisibility(View.GONE);
+            //food_no.setVisibility(View.GONE);
+            food_yes.setVisibility(View.GONE);
+            //books_no.setVisibility(View.GONE);
+            books_yes.setVisibility(View.GONE);
+            //clothings_no.setVisibility(View.GONE);
+            clothings_yes.setVisibility(View.GONE);
+            //electronics_no.setVisibility(View.GONE);
+            electronics_yes.setVisibility(View.GONE);
+            //entertainments_no.setVisibility(View.GONE);
+            entertainments_yes.setVisibility(View.GONE);
+            //health_no.setVisibility(View.GONE);
+            health_yes.setVisibility(View.GONE);
+            //others_no.setVisibility(View.GONE);
+            others_yes.setVisibility(View.GONE);
+            
+            
             final TextView status_text2 = (TextView)findViewById(R.id.status_text2); 
             final TextView status_text = (TextView)findViewById(R.id.status_text); 
             final ListView store_list = (ListView)findViewById(R.id.store_list); 
@@ -62,6 +108,215 @@ public class select_store extends Activity{
             adapter = new Store_Adapter(select_store.this,storeList);
             store_list.setAdapter(adapter);
             final ImageView getData = (ImageView) findViewById(R.id.search);
+            ImageView place_image = (ImageView) findViewById(R.id.place_image);
+            
+            String url2 = "http://122.155.187.27:9876/select_location.php";
+            List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+            params2.add(new BasicNameValuePair("strA", place_name));
+            try{
+            	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+            	for(int i = 0; i < data.length(); i++){
+            	JSONObject c2 = data.getJSONObject(i);
+            	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c2.getString("Image")).getContent());
+            	place_image.setImageBitmap(bitmap);   	
+            	}       
+            	}catch(JSONException e){
+                	e.printStackTrace();
+            	} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            
+            
+            all_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                  food_yes.setVisibility(View.GONE);
+                  all_yes.setVisibility(View.VISIBLE);
+                  books_yes.setVisibility(View.GONE);
+                  clothings_yes.setVisibility(View.GONE);
+                  electronics_yes.setVisibility(View.GONE);
+                  entertainments_yes.setVisibility(View.GONE);
+                  health_yes.setVisibility(View.GONE);
+                  others_yes.setVisibility(View.GONE);
+                	  
+              	  all_no.setVisibility(View.GONE);
+              	  food_no.setVisibility(View.VISIBLE);
+              	  books_no.setVisibility(View.VISIBLE);
+              	  clothings_no.setVisibility(View.VISIBLE);
+              	  electronics_no.setVisibility(View.VISIBLE);
+              	  entertainments_no.setVisibility(View.VISIBLE);
+              	  health_no.setVisibility(View.VISIBLE);
+              	  others_no.setVisibility(View.VISIBLE);
+                  cat = "all";
+                  getData.performClick();
+                }
+                });
+            
+            food_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+              	  food_yes.setVisibility(View.VISIBLE);
+              	  all_yes.setVisibility(View.GONE);
+              	  books_yes.setVisibility(View.GONE);
+              	  clothings_yes.setVisibility(View.GONE);
+              	  electronics_yes.setVisibility(View.GONE);
+              	  entertainments_yes.setVisibility(View.GONE);
+              	  health_yes.setVisibility(View.GONE);
+              	  others_yes.setVisibility(View.GONE);
+              	  
+            	  all_no.setVisibility(View.VISIBLE);
+            	  food_no.setVisibility(View.GONE);
+            	  books_no.setVisibility(View.VISIBLE);
+            	  clothings_no.setVisibility(View.VISIBLE);
+            	  electronics_no.setVisibility(View.VISIBLE);
+            	  entertainments_no.setVisibility(View.VISIBLE);
+            	  health_no.setVisibility(View.VISIBLE);
+            	  others_no.setVisibility(View.VISIBLE);
+              	  cat = "food";             	
+              	  getData.performClick();
+                }
+                });
+            
+            books_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.VISIBLE);
+                    clothings_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.GONE);
+                  	  
+                    all_no.setVisibility(View.VISIBLE);
+                    food_no.setVisibility(View.VISIBLE);
+                    books_no.setVisibility(View.GONE);
+                    clothings_no.setVisibility(View.VISIBLE);
+                    electronics_no.setVisibility(View.VISIBLE);
+                	entertainments_no.setVisibility(View.VISIBLE);
+                    health_no.setVisibility(View.VISIBLE);
+                	others_no.setVisibility(View.VISIBLE);
+                    cat = "books";
+                    getData.performClick();
+                }
+                });
+            clothings_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.VISIBLE);
+                    electronics_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.GONE);
+                  	  
+                	all_no.setVisibility(View.VISIBLE);
+                	food_no.setVisibility(View.VISIBLE);
+                	books_no.setVisibility(View.VISIBLE);
+                	clothings_no.setVisibility(View.GONE);
+                	electronics_no.setVisibility(View.VISIBLE);
+                	entertainments_no.setVisibility(View.VISIBLE);
+                	health_no.setVisibility(View.VISIBLE);
+                	others_no.setVisibility(View.VISIBLE);
+                    cat = "clothings";
+                    getData.performClick();
+                }
+                });
+            electronics_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.VISIBLE);
+                    entertainments_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.GONE);
+                  	  
+                	all_no.setVisibility(View.VISIBLE);
+                	food_no.setVisibility(View.VISIBLE);
+                	books_no.setVisibility(View.VISIBLE);
+                	clothings_no.setVisibility(View.VISIBLE);
+                	electronics_no.setVisibility(View.GONE);
+                	entertainments_no.setVisibility(View.VISIBLE);
+                	health_no.setVisibility(View.VISIBLE);
+                	others_no.setVisibility(View.VISIBLE);
+                    cat = "electronics";
+                    getData.performClick();
+                }
+                });
+            entertainments_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.VISIBLE);
+                    health_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.GONE);
+                  	  
+                	all_no.setVisibility(View.VISIBLE);
+                	food_no.setVisibility(View.VISIBLE);
+                	books_no.setVisibility(View.VISIBLE);
+                	clothings_no.setVisibility(View.VISIBLE);
+                	electronics_no.setVisibility(View.VISIBLE);
+                	entertainments_no.setVisibility(View.GONE);
+                	health_no.setVisibility(View.VISIBLE);
+                	others_no.setVisibility(View.VISIBLE);
+                    cat = "entertainments";
+                    getData.performClick();
+                }
+                });
+            health_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.VISIBLE);
+                    others_yes.setVisibility(View.GONE);
+                  	  
+                	all_no.setVisibility(View.VISIBLE);
+                	food_no.setVisibility(View.VISIBLE);
+                	books_no.setVisibility(View.VISIBLE);
+                	clothings_no.setVisibility(View.VISIBLE);
+                	electronics_no.setVisibility(View.VISIBLE);
+                	entertainments_no.setVisibility(View.VISIBLE);
+                	health_no.setVisibility(View.GONE);
+                	others_no.setVisibility(View.VISIBLE);
+                    cat = "health";
+                    getData.performClick();
+                }
+                });
+            others_no.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    food_yes.setVisibility(View.GONE);
+                    all_yes.setVisibility(View.GONE);
+                    books_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.VISIBLE);
+                  	  
+                	all_no.setVisibility(View.VISIBLE);
+                	food_no.setVisibility(View.VISIBLE);
+                	books_no.setVisibility(View.VISIBLE);
+                	clothings_no.setVisibility(View.VISIBLE);
+                	electronics_no.setVisibility(View.VISIBLE);
+                	entertainments_no.setVisibility(View.VISIBLE);
+                	health_no.setVisibility(View.VISIBLE);
+                	others_no.setVisibility(View.GONE);
+                    cat = "others";
+                    getData.performClick();
+                }
+                });
             
             getData.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -73,6 +328,7 @@ public class select_store extends Activity{
              		List<NameValuePair> params = new ArrayList<NameValuePair>();
                      params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
                      params.add(new BasicNameValuePair("store_search", store_search));
+                     params.add(new BasicNameValuePair("cat", cat));
                  	//String resultServer  = getHttpPost(url,params);
                  	//text.setText(resultServer);
                      try{
@@ -84,7 +340,6 @@ public class select_store extends Activity{
                      	store.setTitle(c.getString("Name"));
                      	store.setThumbnailUrl(c.getString("Image"));
                      	store.setSID(c.getInt("SID"));
-                     	store.setRating(c.getDouble("Rating"));
                      	store.setGenre(c.getString("Category"));
                      	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
                         // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
@@ -104,7 +359,7 @@ public class select_store extends Activity{
                      }catch(JSONException e){
                      	e.printStackTrace();
                      	status_text.setText("Connection FAIL. Please check your internet connection!");
-                     }                           
+                     }                 //placename.setText(cat);           
                      InputMethodManager inputManager = (InputMethodManager)
                              getSystemService(Context.INPUT_METHOD_SERVICE); 
 
@@ -140,9 +395,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     finish();
             	}
             });  
-        }
-
-       
+        }                
       
       public String getHttpPost(String url,List<NameValuePair> params) {
   		StringBuilder str = new StringBuilder();
