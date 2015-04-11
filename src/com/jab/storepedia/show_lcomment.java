@@ -70,15 +70,28 @@ public class show_lcomment extends Activity {
 		final String place_name = intent.getStringExtra("place_name");
 		
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-        ImageButton create_comment = (ImageButton) findViewById(R.id.comment_button);
+        ImageButton create_comment = (ImageButton) findViewById(R.id.create_comment_button);
+        ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
+    	edit_comment.setVisibility(View.GONE);
         create_comment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i;
-				if(flag == "create")					
-				    i = new Intent(show_lcomment.this,create_comment.class);
-				else
-				    i = new Intent(show_lcomment.this,create_comment.class);
+				Intent i = new Intent(show_lcomment.this,create_comment.class);;
+                //i.putExtra("place_name", place_name);
+                //i.putExtra("LID", LID);
+				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+				startActivity(i);
+				finish();
+			}
+        });
+        edit_comment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(show_lcomment.this,create_comment.class);;
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);
@@ -108,11 +121,12 @@ public class show_lcomment extends Activity {
         final TextView text = (TextView)findViewById(R.id.status); 
         final ListView lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
         final TextView store_name_textview = (TextView)findViewById(R.id.textView1); 
-        ImageButton write_comment = (ImageButton) findViewById(R.id.comment_button);
+        //ImageButton write_comment = (ImageButton) findViewById(R.id.create_comment_button);
+        //ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
         final TextView write_comment_text = (TextView)findViewById(R.id.textView2); 
         if(!isLoggedIn()){
-        	write_comment.setVisibility(View.GONE);
-        	write_comment_text.setText("");
+        	create_comment.setVisibility(View.GONE);
+        	edit_comment.setVisibility(View.GONE);
         }
         
         adapter = new Lcomment_adapter(show_lcomment.this,lcommentList);
@@ -155,7 +169,8 @@ public class show_lcomment extends Activity {
                 	JSONArray data = new JSONArray(getHttpPost(url2,params2));
                 	for(int i = 0; i < data.length(); i++){
                     	JSONObject c = data.getJSONObject(i);
-                    	write_comment_text.setText("Edit your comment");
+                    	create_comment.setVisibility(View.GONE);
+                    	edit_comment.setVisibility(View.VISIBLE);
                     	flag = "edit";
                 	}
                 }catch(JSONException e){
