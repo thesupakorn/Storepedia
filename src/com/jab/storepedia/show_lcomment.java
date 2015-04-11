@@ -49,6 +49,7 @@ public class show_lcomment extends Activity {
 	
 	private Lcomment_adapter adapter;
 	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
+	String flag = "create";
 	
     @SuppressLint("NewApi")
 	@Override
@@ -73,7 +74,11 @@ public class show_lcomment extends Activity {
         create_comment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(show_lcomment.this,create_comment.class);
+				Intent i;
+				if(flag == "create")					
+				    i = new Intent(show_lcomment.this,create_comment.class);
+				else
+				    i = new Intent(show_lcomment.this,create_comment.class);
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);
@@ -140,6 +145,22 @@ public class show_lcomment extends Activity {
                 }catch(JSONException e){
                 	e.printStackTrace();
                 	text.setText("Connection FAIL. Please check your internet connection!");
+                }      
+                
+                String url2 = "http://122.155.187.27:9876/check_if_comment.php";
+                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                params2.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+                params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+                try{
+                	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+                	for(int i = 0; i < data.length(); i++){
+                    	JSONObject c = data.getJSONObject(i);
+                    	write_comment_text.setText("Edit your comment");
+                    	flag = "edit";
+                	}
+                }catch(JSONException e){
+                	e.printStackTrace();  
+                	write_comment_text.setText("FAIL TO GET PCID");
                 }      
                 
         lcomment_list.setOnItemClickListener(new OnItemClickListener(){
