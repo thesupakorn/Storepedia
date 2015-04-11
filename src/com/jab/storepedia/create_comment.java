@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,37 +74,134 @@ public class create_comment extends Activity {
 
 	
 	public void loadImagefromGallery1(View view) {
-		// Create intent to Open Image applications like Gallery, Google Photos
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		// Start the Intent
-		imgFlag = 1;
-		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		//builder.setTitle("Choose an action");
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		    		// Create intent to Open Image applications like Gallery, Google Photos
+		    		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+		    				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		    		// Start the Intent
+		    		imgFlag = 1;
+		    		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic1);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
 	}
 	public void loadImagefromGallery2(View view) {
-		// Create intent to Open Image applications like Gallery, Google Photos
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		// Start the Intent
-		imgFlag = 2;
-		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		          // Create intent to Open Image applications like Gallery, Google Photos
+		          Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+				  android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		          // Start the Intent
+		          imgFlag = 2;
+		          startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic2);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
 	}
 	public void loadImagefromGallery3(View view) {
-		// Create intent to Open Image applications like Gallery, Google Photos
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		// Start the Intent
-		imgFlag = 3;
-		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-	}
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		          // Create intent to Open Image applications like Gallery, Google Photos
+		          Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+				  android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		          // Start the Intent
+		          imgFlag = 3;
+		          startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic3);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
+	}		   
 	public void loadImagefromGallery4(View view) {
-		// Create intent to Open Image applications like Gallery, Google Photos
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		// Start the Intent
-		imgFlag = 4;
-		startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-	}
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		          // Create intent to Open Image applications like Gallery, Google Photos
+		          Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+			      android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		          // Start the Intent
+		          imgFlag = 4;
+		          startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic4);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
+	}		   
 	// When Image is selected from Gallery
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

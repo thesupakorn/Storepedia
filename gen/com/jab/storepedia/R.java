@@ -1663,17 +1663,18 @@ containing a value of this type.
         public static final int com_facebook_tooltip_bubble=0x7f030026;
         public static final int com_facebook_usersettingsfragment=0x7f030027;
         public static final int create_comment=0x7f030028;
-        public static final int lcomment=0x7f030029;
-        public static final int lcomment_detail=0x7f03002a;
-        public static final int list_row=0x7f03002b;
-        public static final int select_categories=0x7f03002c;
-        public static final int select_location=0x7f03002d;
-        public static final int select_store=0x7f03002e;
-        public static final int show_lcomment=0x7f03002f;
-        public static final int store_detail=0x7f030030;
-        public static final int store_search_result=0x7f030031;
-        public static final int support_simple_spinner_dropdown_item=0x7f030032;
-        public static final int top_action_bar=0x7f030033;
+        public static final int edit_comment=0x7f030029;
+        public static final int lcomment=0x7f03002a;
+        public static final int lcomment_detail=0x7f03002b;
+        public static final int list_row=0x7f03002c;
+        public static final int select_categories=0x7f03002d;
+        public static final int select_location=0x7f03002e;
+        public static final int select_store=0x7f03002f;
+        public static final int show_lcomment=0x7f030030;
+        public static final int store_detail=0x7f030031;
+        public static final int store_search_result=0x7f030032;
+        public static final int support_simple_spinner_dropdown_item=0x7f030033;
+        public static final int top_action_bar=0x7f030034;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
