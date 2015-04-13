@@ -91,7 +91,7 @@ public class show_lcomment extends Activity {
         edit_comment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(show_lcomment.this,create_comment.class);;
+				Intent i = new Intent(show_lcomment.this,edit_comment.class);;
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);

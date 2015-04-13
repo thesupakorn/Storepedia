@@ -1,6 +1,28 @@
 package com.jab.storepedia;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +39,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,13 +52,13 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 @SuppressLint("NewApi")
-public class create_comment extends Activity {
+public class edit_comment extends Activity {
 	ProgressDialog prgDialog;
 	String encodedString1, encodedString2, encodedString3, encodedString4;
 	RequestParams params = new RequestParams();
 	String imgPath1, imgPath2, imgPath3, imgPath4, fileName, place_name, store_name;
 	Bitmap bitmap;	
-	int imgFlag = 0, SID,LID,UID;
+	int imgFlag = 0, SID,LID,UID, existed1=0, existed2=0, existed3=0, existed4=0;
 	private static int RESULT_LOAD_IMG = 1;
 	EditText comment_field;
 
@@ -60,7 +83,7 @@ public class create_comment extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(create_comment.this,show_lcomment.class);
+				Intent i = new Intent(edit_comment.this,show_lcomment.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
@@ -70,6 +93,170 @@ public class create_comment extends Activity {
 	            finish();
 			}
 	    });
+		 String url = "http://122.155.187.27:9876/edit_comment.php";
+		 List<NameValuePair> params = new ArrayList<NameValuePair>();
+	     params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+	     params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+	     try{
+	        	JSONArray data = new JSONArray(getHttpPost(url,params));
+	            JSONObject c = data.getJSONObject(0);
+	            comment_field.setText(c.getString("comment"));
+	        	if(!c.isNull("link1"))
+	        	{
+	        		String[] link1 = c.getString("link1").split("/");        		
+	        		if(link1[link1.length-1].equals("01.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic1);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed1 = 1;
+	        		}
+	        		if(link1[link1.length-1].equals("02.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic2);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed2 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("03.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic3);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed3 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("04.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic4);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed4 = 1;
+	        		}	
+	        	}
+	        	if(!c.isNull("link2"))
+	        	{
+	        		String[] link1 = c.getString("link1").split("/");        		
+	        		if(link1[link1.length-1].equals("01.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic1);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed1 = 1;
+	        		}
+	        		if(link1[link1.length-1].equals("02.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic2);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed2 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("03.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic3);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed3 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("04.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic4);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed4 = 1;
+	        		}	
+	        	}
+	        	if(!c.isNull("link3"))
+	        	{
+	        		String[] link1 = c.getString("link1").split("/");        		
+	        		if(link1[link1.length-1].equals("01.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic1);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed1 = 1;
+	        		}
+	        		if(link1[link1.length-1].equals("02.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic2);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed2 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("03.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic3);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed3 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("04.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic4);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed4 = 1;
+	        		}	
+	        	}
+	        	if(!c.isNull("link4"))
+	        	{
+	        		String[] link1 = c.getString("link1").split("/");        		
+	        		if(link1[link1.length-1].equals("01.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic1);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed1 = 1;
+	        		}
+	        		if(link1[link1.length-1].equals("02.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic2);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed2 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("03.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic3);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed3 = 1;
+	        		}	
+	        		if(link1[link1.length-1].equals("04.jpg"))
+	        		{
+	        			//comment_field.setText(link1[link1.length-1]);
+	        			Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("link1")).getContent());
+	        			ImageView imgView = (ImageView) findViewById(R.id.pic4);
+	        			imgView.setImageBitmap(bitmap);
+	        			existed4 = 1;
+	        		}	
+	        	}
+	        	//Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
+	        	//store_image_view.setImageBitmap(bitmap);   	
+	        }catch(JSONException e){
+	        	e.printStackTrace();
+	        	//store_name_view.setText(e.toString());
+	        } catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	
@@ -96,7 +283,11 @@ public class create_comment extends Activity {
 				    ImageView imgView = (ImageView) findViewById(R.id.pic1);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
-				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));
+				    if(existed1==1)
+				    {
+				         
+				    }
 		    	}
 		    	else if(which == 2)
 		    	{
@@ -232,7 +423,7 @@ public class create_comment extends Activity {
 				    String fileNameSegments[] = imgPath1.split("/");
 				    fileName = fileNameSegments[fileNameSegments.length - 1];
 				    // Put file name in Async Http Post Param which will used in Php web app
-				params.put("filename1", fileName);
+				params.put("filename1", "01");
 				}
 				else if(imgFlag == 2){
 					imgPath2 = cursor.getString(columnIndex);
@@ -244,7 +435,7 @@ public class create_comment extends Activity {
 					String fileNameSegments[] = imgPath2.split("/");
 					fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename2", fileName);
+					params.put("filename2", "02");
 					}
 				else if(imgFlag == 3){
 					imgPath3 = cursor.getString(columnIndex);
@@ -256,7 +447,7 @@ public class create_comment extends Activity {
 					String fileNameSegments[] = imgPath3.split("/");
 					fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename3", fileName);
+					params.put("filename3", "03");
 					}
 				else if(imgFlag == 4){
 					imgPath4 = cursor.getString(columnIndex);
@@ -268,7 +459,7 @@ public class create_comment extends Activity {
 					String fileNameSegments[] = imgPath4.split("/");
 					fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename4", fileName);
+					params.put("filename4", "04");
 					}
 				cursor.close();
 			} else {
@@ -293,10 +484,15 @@ public class create_comment extends Activity {
 			encodeImagetoString();
 		// When Image is not selected from Gallery
 		} else {
-			Toast.makeText(
+			/*Toast.makeText(
 					getApplicationContext(),
 					"You must select image from gallery before you try to upload",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_LONG).show();*/
+			params.put("comment", comment_field.getText().toString());
+			params.put("mode", "edit" );
+			params.put("SID", Integer.toString(SID));
+			params.put("UID", Integer.toString(UID));
+			triggerImageUpload();
 		}
 	}
 
@@ -380,7 +576,7 @@ public class create_comment extends Activity {
 				params.put("comment", comment_field.getText().toString());
 				params.put("SID", Integer.toString(SID));
 				params.put("UID", Integer.toString(UID));
-				params.put("mode", "create");
+				params.put("mode", "edit");
 				triggerImageUpload();
 			}
 		}.execute(null, null, null);
@@ -407,7 +603,7 @@ public class create_comment extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
-						Intent i = new Intent(create_comment.this,show_lcomment.class);
+						Intent i = new Intent(edit_comment.this,show_lcomment.class);
 						i.putExtra("UID", UID);
 						i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
@@ -456,6 +652,35 @@ public class create_comment extends Activity {
 		if (prgDialog != null) {
 			prgDialog.dismiss();
 		}		
+	}
+	public String getHttpPost(String url,List<NameValuePair> params) {
+		StringBuilder str = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+			HttpResponse response = client.execute(httpPost);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) { // Status OK
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					str.append(line);
+				}
+			} else {
+				Log.e("Log", "Failed to download result..");
+				return "FAIL";
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return str.toString();
 	}
 	
 }
