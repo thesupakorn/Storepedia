@@ -97,6 +97,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_margin="5dp"
+            android:onClick="setting"
             android:src="@drawable/write_comment2" />
 
     </RelativeLayout>

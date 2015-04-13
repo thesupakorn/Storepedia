@@ -29,6 +29,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -51,7 +52,7 @@ public class lcomment_detail extends Activity{
 	ImageView pic2;
 	ImageView pic3;
 	ImageView pic4;
-	int UID,SID,LID;
+	int UID,SID,LID,PCID;
 	String place_name,store_name;
 	@SuppressLint("NewApi")
 	@Override
@@ -377,7 +378,15 @@ public class lcomment_detail extends Activity{
 	
 	public void setting(View view)
 	{
-		CharSequence choices[] = new CharSequence[] {"Edit comment", "Edit images", "Cancel"};
+		Intent intent = getIntent();
+		final int PCID = intent.getIntExtra("PCID", -1);
+        final int UID = intent.getIntExtra("UID" , -1);
+        final int SID = intent.getIntExtra("SID" , -1);
+        final int LID = intent.getIntExtra("LID" , -1);
+        final String store_name = intent.getStringExtra("store_name");
+        final String place_name = intent.getStringExtra("place_name");
+        
+		CharSequence choices[] = new CharSequence[] {"Edit comment", "Edit images","Delete comment" ,"Cancel"};
 		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
 		OptionDialog.setTitle("Setting");
 		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
@@ -386,9 +395,7 @@ public class lcomment_detail extends Activity{
 		        // the user clicked on colors[which]
 		    	if(which == 0)
 		    	{
-		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);;
-	                //i.putExtra("place_name", place_name);
-	                //i.putExtra("LID", LID);
+		    		Intent i = new Intent(lcomment_detail.this,edit_comment_text.class);
 					i.putExtra("UID", UID);
 					i.putExtra("LID", LID);
 					i.putExtra("SID", SID);
@@ -399,7 +406,7 @@ public class lcomment_detail extends Activity{
 		    	}
 		    	else if(which == 1)
 		    	{	  
-		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);;
+		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);
 	                //i.putExtra("place_name", place_name);
 	                //i.putExtra("LID", LID);
 					i.putExtra("UID", UID);
@@ -411,6 +418,27 @@ public class lcomment_detail extends Activity{
 					finish();
 		    	}
 		    	else if(which == 2)
+		    	{
+		    		CharSequence choices[] = new CharSequence[] {"Yes", "Cancel"};
+		    		AlertDialog.Builder OptionDialog2 = new AlertDialog.Builder(lcomment_detail.this);
+		    		OptionDialog2.setTitle("Are you sure that you want to delete your post?");
+		    		OptionDialog2.setItems(choices, new DialogInterface.OnClickListener() {
+		    			 @Override
+		    			    public void onClick(DialogInterface dialog, int which) {
+		    			        // the user clicked on colors[which]
+		    			    	if(which == 0)
+		    			    	{
+		    			    		
+		    			    	}
+		    			    	else if(which == 1)
+		    			    	{
+		    			    	  dialog.dismiss();
+		    			    	}
+		    		}
+		    			});		
+		    		OptionDialog2.show();
+		    		}
+		    	else if(which == 3)
 		    	{
 		    		 dialog.dismiss();
 		    	}

@@ -50,6 +50,7 @@ public class show_lcomment extends Activity {
 	private Lcomment_adapter adapter;
 	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
 	String flag = "create";
+	int PCID;
 	
     @SuppressLint("NewApi")
 	@Override
@@ -91,12 +92,24 @@ public class show_lcomment extends Activity {
         edit_comment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String url1 = "http://122.155.187.27:9876/find_PCID.php";
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+		        try{
+		        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+		            JSONObject c = data.getJSONObject(0);
+		            PCID = Integer.parseInt(c.getString("PCID"));
+		        }catch(JSONException e){
+		        	e.printStackTrace();
+		     }
 				Intent i = new Intent(show_lcomment.this,lcomment_detail.class);;
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
+				i.putExtra("PCID", PCID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				startActivity(i);
