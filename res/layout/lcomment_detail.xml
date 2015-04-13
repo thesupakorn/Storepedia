@@ -89,6 +89,16 @@
             android:layout_toRightOf="@+id/image"
             android:text="User Name"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/write_comment2" />
+
     </RelativeLayout>
 
     <RelativeLayout

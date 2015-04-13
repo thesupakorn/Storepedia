@@ -27,7 +27,10 @@ import com.facebook.Session;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -48,6 +51,8 @@ public class lcomment_detail extends Activity{
 	ImageView pic2;
 	ImageView pic3;
 	ImageView pic4;
+	int UID,SID,LID;
+	String place_name,store_name;
 	@SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -370,6 +375,49 @@ public class lcomment_detail extends Activity{
         return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
     }
 	
+	public void setting(View view)
+	{
+		CharSequence choices[] = new CharSequence[] {"Edit comment", "Edit images", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setTitle("Setting");
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);;
+	                //i.putExtra("place_name", place_name);
+	                //i.putExtra("LID", LID);
+					i.putExtra("UID", UID);
+					i.putExtra("LID", LID);
+					i.putExtra("SID", SID);
+					i.putExtra("place_name", place_name);
+					i.putExtra("store_name", store_name);
+					startActivity(i);
+					finish();
+		    	}
+		    	else if(which == 1)
+		    	{	  
+		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);;
+	                //i.putExtra("place_name", place_name);
+	                //i.putExtra("LID", LID);
+					i.putExtra("UID", UID);
+					i.putExtra("LID", LID);
+					i.putExtra("SID", SID);
+					i.putExtra("place_name", place_name);
+					i.putExtra("store_name", store_name);
+					startActivity(i);
+					finish();
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
+	}
 	public String getHttpPost(String url,List<NameValuePair> params) {
 		StringBuilder str = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
