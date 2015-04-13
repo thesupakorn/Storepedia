@@ -80,10 +80,22 @@ public class edit_comment_text extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(edit_comment_text.this,show_lcomment.class);
+				Intent i = new Intent(edit_comment_text.this,lcomment_detail.class);
+				String url1 = "http://122.155.187.27:9876/find_PCID.php";
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+		        try{
+		        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+		            JSONObject c = data.getJSONObject(0);
+		            PCID = Integer.parseInt(c.getString("PCID"));
+		        }catch(JSONException e){
+		        	e.printStackTrace();
+		     }
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
+				i.putExtra("PCID", PCID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 	            startActivity(i);

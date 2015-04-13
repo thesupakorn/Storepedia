@@ -71,6 +71,8 @@ public class lcomment_detail extends Activity{
         ImageView current_vote_up = (ImageView) findViewById(R.id.current_vote_up);
         ImageView vote_down = (ImageView) findViewById(R.id.vote_down);
         ImageView current_vote_down = (ImageView) findViewById(R.id.current_vote_down);
+        ImageView setting_button = (ImageView) findViewById(R.id.setting_button);
+        setting_button.setVisibility(View.GONE);
         pic1 = (ImageView) findViewById(R.id.pic1);
         pic2 = (ImageView) findViewById(R.id.pic2);
         pic3 = (ImageView) findViewById(R.id.pic3);
@@ -88,7 +90,6 @@ public class lcomment_detail extends Activity{
         final int LID = intent.getIntExtra("LID" , -1);
         final String store_name = intent.getStringExtra("store_name");
         final String place_name = intent.getStringExtra("place_name");
-        
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -103,6 +104,26 @@ public class lcomment_detail extends Activity{
 			}
         });       
         
+    	String url0 = "http://122.155.187.27:9876/check_if_owner.php";
+
+        List<NameValuePair> params0 = new ArrayList<NameValuePair>();
+        params0.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+        params0.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+        //comment.setText("UID: "+UID+" PCID: "+PCID);
+        try{
+        	JSONArray data = new JSONArray(getHttpPost(url0,params0));
+        	JSONObject c = data.getJSONObject(0);
+        	String result = c.getString("result");
+        	comment.setText(result);
+        	if(result.equals("yes"))
+        	{
+        		setting_button.setVisibility(View.VISIBLE);
+        	}
+        }catch(JSONException e)
+    	{
+    		e.printStackTrace();
+    	}
+        
         vote_up.setVisibility(View.GONE);
 		vote_down.setVisibility(View.GONE);
         String url = "http://122.155.187.27:9876/lcomment_detail.php";
@@ -116,7 +137,7 @@ public class lcomment_detail extends Activity{
         	user_name.setText(c.getString("username"));
         	agreed.setText(c.getString("agreed"));
         	disagreed.setText(c.getString("disagreed"));
-        	comment.setText(c.getString("comment"));
+        	//comment.setText(c.getString("comment"));
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
         		pic1.setImageBitmap(bitmap1);
@@ -406,7 +427,7 @@ public class lcomment_detail extends Activity{
 		    	}
 		    	else if(which == 1)
 		    	{	  
-		    		Intent i = new Intent(lcomment_detail.this,lcomment_detail.class);
+		    		Intent i = new Intent(lcomment_detail.this,edit_comment_image.class);
 	                //i.putExtra("place_name", place_name);
 	                //i.putExtra("LID", LID);
 					i.putExtra("UID", UID);

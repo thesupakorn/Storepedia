@@ -1,6 +1,26 @@
 package com.jab.storepedia;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +37,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,14 +56,14 @@ public class edit_comment_image extends Activity {
 	RequestParams params = new RequestParams();
 	String imgPath1, imgPath2, imgPath3, imgPath4, fileName, place_name, store_name;
 	Bitmap bitmap;	
-	int imgFlag = 0, SID,LID,UID;
+	int imgFlag = 0, SID,LID,UID,PCID;
 	private static int RESULT_LOAD_IMG = 1;
-	EditText comment_field;
+	TextView comment_field;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.create_comment);
+		setContentView(R.layout.edit_comment_image);
 		prgDialog = new ProgressDialog(this);
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
@@ -53,23 +74,47 @@ public class edit_comment_image extends Activity {
 		UID = intent.getIntExtra("UID" , -1);
 		final String store_name = intent.getStringExtra("store_name");
 		final String place_name = intent.getStringExtra("place_name");
-		comment_field = (EditText) findViewById(R.id.comment);
+		comment_field = (TextView) findViewById(R.id.comment);
 		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+		
+		String url1 = "http://122.155.187.27:9876/find_PCID.php";
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+        try{
+        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+            JSONObject c = data.getJSONObject(0);
+            PCID = Integer.parseInt(c.getString("PCID"));
+        }catch(JSONException e){
+        	e.printStackTrace();
+     }
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(edit_comment_image.this,show_lcomment.class);
+				Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
+				i.putExtra("PCID", PCID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 	            startActivity(i);
 	            finish();
 			}
 	    });
+		 String url = "http://122.155.187.27:9876/edit_comment.php";
+		 List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+	     params2.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+	     params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+	     try{
+	        	JSONArray data = new JSONArray(getHttpPost(url,params2));
+	            JSONObject c = data.getJSONObject(0);
+	            comment_field.setText(c.getString("comment"));
+	     }catch(JSONException e){
+	        	e.printStackTrace();
+	     }
 	}
 
 	
@@ -284,20 +329,23 @@ public class edit_comment_image extends Activity {
 	}
 	
 	// When Upload button is clicked
-	public void uploadImage(View v) {
-		// When Image is selected from Gallery
-		if ((imgPath1 != null && !imgPath1.isEmpty()) || (imgPath2 != null && !imgPath2.isEmpty()) || (imgPath3 != null && !imgPath3.isEmpty()) || (imgPath4 != null && !imgPath4.isEmpty())) {
+	public void uploadImage(View v) {	
+		
 			prgDialog.setMessage("Converting Image to Binary Data");
 			prgDialog.show();
+			String url1 = "http://122.155.187.27:9876/delete_comment_image.php";
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+	        try{
+	        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+	            JSONObject c = data.getJSONObject(0);
+	        }catch(JSONException e){
+	        	e.printStackTrace();
+	     }
 			// Convert image to String using Base64
 			encodeImagetoString();
 		// When Image is not selected from Gallery
-		} else {
-			Toast.makeText(
-					getApplicationContext(),
-					"You must select image from gallery before you try to upload",
-					Toast.LENGTH_LONG).show();
-		}
+
 	}
 
 	// AsyncTask - To convert Image to String
@@ -377,7 +425,6 @@ public class edit_comment_image extends Activity {
 				    params.put("image4", encodedString4);
 				}
 				// Trigger Image upload
-				params.put("comment", comment_field.getText().toString());
 				params.put("SID", Integer.toString(SID));
 				params.put("UID", Integer.toString(UID));
 				triggerImageUpload();
@@ -456,5 +503,34 @@ public class edit_comment_image extends Activity {
 			prgDialog.dismiss();
 		}		
 	}
+	public String getHttpPost(String url,List<NameValuePair> params) {
+ 		StringBuilder str = new StringBuilder();
+ 		HttpClient client = new DefaultHttpClient();
+ 		HttpPost httpPost = new HttpPost(url);
+ 		
+ 		try {
+ 			httpPost.setEntity(new UrlEncodedFormEntity(params));
+ 			HttpResponse response = client.execute(httpPost);
+ 			StatusLine statusLine = response.getStatusLine();
+ 			int statusCode = statusLine.getStatusCode();
+ 			if (statusCode == 200) { // Status OK
+ 				HttpEntity entity = response.getEntity();
+ 				InputStream content = entity.getContent();
+ 				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+ 				String line;
+ 				while ((line = reader.readLine()) != null) {
+ 					str.append(line);
+ 				}
+ 			} else {
+ 				Log.e("Log", "Failed to download result..");
+ 				return "FAIL";
+ 			}
+ 		} catch (ClientProtocolException e) {
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+ 		return str.toString();
+ 	}
 	
 }

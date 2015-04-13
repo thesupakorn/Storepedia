@@ -91,14 +91,14 @@
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <ImageView
-            android:id="@+id/setting"
+            android:id="@+id/setting_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_margin="5dp"
             android:onClick="setting"
-            android:src="@drawable/write_comment2" />
+            android:src="@drawable/setting_button" />
 
     </RelativeLayout>
 
