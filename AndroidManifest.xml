@@ -129,6 +129,26 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".create_store2"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <intent-filter >
+                <action  android:name="in.wptrafficanalyzer.edit_create_store2"/>
+                <category  android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".create_store3"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <intent-filter >
+                <action  android:name="in.wptrafficanalyzer.edit_create_store3"/>
+                <category  android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".store_info"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

@@ -51,17 +51,17 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 @SuppressLint("NewApi")
-public class create_store extends Activity {
+public class create_store2 extends Activity {
 	ProgressDialog prgDialog;
 	RequestParams params = new RequestParams();	
 	int LID,UID;
-	EditText store_name, store_detail;
-	String place_name, ex_store_name = "", ex_store_detail="";
+	EditText store_address, store_contact;
+	String place_name, store_name, store_detail, ex_store_address="", ex_store_contact="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.create_store);
+		setContentView(R.layout.create_store2);
 		prgDialog = new ProgressDialog(this);
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
@@ -69,23 +69,28 @@ public class create_store extends Activity {
 		Intent intent = getIntent();
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
+		store_name = intent.getStringExtra("store_name");
+		store_detail = intent.getStringExtra("store_detail");
+		ex_store_address = intent.getStringExtra("store_address");
+		ex_store_contact = intent.getStringExtra("store_contact");
+
+		
 		final String place_name = intent.getStringExtra("place_name");
-		ex_store_name = intent.getStringExtra("store_name");
-		ex_store_detail = intent.getStringExtra("store_detail");
 		
-		
-		store_name = (EditText) findViewById(R.id.store_name);
-		store_detail = (EditText) findViewById(R.id.store_detail);
-		store_name.setText(ex_store_name);
-		store_detail.setText(ex_store_detail);
+		store_address = (EditText) findViewById(R.id.store_address);
+		store_contact = (EditText) findViewById(R.id.store_contact);
+		store_address.setText(ex_store_address);
+		store_contact.setText(ex_store_contact);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(create_store.this,select_store.class);				
+				Intent i = new Intent(create_store2.this,create_store.class);				
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+				i.putExtra("store_detail", store_detail);
 	            startActivity(i);
 	            finish();
 			}
@@ -94,17 +99,20 @@ public class create_store extends Activity {
 
 	public void clear_text(View v)
 	{
-		store_detail.setText("");
+		store_address.setText("");
+		store_contact.setText("");
 	}
 	
 	public void next(View v)
 	{		
-	        Intent i = new Intent(create_store.this,create_store2.class);
+	     Intent i = new Intent(create_store2.this,create_store3.class);;
 			i.putExtra("UID", UID);
 			i.putExtra("LID", LID);
 			i.putExtra("place_name", place_name);
-			i.putExtra("store_name", store_name.getText().toString());
-			i.putExtra("store_detail", store_detail.getText().toString());
+			i.putExtra("store_name", store_name);
+			i.putExtra("store_detail", store_detail);
+			i.putExtra("store_address", store_address.getText().toString());
+			i.putExtra("store_contact", store_contact.getText().toString());
 			startActivity(i);
 			finish();
 	}
