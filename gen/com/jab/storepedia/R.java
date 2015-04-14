@@ -1451,7 +1451,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050021;
         public static final int action_menu_presenter=0x7f050022;
         public static final int action_mode_close_button=0x7f05002f;
-        public static final int action_settings=0x7f0500ab;
+        public static final int action_settings=0x7f0500ac;
         public static final int activity_chooser_view_content=0x7f050030;
         public static final int address=0x7f0500a6;
         public static final int address_info=0x7f0500a7;
@@ -1506,6 +1506,7 @@ containing a value of this type.
         public static final int create_comment_button=0x7f05009b;
         public static final int current_vote_down=0x7f050077;
         public static final int current_vote_up=0x7f050076;
+        public static final int debug_text=0x7f0500ab;
         public static final int default_activity_button=0x7f050033;
         public static final int detail=0x7f0500a4;
         public static final int detail_info=0x7f0500a5;

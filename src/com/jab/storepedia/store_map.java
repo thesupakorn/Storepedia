@@ -83,14 +83,16 @@ public class store_map extends ActionBarActivity {
         final String store_name = intent.getStringExtra("store_name");
         final String place_name = intent.getStringExtra("place_name");
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+        TextView debug_text = (TextView) findViewById(R.id.debug_text);
+        //debug_text.setText("UID = "+ UID + " , SID = "+SID+" , LID = "+LID);
         
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {		        
 				Intent i = new Intent(store_map.this,store_detail.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
-				i.putExtra("SID", LID);
+				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				startActivity(i);

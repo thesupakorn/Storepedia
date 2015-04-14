@@ -436,7 +436,7 @@ int id action_context_bar 0x7f050028
 int id action_menu_divider 0x7f050021
 int id action_menu_presenter 0x7f050022
 int id action_mode_close_button 0x7f05002f
-int id action_settings 0x7f0500ab
+int id action_settings 0x7f0500ac
 int id activity_chooser_view_content 0x7f050030
 int id address 0x7f0500a6
 int id address_info 0x7f0500a7
@@ -491,6 +491,7 @@ int id contact_info 0x7f0500a9
 int id create_comment_button 0x7f05009b
 int id current_vote_down 0x7f050077
 int id current_vote_up 0x7f050076
+int id debug_text 0x7f0500ab
 int id default_activity_button 0x7f050033
 int id detail 0x7f0500a4
 int id detail_info 0x7f0500a5
