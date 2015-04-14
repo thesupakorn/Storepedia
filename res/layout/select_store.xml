@@ -55,13 +55,14 @@
             android:src="@drawable/magnifying_glass113" />
 
         <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/store_search"
-            android:layout_marginTop="18dp"
-            android:layout_toRightOf="@+id/search"
-            android:src="@drawable/write_comment2" />
+            android:id="@+id/newstore_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_toRightOf="@+id/store_search"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="73dp"
+            android:onClick="newstore"
+            android:src="@drawable/newstore_button" />
 
     </RelativeLayout>
 

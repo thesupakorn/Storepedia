@@ -396,7 +396,20 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
             	}
             });  
         }                
-      
+      public void newstore(View v)
+      {
+    	  Intent intent = getIntent();
+    	  final String place_name = intent.getStringExtra("place_name");
+          final int LID = intent.getIntExtra("LID", -1);
+          final int UID = intent.getIntExtra("UID" , -1);
+          
+          Intent i = new Intent(select_store.this,create_store.class);
+		  i.putExtra("UID", UID);
+		  i.putExtra("LID", LID);
+          startActivity(i);
+          finish();
+          
+      }
       public String getHttpPost(String url,List<NameValuePair> params) {
   		StringBuilder str = new StringBuilder();
   		HttpClient client = new DefaultHttpClient();
