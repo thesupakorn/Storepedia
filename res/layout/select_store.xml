@@ -23,7 +23,7 @@
 
         <EditText
             android:id="@+id/store_search"
-            android:layout_width="268dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/place_image"
             android:layout_below="@+id/place_image"
@@ -53,6 +53,15 @@
             android:layout_toRightOf="@+id/store_search"
             android:layout_marginTop="73dp"
             android:src="@drawable/magnifying_glass113" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/store_search"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/search"
+            android:src="@drawable/write_comment2" />
 
     </RelativeLayout>
 

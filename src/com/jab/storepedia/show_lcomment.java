@@ -119,7 +119,7 @@ public class show_lcomment extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(show_lcomment.this,select_store.class);
+				Intent i = new Intent(show_lcomment.this,store_detail.class);
                 //i.putExtra("place_name", place_name);
                 //i.putExtra("LID", LID);
 				i.putExtra("UID", UID);

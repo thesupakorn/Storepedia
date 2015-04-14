@@ -453,7 +453,18 @@ public class edit_comment_image extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
-						Intent i = new Intent(edit_comment_image.this,show_lcomment.class);
+						String url1 = "http://122.155.187.27:9876/find_PCID.php";
+						List<NameValuePair> params = new ArrayList<NameValuePair>();
+				        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+				        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+				        try{
+				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+				            JSONObject c = data.getJSONObject(0);
+				            PCID = Integer.parseInt(c.getString("PCID"));
+				        }catch(JSONException e){
+				        	e.printStackTrace();
+				     }
+						Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);
 						i.putExtra("UID", UID);
 						i.putExtra("LID", LID);
 						i.putExtra("SID", SID);

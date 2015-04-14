@@ -114,7 +114,7 @@ public class lcomment_detail extends Activity{
         	JSONArray data = new JSONArray(getHttpPost(url0,params0));
         	JSONObject c = data.getJSONObject(0);
         	String result = c.getString("result");
-        	comment.setText(result);
+        	//comment.setText(result);
         	if(result.equals("yes"))
         	{
         		setting_button.setVisibility(View.VISIBLE);
@@ -137,7 +137,7 @@ public class lcomment_detail extends Activity{
         	user_name.setText(c.getString("username"));
         	agreed.setText(c.getString("agreed"));
         	disagreed.setText(c.getString("disagreed"));
-        	//comment.setText(c.getString("comment"));
+        	comment.setText(c.getString("comment"));
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
         		pic1.setImageBitmap(bitmap1);
@@ -449,7 +449,23 @@ public class lcomment_detail extends Activity{
 		    			        // the user clicked on colors[which]
 		    			    	if(which == 0)
 		    			    	{
-		    			    		
+		    			    		String url1 = "http://122.155.187.27:9876/delete_comment.php";
+		    						List<NameValuePair> params = new ArrayList<NameValuePair>();
+		    				        params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+		    				        try{
+		    				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+		    				            JSONObject c = data.getJSONObject(0);
+		    				        }catch(JSONException e){
+		    				        	e.printStackTrace();
+		    				     }
+		    				        Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
+		    						i.putExtra("UID", UID);
+		    						i.putExtra("LID", LID);
+		    						i.putExtra("SID", SID);
+		    						i.putExtra("place_name", place_name);
+		    						i.putExtra("store_name", store_name);
+		    						startActivity(i);
+		    						finish();
 		    			    	}
 		    			    	else if(which == 1)
 		    			    	{
