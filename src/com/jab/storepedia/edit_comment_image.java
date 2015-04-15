@@ -72,8 +72,8 @@ public class edit_comment_image extends Activity {
 		SID = intent.getIntExtra("SID" , -1);
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
-		final String store_name = intent.getStringExtra("store_name");
-		final String place_name = intent.getStringExtra("place_name");
+		store_name = intent.getStringExtra("store_name");
+		place_name = intent.getStringExtra("place_name");
 		comment_field = (TextView) findViewById(R.id.comment);
 		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
@@ -425,8 +425,20 @@ public class edit_comment_image extends Activity {
 				    params.put("image4", encodedString4);
 				}
 				// Trigger Image upload
+				String url1 = "http://122.155.187.27:9876/find_PCID.php";
+				List<NameValuePair> params0 = new ArrayList<NameValuePair>();
+		        params0.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		        params0.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+		        try{
+		        	JSONArray data = new JSONArray(getHttpPost(url1,params0));
+		            JSONObject c = data.getJSONObject(0);
+		            PCID = Integer.parseInt(c.getString("PCID"));
+		        }catch(JSONException e){
+		        	e.printStackTrace();
+		     }
 				params.put("SID", Integer.toString(SID));
 				params.put("UID", Integer.toString(UID));
+				params.put("PCID", Integer.toString(PCID));
 				triggerImageUpload();
 			}
 		}.execute(null, null, null);
@@ -443,7 +455,7 @@ public class edit_comment_image extends Activity {
 		prgDialog.setMessage("Invoking Php");		
 		AsyncHttpClient client = new AsyncHttpClient();
 		// Don't forget to change the IP address to your LAN address. Port no as well.
-		client.post("http://122.155.187.27:9876/create_comment.php",
+		client.post("http://122.155.187.27:9876/edit_comment_image.php",
 				params, new AsyncHttpResponseHandler() {
 					// When the response returned by REST has Http
 					// response code '200'
@@ -453,25 +465,37 @@ public class edit_comment_image extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
+						
+						Intent intent = getIntent();
+						SID = intent.getIntExtra("SID" , -1);
+						LID = intent.getIntExtra("LID" , -1);
+						UID = intent.getIntExtra("UID" , -1);
+						store_name = intent.getStringExtra("store_name");
+						place_name = intent.getStringExtra("place_name");
 						String url1 = "http://122.155.187.27:9876/find_PCID.php";
-						List<NameValuePair> params = new ArrayList<NameValuePair>();
-				        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-				        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+						List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+				        params1.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+				        params1.add(new BasicNameValuePair("UID", Integer.toString(UID)));
 				        try{
-				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+				        	JSONArray data = new JSONArray(getHttpPost(url1,params1));
 				            JSONObject c = data.getJSONObject(0);
 				            PCID = Integer.parseInt(c.getString("PCID"));
 				        }catch(JSONException e){
 				        	e.printStackTrace();
 				     }
-						Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);
-						i.putExtra("UID", UID);
-						i.putExtra("LID", LID);
-						i.putExtra("SID", SID);
-						i.putExtra("place_name", place_name);
-						i.putExtra("store_name", store_name);
-				        startActivity(i);
-				        finish();
+						
+						//comment_field.setText("PCID: " + Integer.toString(PCID)+ " UID: "+UID+" SID = "+SID + "place_name = "+ place_name+"store_name = "+store_name);
+				        Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);;
+				         //i.putExtra("place_name", place_name);
+				         //i.putExtra("LID", LID);
+							i.putExtra("UID", UID);
+							i.putExtra("LID", LID);
+							i.putExtra("SID", SID);
+							i.putExtra("PCID", PCID);
+							i.putExtra("place_name", place_name);
+							i.putExtra("store_name", store_name);
+							startActivity(i);
+							finish();
 					}
 
 					// When the response returned by REST has Http

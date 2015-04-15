@@ -54,15 +54,15 @@ public class create_store3 extends Activity {
 	ProgressDialog prgDialog;
 	String encodedString1, encodedString2, encodedString3, encodedString4,encodedString5,encodedString6;
 	RequestParams params = new RequestParams();
-	String imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name;
+	String imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name,store_detail,store_address,store_contact;
 	Bitmap bitmap;	
-	int imgFlag = 0, SID,LID,UID, PCID;
+	int imgFlag = 0, SID,LID,UID;
 	private static int RESULT_LOAD_IMG = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.create_comment);
+		setContentView(R.layout.create_store3);
 		prgDialog = new ProgressDialog(this);
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
@@ -70,11 +70,11 @@ public class create_store3 extends Activity {
 		Intent intent = getIntent();
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
-		final String store_name = intent.getStringExtra("store_name");
-		final String place_name = intent.getStringExtra("place_name");
-		final String store_detail = intent.getStringExtra("store_detail");
-		final String store_address = intent.getStringExtra("store_address");
-		final String store_contact = intent.getStringExtra("store_contact");
+		store_name = intent.getStringExtra("store_name");
+		place_name = intent.getStringExtra("place_name");
+		store_detail = intent.getStringExtra("store_detail");
+		store_address = intent.getStringExtra("store_address");
+		store_contact = intent.getStringExtra("store_contact");
 		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
@@ -87,6 +87,9 @@ public class create_store3 extends Activity {
 				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
+				i.putExtra("store_detail", store_detail);
+				i.putExtra("store_address", store_address);
+				i.putExtra("store_contact", store_contact);
 	            startActivity(i);
 	            finish();
 			}
@@ -223,6 +226,70 @@ public class create_store3 extends Activity {
 		});		
 		OptionDialog.show();
 	}		   
+	public void loadImagefromGallery5(View view) {
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		          // Create intent to Open Image applications like Gallery, Google Photos
+		          Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+			      android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		          // Start the Intent
+		          imgFlag = 5;
+		          startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic5);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
+	}		   
+	public void loadImagefromGallery6(View view) {
+		CharSequence choices[] = new CharSequence[] {"Upload Image", "Delete Image", "Cancel"};
+		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
+		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        // the user clicked on colors[which]
+		    	if(which == 0)
+		    	{
+		          // Create intent to Open Image applications like Gallery, Google Photos
+		          Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+			      android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		          // Start the Intent
+		          imgFlag = 6;
+		          startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		    	}
+		    	else if(which == 1)
+		    	{
+		    		imgPath1 = null;
+				    ImageView imgView = (ImageView) findViewById(R.id.pic6);
+				    // Set the Image in ImageView
+				    Resources res = getResources();
+				    imgView.setImageDrawable(res.getDrawable(R.drawable.insert_image_icon));	    		
+		    	}
+		    	else if(which == 2)
+		    	{
+		    		 dialog.dismiss();
+		    	}
+		    }
+		});		
+		OptionDialog.show();
+	}		   
 	// When Image is selected from Gallery
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -250,10 +317,13 @@ public class create_store3 extends Activity {
 				    imgView.setImageBitmap(BitmapFactory
 						    .decodeFile(imgPath1));
 				    // Get the Image's file name
-				    String fileNameSegments[] = imgPath1.split("/");
-				    fileName = fileNameSegments[fileNameSegments.length - 1];
+				    //String fileNameSegments[] = imgPath1.split("/");
+				    //fileName = fileNameSegments[fileNameSegments.length - 1];
 				    // Put file name in Async Http Post Param which will used in Php web app
-				params.put("filename1", fileName);
+				//params.put("filename1", fileName);
+				    String filenameArray[] = imgPath1.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename1", extension);
 				}
 				else if(imgFlag == 2){
 					imgPath2 = cursor.getString(columnIndex);
@@ -262,10 +332,13 @@ public class create_store3 extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath2));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath2.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath2.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename2", fileName);
+					//params.put("filename2", fileName);
+					String filenameArray[] = imgPath2.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename2", extension);
 					}
 				else if(imgFlag == 3){
 					imgPath3 = cursor.getString(columnIndex);
@@ -274,10 +347,13 @@ public class create_store3 extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath3));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath3.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath3.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename3", fileName);
+					//params.put("filename3", fileName);
+					String filenameArray[] = imgPath3.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename3", extension);
 					}
 				else if(imgFlag == 4){
 					imgPath4 = cursor.getString(columnIndex);
@@ -286,10 +362,43 @@ public class create_store3 extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath4));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath4.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath4.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename4", fileName);
+					//params.put("filename4", fileName);
+					String filenameArray[] = imgPath4.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename4", extension);
+					}
+				else if(imgFlag == 5){
+					imgPath4 = cursor.getString(columnIndex);
+					ImageView imgView = (ImageView) findViewById(R.id.pic5);
+					// Set the Image in ImageView
+					imgView.setImageBitmap(BitmapFactory
+							.decodeFile(imgPath5));
+					// Get the Image's file name
+					//String fileNameSegments[] = imgPath5.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
+					// Put file name in Async Http Post Param which will used in Php web app
+					//params.put("filename5", fileName);
+					String filenameArray[] = imgPath5.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename5", extension);
+					}
+				else if(imgFlag == 6){
+					imgPath6 = cursor.getString(columnIndex);
+					ImageView imgView = (ImageView) findViewById(R.id.pic6);
+					// Set the Image in ImageView
+					imgView.setImageBitmap(BitmapFactory
+							.decodeFile(imgPath6));
+					// Get the Image's file name
+					//String fileNameSegments[] = imgPath6.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
+					// Put file name in Async Http Post Param which will used in Php web app
+					//params.put("filename6", fileName);
+					String filenameArray[] = imgPath6.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename6", extension);
 					}
 				cursor.close();
 			} else {
@@ -371,6 +480,28 @@ public class create_store3 extends Activity {
 				// Encode Image to String
 				encodedString4 = Base64.encodeToString(byte_arr, 0);
 				}
+				if (imgPath5 != null && !imgPath5.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath5,
+						options);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				// Must compress the Image to reduce image size to make upload easy
+				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
+				byte[] byte_arr = stream.toByteArray();
+				// Encode Image to String
+				encodedString5 = Base64.encodeToString(byte_arr, 0);
+				}
+				if (imgPath6 != null && !imgPath6.isEmpty())
+				{
+				bitmap = BitmapFactory.decodeFile(imgPath6,
+						options);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				// Must compress the Image to reduce image size to make upload easy
+				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
+				byte[] byte_arr = stream.toByteArray();
+				// Encode Image to String
+				encodedString6 = Base64.encodeToString(byte_arr, 0);
+				}
 				return "";
 			}
 
@@ -390,9 +521,19 @@ public class create_store3 extends Activity {
 				if (imgPath4 != null && !imgPath4.isEmpty()){
 				    params.put("image4", encodedString4);
 				}
+				if (imgPath5 != null && !imgPath5.isEmpty()){
+				    params.put("image5", encodedString5);
+				}
+				if (imgPath6 != null && !imgPath6.isEmpty()){
+				    params.put("image6", encodedString6);
+				}
 				// Trigger Image upload
-				params.put("SID", Integer.toString(SID));
+				params.put("store_name", store_name);
+				params.put("store_detail", store_detail);
+				params.put("store_address", store_address);
+				params.put("store_contact", store_contact);
 				params.put("UID", Integer.toString(UID));
+				params.put("LID", Integer.toString(LID));
 				triggerImageUpload();
 			}
 		}.execute(null, null, null);
@@ -409,7 +550,7 @@ public class create_store3 extends Activity {
 		prgDialog.setMessage("Invoking Php");		
 		AsyncHttpClient client = new AsyncHttpClient();
 		// Don't forget to change the IP address to your LAN address. Port no as well.
-		client.post("http://122.155.187.27:9876/create_comment.php",
+		client.post("http://122.155.187.27:9876/create_store.php",
 				params, new AsyncHttpResponseHandler() {
 					// When the response returned by REST has Http
 					// response code '200'
@@ -419,22 +560,11 @@ public class create_store3 extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
-						String url1 = "http://122.155.187.27:9876/find_PCID.php";
-						List<NameValuePair> params = new ArrayList<NameValuePair>();
-				        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-				        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-				        try{
-				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
-				            JSONObject c = data.getJSONObject(0);
-				            PCID = Integer.parseInt(c.getString("PCID"));
-				        }catch(JSONException e){
-				        	e.printStackTrace();
-				     }
-						Intent i = new Intent(create_store3.this,lcomment_detail.class);
+						
+						Intent i = new Intent(create_store3.this,store_detail.class);
 						i.putExtra("UID", UID);
 						i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
-						i.putExtra("PCID",PCID);
 						i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name);
 				        startActivity(i);

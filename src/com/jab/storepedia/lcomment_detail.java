@@ -43,6 +43,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -129,6 +130,7 @@ public class lcomment_detail extends Activity{
         String url = "http://122.155.187.27:9876/lcomment_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+        //comment.setText(Integer.toString(PCID));
         try{
         	JSONArray data = new JSONArray(getHttpPost(url,params));
         	JSONObject c = data.getJSONObject(0);
@@ -458,6 +460,8 @@ public class lcomment_detail extends Activity{
 		    				        }catch(JSONException e){
 		    				        	e.printStackTrace();
 		    				     }
+		    				        Toast.makeText(getApplicationContext(), "Your comment has been deleted!",
+		    								Toast.LENGTH_LONG).show();
 		    				        Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
 		    						i.putExtra("UID", UID);
 		    						i.putExtra("LID", LID);

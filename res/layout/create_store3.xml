@@ -70,23 +70,9 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/comment"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
-            android:text="Write your comment here" />
-
-        <EditText
-            android:id="@+id/comment"
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/textView1"
-            android:layout_margin="30dp"
-            android:ems="10"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:lines="8"
-            android:scrollbars="vertical"
-            android:hint="Write your comment here" />
+            android:layout_margin="18dp"
+            android:text="Choose store image" />
 
         <Button
             android:id="@+id/upload"
@@ -97,6 +83,53 @@
             android:layout_marginBottom="25dp"
             android:onClick="uploadImage"
             android:text="Submit" />
+
+        <ImageView
+            android:id="@+id/pic5"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/pic1"
+            android:layout_below="@+id/textView1"
+            android:onClick="loadImagefromGallery5"
+            android:src="@drawable/insert_image_icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pic5"
+            android:layout_margin="18dp"
+            android:text="Upload a map" />
+
+        <ImageView
+            android:id="@+id/pic6"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/pic5"
+            android:layout_below="@+id/textView2"
+            android:onClick="loadImagefromGallery6"
+            android:src="@drawable/insert_image_icon" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_below="@+id/pic6"
+            android:text="Upload photos" />
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/pic6"
+            android:layout_alignLeft="@+id/pic3"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/textView1"
+            android:choiceMode="singleChoice"
+            android:listSelector="#666666" >
+
+        </ListView>
 
     </RelativeLayout>
 

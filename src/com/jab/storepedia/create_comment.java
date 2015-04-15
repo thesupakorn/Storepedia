@@ -250,10 +250,12 @@ public class create_comment extends Activity {
 				    imgView.setImageBitmap(BitmapFactory
 						    .decodeFile(imgPath1));
 				    // Get the Image's file name
-				    String fileNameSegments[] = imgPath1.split("/");
-				    fileName = fileNameSegments[fileNameSegments.length - 1];
+				    //String fileNameSegments[] = imgPath1.split("/");
+				    //fileName = fileNameSegments[fileNameSegments.length - 1];
 				    // Put file name in Async Http Post Param which will used in Php web app
-				params.put("filename1", fileName);
+				    String filenameArray[] = imgPath1.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+				params.put("filename1", extension);
 				}
 				else if(imgFlag == 2){
 					imgPath2 = cursor.getString(columnIndex);
@@ -262,10 +264,12 @@ public class create_comment extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath2));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath2.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath2.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename2", fileName);
+					String filenameArray[] = imgPath2.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+					params.put("filename2", extension);
 					}
 				else if(imgFlag == 3){
 					imgPath3 = cursor.getString(columnIndex);
@@ -274,10 +278,12 @@ public class create_comment extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath3));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath3.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath3.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename3", fileName);
+					String filenameArray[] = imgPath3.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+					params.put("filename3", extension);
 					}
 				else if(imgFlag == 4){
 					imgPath4 = cursor.getString(columnIndex);
@@ -286,10 +292,12 @@ public class create_comment extends Activity {
 					imgView.setImageBitmap(BitmapFactory
 							.decodeFile(imgPath4));
 					// Get the Image's file name
-					String fileNameSegments[] = imgPath4.split("/");
-					fileName = fileNameSegments[fileNameSegments.length - 1];
+					//String fileNameSegments[] = imgPath4.split("/");
+					//fileName = fileNameSegments[fileNameSegments.length - 1];
 					// Put file name in Async Http Post Param which will used in Php web app
-					params.put("filename4", fileName);
+					String filenameArray[] = imgPath4.split("\\.");
+				    String extension = filenameArray[filenameArray.length-1];
+					params.put("filename4", extension);
 					}
 				cursor.close();
 			} else {
