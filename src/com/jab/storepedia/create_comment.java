@@ -114,6 +114,7 @@ public class create_comment extends Activity {
 		    	else if(which == 1)
 		    	{
 		    		imgPath1 = null;
+		    		params.remove("image1");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic1);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -145,7 +146,8 @@ public class create_comment extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath2 = null;
+		    		params.remove("image2");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic2);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -177,7 +179,8 @@ public class create_comment extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath3 = null;
+		    		params.remove("image3");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic3);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -209,7 +212,8 @@ public class create_comment extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath4 = null;
+		    		params.remove("image4");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic4);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -471,10 +475,15 @@ public class create_comment extends Activity {
 									Toast.LENGTH_LONG).show();
 						}
 						// When Http response code other than 404, 500
+						else if (statusCode == 413) {
+							Toast.makeText(getApplicationContext(),
+									"Some of your images is too large.",
+									Toast.LENGTH_LONG).show();
+						}
 						else {
 							Toast.makeText(
 									getApplicationContext(),
-									"Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
+									"Error Occured. Status code : "
 											+ statusCode, Toast.LENGTH_LONG)
 									.show();
 						}

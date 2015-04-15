@@ -27,28 +27,6 @@
             android:layout_marginLeft="20dp"
             android:text="Enter Address" />
 
-        <Button
-            android:id="@+id/upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"
-            android:layout_toRightOf="@+id/clear"
-            android:layout_marginLeft="30dp"
-            android:onClick="next"
-            android:text="Next" />
-
-        <Button
-            android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="70dp"
-            android:onClick="clear_text"
-            android:text="Clear" />
-
         <EditText
             android:id="@+id/store_address"
             android:layout_width="wrap_content"
@@ -83,5 +61,24 @@
             android:ems="10" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/upload"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="next"
+       android:src="@drawable/next2"/>
+
+     <ImageView
+        android:id="@+id/clear"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/upload"
+        android:onClick="clear_text"
+        android:src="@drawable/clear" />
 
 </RelativeLayout>

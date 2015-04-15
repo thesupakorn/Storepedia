@@ -42,6 +42,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,11 +55,10 @@ public class create_store3 extends Activity {
 	ProgressDialog prgDialog;
 	String encodedString1, encodedString2, encodedString3, encodedString4,encodedString5,encodedString6;
 	RequestParams params = new RequestParams();
-	String imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name,store_detail,store_address,store_contact;
+	String cat, imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name,store_detail,store_address,store_contact;
 	Bitmap bitmap;	
 	int imgFlag = 0, SID,LID,UID;
 	private static int RESULT_LOAD_IMG = 1;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,8 +75,18 @@ public class create_store3 extends Activity {
 		store_detail = intent.getStringExtra("store_detail");
 		store_address = intent.getStringExtra("store_address");
 		store_contact = intent.getStringExtra("store_contact");
-		TextView debug_text = (TextView) findViewById(R.id.textView1);
+		//TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+		
+		RadioButton food = (RadioButton) findViewById(R.id.food_button);
+		RadioButton books = (RadioButton) findViewById(R.id.books_button);
+		RadioButton clothings = (RadioButton) findViewById(R.id.clothings_button);
+		RadioButton electronics = (RadioButton) findViewById(R.id.electronics_button);
+		RadioButton entertainments = (RadioButton) findViewById(R.id.entertainments_button);
+		RadioButton health = (RadioButton) findViewById(R.id.health_button);
+		RadioButton others = (RadioButton) findViewById(R.id.others_button);
+		
+		
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -117,6 +127,7 @@ public class create_store3 extends Activity {
 		    	else if(which == 1)
 		    	{
 		    		imgPath1 = null;
+		    		params.remove("image1");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic1);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -148,7 +159,8 @@ public class create_store3 extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath2 = null;
+		    		params.remove("image2");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic2);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -180,7 +192,8 @@ public class create_store3 extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath3 = null;
+		    		params.remove("image3");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic3);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -212,7 +225,8 @@ public class create_store3 extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath4 = null;
+		    		params.remove("image4");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic4);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -244,7 +258,8 @@ public class create_store3 extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath5 = null;
+		    		params.remove("image5");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic5);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -276,7 +291,8 @@ public class create_store3 extends Activity {
 		    	}
 		    	else if(which == 1)
 		    	{
-		    		imgPath1 = null;
+		    		imgPath6 = null;
+		    		params.remove("image6");
 				    ImageView imgView = (ImageView) findViewById(R.id.pic6);
 				    // Set the Image in ImageView
 				    Resources res = getResources();
@@ -371,7 +387,7 @@ public class create_store3 extends Activity {
 				params.put("filename4", extension);
 					}
 				else if(imgFlag == 5){
-					imgPath4 = cursor.getString(columnIndex);
+					imgPath5 = cursor.getString(columnIndex);
 					ImageView imgView = (ImageView) findViewById(R.id.pic5);
 					// Set the Image in ImageView
 					imgView.setImageBitmap(BitmapFactory
@@ -528,10 +544,42 @@ public class create_store3 extends Activity {
 				    params.put("image6", encodedString6);
 				}
 				// Trigger Image upload
+				
+				cat = "Food";
+				/*if(food.isChecked())
+				{
+					cat = "Food";
+				}
+				if(books.isChecked())
+				{
+					cat = "Books";
+				}
+				if(clothings.isChecked())
+				{
+					cat = "Clothings";
+				}
+				if(electronics.isChecked())
+				{
+					cat = "Electronics";
+				}
+				if(entertainments.isChecked())
+				{
+					cat = "Entertainments";
+				}
+				if(health.isChecked())
+				{
+					cat = "Health";
+				}
+				if(others.isChecked())
+				{
+					cat = "Others";
+				}*/
+				
 				params.put("store_name", store_name);
 				params.put("store_detail", store_detail);
 				params.put("store_address", store_address);
 				params.put("store_contact", store_contact);
+				params.put("store_cat", cat);
 				params.put("UID", Integer.toString(UID));
 				params.put("LID", Integer.toString(LID));
 				triggerImageUpload();
@@ -547,6 +595,14 @@ public class create_store3 extends Activity {
 	// http://192.168.2.4:9999/ImageUploadWebApp/uploadimg.jsp
 	// Make Http call to upload Image to Php server
 	public void makeHTTPCall() {
+		Intent intent = getIntent();
+		LID = intent.getIntExtra("LID" , -1);
+		UID = intent.getIntExtra("UID" , -1);
+		store_name = intent.getStringExtra("store_name");
+		place_name = intent.getStringExtra("place_name");
+		store_detail = intent.getStringExtra("store_detail");
+		store_address = intent.getStringExtra("store_address");
+		store_contact = intent.getStringExtra("store_contact");
 		prgDialog.setMessage("Invoking Php");		
 		AsyncHttpClient client = new AsyncHttpClient();
 		// Don't forget to change the IP address to your LAN address. Port no as well.
@@ -560,6 +616,9 @@ public class create_store3 extends Activity {
 						prgDialog.hide();
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
+						
+						String filenameArray[] = response.split(" ");
+					    String SID = filenameArray[filenameArray.length-1];
 						
 						Intent i = new Intent(create_store3.this,store_detail.class);
 						i.putExtra("UID", UID);
@@ -592,10 +651,15 @@ public class create_store3 extends Activity {
 									Toast.LENGTH_LONG).show();
 						}
 						// When Http response code other than 404, 500
+						else if (statusCode == 413) {
+							Toast.makeText(getApplicationContext(),
+									"Some of your images is too large.",
+									Toast.LENGTH_LONG).show();
+						}
 						else {
 							Toast.makeText(
 									getApplicationContext(),
-									"Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
+									"Error Occured. Status code : "
 											+ statusCode, Toast.LENGTH_LONG)
 									.show();
 						}

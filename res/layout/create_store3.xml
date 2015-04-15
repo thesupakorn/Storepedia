@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="115dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="25dp"
             android:onClick="uploadImage"
             android:text="Submit" />
@@ -118,18 +118,79 @@
             android:layout_below="@+id/pic6"
             android:text="Upload photos" />
 
-        <ListView
-            android:id="@+id/listView1"
+        <RadioGroup 
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical" 
+             android:layout_alignLeft="@+id/textView4"
+             android:layout_below="@+id/textView4"
+             >
+        <RadioButton
+            android:id="@+id/food_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/pic6"
-            android:layout_alignLeft="@+id/pic3"
-            android:layout_marginRight="20dp"
-            android:layout_below="@+id/textView1"
-            android:choiceMode="singleChoice"
-            android:listSelector="#666666" >
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textView4"
+            android:checked="true" 
+            android:text="Food" />
 
-        </ListView>
+        <RadioButton
+            android:id="@+id/books_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/food_button"
+            android:text="Books" />
+        
+        <RadioButton
+            android:id="@+id/clothings_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/books_button"
+            android:text="Clothings" />
+        
+        <RadioButton
+            android:id="@+id/electronics_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/clothings_button"
+            android:text="Electronics" />
+        
+        <RadioButton
+            android:id="@+id/entertainments_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/electronics_button"
+            android:text="Entertainments" />
+        
+         <RadioButton
+            android:id="@+id/health_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/entertainments_button"
+            android:text="Health" />
+         
+         <RadioButton
+            android:id="@+id/others_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/food_button"
+            android:layout_below="@+id/health_button"
+            android:text="Others" />
+
+         </RadioGroup>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_toRightOf="@+id/textView1"
+            android:text="Select Category" />
 
     </RelativeLayout>
 
