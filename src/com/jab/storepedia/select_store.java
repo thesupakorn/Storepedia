@@ -406,6 +406,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
           Intent i = new Intent(select_store.this,create_store.class);
 		  i.putExtra("UID", UID);
 		  i.putExtra("LID", LID);
+		  i.putExtra("place_name", place_name);
           startActivity(i);
           finish();
           

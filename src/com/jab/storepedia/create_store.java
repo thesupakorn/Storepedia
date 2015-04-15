@@ -66,13 +66,16 @@ public class create_store extends Activity {
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
 		
+		
 		Intent intent = getIntent();
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
-		final String place_name = intent.getStringExtra("place_name");
+		place_name = intent.getStringExtra("place_name");
 		ex_store_name = intent.getStringExtra("store_name");
 		ex_store_detail = intent.getStringExtra("store_detail");
 		
+		//TextView create_your_store = (TextView) findViewById(R.id.textView1);
+		//create_your_store.setText(place_name);
 		
 		store_name = (EditText) findViewById(R.id.store_name);
 		store_detail = (EditText) findViewById(R.id.store_detail);

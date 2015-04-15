@@ -64,20 +64,10 @@
                 android:layout_centerInParent="true"/>
 
             <TextView
-                android:id="@+id/score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Score"
-                android:layout_below="@+id/place_name"
-                android:paddingTop="15dp" 
-                android:paddingRight="15dp"
-                android:layout_centerInParent="true" />
-
-            <TextView
                 android:id="@+id/category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/score"
+                android:layout_below="@+id/place_name"
                 android:layout_centerInParent="true"
                 android:paddingTop="10dp"
                 android:text="Category" />

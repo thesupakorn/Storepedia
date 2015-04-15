@@ -79,7 +79,7 @@ public class store_detail extends Activity{
 		TextView store_name_view = (TextView) findViewById(R.id.store_name);
 		TextView place_name_view = (TextView) findViewById(R.id.place_name); 
 		TextView category_view = (TextView) findViewById(R.id.category_text);
-		TextView score_view = (TextView) findViewById(R.id.score);
+		//TextView score_view = (TextView) findViewById(R.id.score);
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         ImageView where = (ImageView) findViewById(R.id.comment_button);
         ImageView info = (ImageView) findViewById(R.id.info_button);
@@ -126,13 +126,13 @@ public class store_detail extends Activity{
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
         category_view.setText(Integer.toString(SID));
-        score_view.setText(store_name);
+        store_name_view.setText(store_name);
         try{
         	JSONArray data = new JSONArray(getHttpPost(url,params));
             	JSONObject c = data.getJSONObject(0);
         	store_name_view.setText(c.getString("Name"));
         	place_name_view.setText(c.getString("Location_Name"));
-        	category_view.setText("Category: "+c.getString("Category"));
+        	category_view.setText(c.getString("Category"));
         	//score_view.setText("Rating: "+c.getString("Rating"));
         	//score_view.setText(c.getString("Image"));
         	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());

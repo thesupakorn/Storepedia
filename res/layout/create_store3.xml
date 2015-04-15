@@ -110,20 +110,13 @@
             android:onClick="loadImagefromGallery6"
             android:src="@drawable/insert_image_icon" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_below="@+id/pic6"
-            android:text="Upload photos" />
-
         <RadioGroup 
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="vertical" 
              android:layout_alignLeft="@+id/textView4"
              android:layout_below="@+id/textView4"
+             android:id="@+id/category"
              >
         <RadioButton
             android:id="@+id/food_button"
@@ -191,6 +184,14 @@
             android:layout_alignBottom="@+id/textView1"
             android:layout_toRightOf="@+id/textView1"
             android:text="Select Category" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/pic1"
+            android:layout_margin="18dp"
+            android:text="Upload photos" />
 
     </RelativeLayout>
 

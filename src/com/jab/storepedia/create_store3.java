@@ -43,6 +43,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +59,9 @@ public class create_store3 extends Activity {
 	RequestParams params = new RequestParams();
 	String cat, imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name,store_detail,store_address,store_contact;
 	Bitmap bitmap;	
-	int imgFlag = 0, SID,LID,UID;
+	RadioButton food, books, clothings, electronics, entertainments, health, others;
+	int imgFlag = 0,LID,UID;
+	
 	private static int RESULT_LOAD_IMG = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +79,22 @@ public class create_store3 extends Activity {
 		store_detail = intent.getStringExtra("store_detail");
 		store_address = intent.getStringExtra("store_address");
 		store_contact = intent.getStringExtra("store_contact");
-		//TextView debug_text = (TextView) findViewById(R.id.textView1);
+		//final TextView choose_store_image = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-		
-		RadioButton food = (RadioButton) findViewById(R.id.food_button);
-		RadioButton books = (RadioButton) findViewById(R.id.books_button);
-		RadioButton clothings = (RadioButton) findViewById(R.id.clothings_button);
-		RadioButton electronics = (RadioButton) findViewById(R.id.electronics_button);
-		RadioButton entertainments = (RadioButton) findViewById(R.id.entertainments_button);
-		RadioButton health = (RadioButton) findViewById(R.id.health_button);
-		RadioButton others = (RadioButton) findViewById(R.id.others_button);
+				
+		cat = "Food";
+		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.category);        
+	    radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+	    {
+	        @Override
+	        public void onCheckedChanged(RadioGroup group, int checkedId) {
+	            // checkedId is the RadioButton selected
+	        	RadioButton rb=(RadioButton)findViewById(checkedId);	        	
+	        	cat = rb.getText().toString();
+	        	//choose_store_image.setText(cat);
+	        	
+	        }
+	    });
 		
 		
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
@@ -94,7 +104,6 @@ public class create_store3 extends Activity {
 				Intent i = new Intent(create_store3.this,create_store2.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
-				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				i.putExtra("store_detail", store_detail);
@@ -545,36 +554,7 @@ public class create_store3 extends Activity {
 				}
 				// Trigger Image upload
 				
-				cat = "Food";
-				/*if(food.isChecked())
-				{
-					cat = "Food";
-				}
-				if(books.isChecked())
-				{
-					cat = "Books";
-				}
-				if(clothings.isChecked())
-				{
-					cat = "Clothings";
-				}
-				if(electronics.isChecked())
-				{
-					cat = "Electronics";
-				}
-				if(entertainments.isChecked())
-				{
-					cat = "Entertainments";
-				}
-				if(health.isChecked())
-				{
-					cat = "Health";
-				}
-				if(others.isChecked())
-				{
-					cat = "Others";
-				}*/
-				
+
 				params.put("store_name", store_name);
 				params.put("store_detail", store_detail);
 				params.put("store_address", store_address);
@@ -617,15 +597,17 @@ public class create_store3 extends Activity {
 						Toast.makeText(getApplicationContext(), response,
 								Toast.LENGTH_LONG).show();
 						
-						String filenameArray[] = response.split(" ");
+						String filenameArray[] = response.toString().split(" ");
 					    String SID = filenameArray[filenameArray.length-1];
 						
 						Intent i = new Intent(create_store3.this,store_detail.class);
 						i.putExtra("UID", UID);
 						i.putExtra("LID", LID);
-						i.putExtra("SID", SID);
+						i.putExtra("SID", Integer.parseInt(SID));
 						i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name);
+						//Toast.makeText(getApplicationContext(), "SID = "+SID + "UID = "+UID+" LID = "+LID + "place_name = "+place_name + " store_name = "+store_name,
+								//Toast.LENGTH_LONG).show();
 				        startActivity(i);
 				        finish();
 					}

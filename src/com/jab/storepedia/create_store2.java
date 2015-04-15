@@ -71,11 +71,12 @@ public class create_store2 extends Activity {
 		UID = intent.getIntExtra("UID" , -1);
 		store_name = intent.getStringExtra("store_name");
 		store_detail = intent.getStringExtra("store_detail");
+		place_name = intent.getStringExtra("place_name");
 		ex_store_address = intent.getStringExtra("store_address");
 		ex_store_contact = intent.getStringExtra("store_contact");
 
-		
-		final String place_name = intent.getStringExtra("place_name");
+		//TextView enter_address = (TextView) findViewById(R.id.textView1);
+		//enter_address.setText(place_name);
 		
 		store_address = (EditText) findViewById(R.id.store_address);
 		store_contact = (EditText) findViewById(R.id.store_contact);
