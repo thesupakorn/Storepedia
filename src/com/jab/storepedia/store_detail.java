@@ -51,6 +51,8 @@ public class store_detail extends Activity{
 	ImageView pic2;
 	ImageView pic3;
 	ImageView pic4;
+	int SID,LID,UID;
+	String store_name,place_name;
 	@SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,11 +65,11 @@ public class store_detail extends Activity{
             StrictMode.setThreadPolicy(policy);
         }
         Intent intent = getIntent();
-        final int SID = intent.getIntExtra("SID", -1);
-        final int LID = intent.getIntExtra("LID", -1);
-        final int UID = intent.getIntExtra("UID", -1);
-        final String store_name = intent.getStringExtra("store_name");
-        final String place_name = intent.getStringExtra("place_name");
+        SID = intent.getIntExtra("SID", -1);
+        LID = intent.getIntExtra("LID", -1);
+        UID = intent.getIntExtra("UID", -1);
+        store_name = intent.getStringExtra("store_name");
+        place_name = intent.getStringExtra("place_name");
         
         pic1 = (ImageView) findViewById(R.id.pic1);
         pic2 = (ImageView) findViewById(R.id.pic2);
@@ -339,21 +341,20 @@ public class store_detail extends Activity{
 }	
 	
 	public void setting(View view)
-	{
-		Intent intent = getIntent();
-		final int PCID = intent.getIntExtra("PCID", -1);
-        final int UID = intent.getIntExtra("UID" , -1);
-        final int SID = intent.getIntExtra("SID" , -1);
-        final int LID = intent.getIntExtra("LID" , -1);
-        final String store_name = intent.getStringExtra("store_name");
-        final String place_name = intent.getStringExtra("place_name");
-        
+	{		        
 		CharSequence choices[] = new CharSequence[] {"Edit information", "Edit images","Delete store" ,"Cancel"};
 		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
 		OptionDialog.setTitle("Setting");
 		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
 		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
+		    public void onClick(DialogInterface dialog, int which) {		    	
+		    	Intent intent = getIntent();
+		        UID = intent.getIntExtra("UID" , -1);
+		        SID = intent.getIntExtra("SID" , -1);
+		        LID = intent.getIntExtra("LID" , -1);
+		        store_name = intent.getStringExtra("store_name");
+		        place_name = intent.getStringExtra("place_name");
+		    	
 		        // the user clicked on colors[which]
 		    	if(which == 0)
 		    	{
@@ -390,21 +391,19 @@ public class store_detail extends Activity{
 		    			        // the user clicked on colors[which]
 		    			    	if(which == 0)
 		    			    	{
-		    			    		String url1 = "http://122.155.187.27:9876/delete_comment.php";
+		    			    		String url1 = "http://122.155.187.27:9876/delete_store.php";
 		    						List<NameValuePair> params = new ArrayList<NameValuePair>();
-		    				        params.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
+		    				        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
 		    				        try{
 		    				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
 		    				            JSONObject c = data.getJSONObject(0);
 		    				        }catch(JSONException e){
 		    				        	e.printStackTrace();
 		    				     }
-		    				        Intent i = new Intent(store_detail.this,show_lcomment.class);
+		    				        Intent i = new Intent(store_detail.this,select_store.class);
 		    						i.putExtra("UID", UID);
 		    						i.putExtra("LID", LID);
-		    						i.putExtra("SID", SID);
 		    						i.putExtra("place_name", place_name);
-		    						i.putExtra("store_name", store_name);
 		    						startActivity(i);
 		    						finish();
 		    			    	}
