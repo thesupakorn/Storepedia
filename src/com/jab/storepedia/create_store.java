@@ -54,7 +54,7 @@ import com.loopj.android.http.RequestParams;
 public class create_store extends Activity {
 	ProgressDialog prgDialog;
 	RequestParams params = new RequestParams();	
-	int LID,UID;
+	int LID,UID, SID;
 	EditText store_name, store_detail;
 	String place_name, ex_store_name = "", ex_store_detail="";
 
@@ -66,9 +66,10 @@ public class create_store extends Activity {
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
 		
-		
+		SID = -1;
 		Intent intent = getIntent();
 		LID = intent.getIntExtra("LID" , -1);
+		SID = intent.getIntExtra("SID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
 		place_name = intent.getStringExtra("place_name");
 		ex_store_name = intent.getStringExtra("store_name");
@@ -81,6 +82,16 @@ public class create_store extends Activity {
 		store_detail = (EditText) findViewById(R.id.store_detail);
 		store_name.setText(ex_store_name);
 		store_detail.setText(ex_store_detail);
+		ImageView next_button = (ImageView) findViewById(R.id.upload);
+		ImageView edited_button = (ImageView) findViewById(R.id.edited);
+		
+		edited_button.setVisibility(View.GONE);
+		if(SID!=-1)
+		{
+			next_button.setVisibility(View.INVISIBLE);
+			edited_button.setVisibility(View.VISIBLE);
+		}
+		
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -98,6 +109,7 @@ public class create_store extends Activity {
 	public void clear_text(View v)
 	{
 		store_detail.setText("");
+		//store_name.setText("");
 	}
 	
 	public void next(View v)
@@ -111,6 +123,61 @@ public class create_store extends Activity {
 			startActivity(i);
 			finish();
 	}
-	
-	    
+	public void edited(View v)
+	{		
+		Intent i = new Intent(create_store.this,store_info.class);
+		String url = "http://122.155.187.27:9876/edit_store_detail.php";
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        params.add(new BasicNameValuePair("store_name", store_name.getText().toString()));
+        params.add(new BasicNameValuePair("store_detail", store_detail.getText().toString()));
+        try{
+        	getHttpPost(url,params);	         	
+        	i.putExtra("UID", UID);
+			i.putExtra("LID", LID);
+			i.putExtra("SID", SID);
+			i.putExtra("place_name", place_name);
+			i.putExtra("store_name", store_name.getText().toString());
+			startActivity(i);
+			finish();
+        	}catch(Exception e)
+        	{
+        		//e.printStackTrace();
+        		//TextView create_your_store = (TextView) findViewById(R.id.textView1);
+        		//create_your_store.setText("SID: "+Integer.toString(SID)+ "  UID: "+Integer.toString(UID) + "   LID: "+Integer.toString(LID)+ "   place_name: "+place_name + " store_name: "+store_name.getText().toString());
+        	}	
+	        
+			
+	}
+	public String getHttpPost(String url,List<NameValuePair> params) {
+		StringBuilder str = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+			HttpResponse response = client.execute(httpPost);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) { // Status OK
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					str.append(line);
+				}
+			} else {
+				Log.e("Log", "Failed to download result..");
+				return "FAIL";
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return str.toString();
+	}
 }
+	    
+

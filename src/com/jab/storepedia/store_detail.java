@@ -342,7 +342,7 @@ public class store_detail extends Activity{
 	
 	public void setting(View view)
 	{		        
-		CharSequence choices[] = new CharSequence[] {"Edit information", "Edit images","Delete store" ,"Cancel"};
+		CharSequence choices[] = new CharSequence[] {"Edit name & detail", "Edit information", "Edit images & category","Delete store" ,"Cancel"};
 		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
 		OptionDialog.setTitle("Setting");
 		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
@@ -356,18 +356,57 @@ public class store_detail extends Activity{
 		        place_name = intent.getStringExtra("place_name");
 		    	
 		        // the user clicked on colors[which]
+		        
+		        // select Edit name & detail
 		    	if(which == 0)
 		    	{
-		    		Intent i = new Intent(store_detail.this,edit_comment_text.class);
-					i.putExtra("UID", UID);
-					i.putExtra("LID", LID);
-					i.putExtra("SID", SID);
-					i.putExtra("place_name", place_name);
-					i.putExtra("store_name", store_name);
-					startActivity(i);
-					finish();
+		    		Intent i = new Intent(store_detail.this,create_store.class);
+		    		
+		    		String url = "http://122.155.187.27:9876/store_info.php";
+		            List<NameValuePair> params = new ArrayList<NameValuePair>();
+		            params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		            try{
+		            	JSONArray data = new JSONArray(getHttpPost(url,params));
+		            	JSONObject c = data.getJSONObject(0);	  
+		            	i.putExtra("store_detail", c.getString("detail"));    
+		            	i.putExtra("UID", UID);
+		            	i.putExtra("LID", LID);
+						i.putExtra("SID", SID);
+						i.putExtra("place_name", place_name);
+						i.putExtra("store_name", store_name);
+						startActivity(i);
+						finish();
+		            	}catch(JSONException e)
+		            	{
+		            		e.printStackTrace();
+		            	}		    											
 		    	}
+		    	//select Edit information
 		    	else if(which == 1)
+		    	{	  
+		    		Intent i = new Intent(store_detail.this,create_store2.class);
+		    		
+		    		String url = "http://122.155.187.27:9876/store_info.php";
+		            List<NameValuePair> params = new ArrayList<NameValuePair>();
+		            params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		            try{
+		            	JSONArray data = new JSONArray(getHttpPost(url,params));
+		            	JSONObject c = data.getJSONObject(0);	  
+		            	i.putExtra("store_address", c.getString("address"));    
+		            	i.putExtra("store_contact", c.getString("contact"));
+		            	i.putExtra("UID", UID);
+		            	i.putExtra("LID", LID);
+						i.putExtra("SID", SID);
+						i.putExtra("place_name", place_name);
+						i.putExtra("store_name", store_name);
+						startActivity(i);
+						finish();
+		            	}catch(JSONException e)
+		            	{
+		            		e.printStackTrace();
+		            	}
+		    	}
+		    	else if(which == 2)
 		    	{	  
 		    		Intent i = new Intent(store_detail.this,edit_comment_image.class);
 	                //i.putExtra("place_name", place_name);
@@ -380,7 +419,7 @@ public class store_detail extends Activity{
 					startActivity(i);
 					finish();
 		    	}
-		    	else if(which == 2)
+		    	else if(which == 3)
 		    	{
 		    		CharSequence choices[] = new CharSequence[] {"Yes", "Cancel"};
 		    		AlertDialog.Builder OptionDialog2 = new AlertDialog.Builder(store_detail.this);
@@ -415,7 +454,7 @@ public class store_detail extends Activity{
 		    			});		
 		    		OptionDialog2.show();
 		    		}
-		    	else if(which == 3)
+		    	else if(which == 4)
 		    	{
 		    		 dialog.dismiss();
 		    	}

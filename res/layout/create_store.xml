@@ -81,6 +81,14 @@
         android:layout_alignParentTop="true"
         android:onClick="next"
        android:src="@drawable/next2"/>
+    <ImageView
+        android:id="@+id/edited"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="edited"
+       android:src="@drawable/done"/>
 
     <ImageView
         android:id="@+id/clear"

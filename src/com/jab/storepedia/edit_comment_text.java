@@ -54,7 +54,7 @@ import com.loopj.android.http.RequestParams;
 public class edit_comment_text extends Activity {
 	ProgressDialog prgDialog;
 	RequestParams params = new RequestParams();	
-	int SID,LID,UID, PCID;
+	int SID,LID,UID, PCID, isedit;
 	EditText comment_field;
 	String store_name,place_name;
 
@@ -70,6 +70,7 @@ public class edit_comment_text extends Activity {
 		SID = intent.getIntExtra("SID" , -1);
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
+		isedit = UID = intent.getIntExtra("UID" , -1);
 		final String store_name = intent.getStringExtra("store_name");
 		final String place_name = intent.getStringExtra("place_name");
 		comment_field = (EditText) findViewById(R.id.comment);
