@@ -96,12 +96,33 @@ public class create_store extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				SID = -1;
+				Intent intent = getIntent();
+				LID = intent.getIntExtra("LID" , -1);
+				SID = intent.getIntExtra("SID" , -1);
+				UID = intent.getIntExtra("UID" , -1);
+				//store_name = intent.getStringExtra("store_name");
+				place_name = intent.getStringExtra("place_name");
+				if(SID!=-1)
+				{
+					Intent i = new Intent(create_store.this,store_detail.class);
+					i.putExtra("SID", SID);
+					i.putExtra("UID", UID);
+				    i.putExtra("LID", LID);
+				    i.putExtra("place_name", place_name);
+				    //i.putExtra("store_name", store_name);
+				    startActivity(i);
+	                finish();
+				}
+				else
+				{
 				Intent i = new Intent(create_store.this,select_store.class);				
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("place_name", place_name);
 	            startActivity(i);
 	            finish();
+			}
 			}
 	    });
 	}		

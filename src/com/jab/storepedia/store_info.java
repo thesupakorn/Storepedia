@@ -113,7 +113,7 @@ public class store_info extends Activity{
         	try {
 				bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
 				store_image.setImageBitmap(bitmap);
-				store_name_view.setText(c.getString("Name"));
+				
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -121,16 +121,13 @@ public class store_info extends Activity{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+        	store_name_view.setText(c.getString("Name"));
         }catch(JSONException e)
     	{
     		e.printStackTrace();
     	}
 
-	}
-	
-	
-	
+	}	
 	
 	
 	public String getHttpPost(String url,List<NameValuePair> params) {

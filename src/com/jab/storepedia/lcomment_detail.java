@@ -134,12 +134,18 @@ public class lcomment_detail extends Activity{
         try{
         	JSONArray data = new JSONArray(getHttpPost(url,params));
         	JSONObject c = data.getJSONObject(0);
-        	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("image")).getContent());
-        	image.setImageBitmap(bitmap);  
         	user_name.setText(c.getString("username"));
         	agreed.setText(c.getString("agreed"));
         	disagreed.setText(c.getString("disagreed"));
         	comment.setText(c.getString("comment"));
+        	try{
+            	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("image")).getContent());
+            	image.setImageBitmap(bitmap);  
+        	}
+        	catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
         		pic1.setImageBitmap(bitmap1);

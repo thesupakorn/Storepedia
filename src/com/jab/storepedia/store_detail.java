@@ -128,17 +128,23 @@ public class store_detail extends Activity{
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
         category_view.setText(Integer.toString(SID));
-        store_name_view.setText(store_name);
+        //store_name_view.setText(store_name);
         try{
         	JSONArray data = new JSONArray(getHttpPost(url,params));
             	JSONObject c = data.getJSONObject(0);
         	store_name_view.setText(c.getString("Name"));
+        	store_name = c.getString("Name");
         	place_name_view.setText(c.getString("Location_Name"));
         	category_view.setText(c.getString("Category"));
         	//score_view.setText("Rating: "+c.getString("Rating"));
         	//score_view.setText(c.getString("Image"));
-        	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
-        	store_image_view.setImageBitmap(bitmap);   	
+        	try{
+        	    Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
+        	    store_image_view.setImageBitmap(bitmap); 
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
         		pic1.setImageBitmap(bitmap1);
@@ -169,7 +175,7 @@ public class store_detail extends Activity{
         	}
         }catch(JSONException e){
         	e.printStackTrace();
-        	store_name_view.setText(e.toString());
+        	place_name_view.setText(e.toString());
         } catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -302,11 +308,12 @@ public class store_detail extends Activity{
         
         where.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
+    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
     			Intent i = new Intent(store_detail.this,show_lcomment.class);
         		i.putExtra("SID", SID);
         		i.putExtra("UID", UID);
         		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name);
+        		i.putExtra("store_name",store_name_view.getText().toString());
         		i.putExtra("place_name",place_name);
     			startActivity(i);
     			finish();
@@ -315,11 +322,12 @@ public class store_detail extends Activity{
         
         info.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
+    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
     			Intent i = new Intent(store_detail.this,store_info.class);
         		i.putExtra("SID", SID);
         		i.putExtra("UID", UID);
         		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name);
+        		i.putExtra("store_name",store_name_view.getText().toString());
         		i.putExtra("place_name",place_name);
     			startActivity(i);
     			finish();
@@ -328,11 +336,12 @@ public class store_detail extends Activity{
         
         map.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
+    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
     			Intent i = new Intent(store_detail.this,store_map.class);
         		i.putExtra("SID", SID);
         		i.putExtra("UID", UID);
         		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name);
+        		i.putExtra("store_name",store_name_view.getText().toString());
         		i.putExtra("place_name",place_name);
     			startActivity(i);
     			finish();
@@ -366,6 +375,7 @@ public class store_detail extends Activity{
 		            List<NameValuePair> params = new ArrayList<NameValuePair>();
 		            params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
 		            try{
+		            	TextView store_name_view = (TextView) findViewById(R.id.store_name);
 		            	JSONArray data = new JSONArray(getHttpPost(url,params));
 		            	JSONObject c = data.getJSONObject(0);	  
 		            	i.putExtra("store_detail", c.getString("detail"));    
@@ -373,7 +383,7 @@ public class store_detail extends Activity{
 		            	i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
 						i.putExtra("place_name", place_name);
-						i.putExtra("store_name", store_name);
+						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
 						finish();
 		            	}catch(JSONException e)
@@ -390,6 +400,7 @@ public class store_detail extends Activity{
 		            List<NameValuePair> params = new ArrayList<NameValuePair>();
 		            params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
 		            try{
+		            	TextView store_name_view = (TextView) findViewById(R.id.store_name);
 		            	JSONArray data = new JSONArray(getHttpPost(url,params));
 		            	JSONObject c = data.getJSONObject(0);	  
 		            	i.putExtra("store_address", c.getString("address"));    
@@ -398,7 +409,7 @@ public class store_detail extends Activity{
 		            	i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
 						i.putExtra("place_name", place_name);
-						i.putExtra("store_name", store_name);
+						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
 						finish();
 		            	}catch(JSONException e)
@@ -406,19 +417,22 @@ public class store_detail extends Activity{
 		            		e.printStackTrace();
 		            	}
 		    	}
+		    	
+		    	//select edit images & category
 		    	else if(which == 2)
 		    	{	  
-		    		Intent i = new Intent(store_detail.this,edit_comment_image.class);
-	                //i.putExtra("place_name", place_name);
-	                //i.putExtra("LID", LID);
-					i.putExtra("UID", UID);
-					i.putExtra("LID", LID);
+		    		TextView store_name_view = (TextView) findViewById(R.id.store_name);
+                    Intent i = new Intent(store_detail.this,create_store3.class);
+		            i.putExtra("UID", UID);
+		            i.putExtra("LID", LID);
 					i.putExtra("SID", SID);
 					i.putExtra("place_name", place_name);
-					i.putExtra("store_name", store_name);
+					i.putExtra("store_name", store_name_view.getText().toString());
 					startActivity(i);
 					finish();
+
 		    	}
+		    	//select delete store
 		    	else if(which == 3)
 		    	{
 		    		CharSequence choices[] = new CharSequence[] {"Yes", "Cancel"};
@@ -454,6 +468,7 @@ public class store_detail extends Activity{
 		    			});		
 		    		OptionDialog2.show();
 		    		}
+		    	//select cancel
 		    	else if(which == 4)
 		    	{
 		    		 dialog.dismiss();

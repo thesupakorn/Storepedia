@@ -60,7 +60,7 @@ public class create_store3 extends Activity {
 	String cat, imgPath1, imgPath2, imgPath3, imgPath4, imgPath5, imgPath6, fileName, place_name, store_name,store_detail,store_address,store_contact;
 	Bitmap bitmap;	
 	RadioButton food, books, clothings, electronics, entertainments, health, others;
-	int imgFlag = 0,LID,UID;
+	int imgFlag = 0,LID,UID, SID;
 	
 	private static int RESULT_LOAD_IMG = 1;
 	@Override
@@ -71,8 +71,10 @@ public class create_store3 extends Activity {
 		// Set Cancelable as False
 		prgDialog.setCancelable(false);
 		
+		SID = -1;
 		Intent intent = getIntent();
 		LID = intent.getIntExtra("LID" , -1);
+		SID = intent.getIntExtra("SID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
 		store_name = intent.getStringExtra("store_name");
 		place_name = intent.getStringExtra("place_name");
@@ -101,16 +103,37 @@ public class create_store3 extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(create_store3.this,create_store2.class);
-				i.putExtra("UID", UID);
-				i.putExtra("LID", LID);
-				i.putExtra("place_name", place_name);
-				i.putExtra("store_name", store_name);
-				i.putExtra("store_detail", store_detail);
-				i.putExtra("store_address", store_address);
-				i.putExtra("store_contact", store_contact);
-	            startActivity(i);
-	            finish();
+				SID = -1;
+				Intent intent = getIntent();
+				LID = intent.getIntExtra("LID" , -1);
+				SID = intent.getIntExtra("SID" , -1);
+				UID = intent.getIntExtra("UID" , -1);
+				store_name = intent.getStringExtra("store_name");
+				place_name = intent.getStringExtra("place_name");
+				if(SID!=-1)
+				{
+					Intent i = new Intent(create_store3.this,store_detail.class);
+					i.putExtra("SID", SID);
+					i.putExtra("UID", UID);
+				    i.putExtra("LID", LID);
+				    i.putExtra("place_name", place_name);
+				    i.putExtra("store_name", store_name);
+				    startActivity(i);
+	                finish();
+				}
+				else
+				{
+				    Intent i = new Intent(create_store3.this,create_store2.class);
+				    i.putExtra("UID", UID);
+				    i.putExtra("LID", LID);
+				    i.putExtra("place_name", place_name);
+				    i.putExtra("store_name", store_name);
+				    i.putExtra("store_detail", store_detail);
+				    i.putExtra("store_address", store_address);
+				    i.putExtra("store_contact", store_contact);
+	                startActivity(i);
+	                finish();
+				}
 			}
 	    });
 	}
@@ -441,7 +464,7 @@ public class create_store3 extends Activity {
 	// When Upload button is clicked
 	public void uploadImage(View v) {
 		// When Image is selected from Gallery		
-			prgDialog.setMessage("Creating comment");
+			prgDialog.setMessage("Uploading data");
 			prgDialog.show();
 			// Convert image to String using Base64
 			encodeImagetoString();
@@ -554,7 +577,6 @@ public class create_store3 extends Activity {
 				}
 				// Trigger Image upload
 				
-
 				params.put("store_name", store_name);
 				params.put("store_detail", store_detail);
 				params.put("store_address", store_address);
@@ -576,8 +598,10 @@ public class create_store3 extends Activity {
 	// Make Http call to upload Image to Php server
 	public void makeHTTPCall() {
 		Intent intent = getIntent();
+		SID = -1;
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
+		SID = intent.getIntExtra("SID" , -1);
 		store_name = intent.getStringExtra("store_name");
 		place_name = intent.getStringExtra("place_name");
 		store_detail = intent.getStringExtra("store_detail");
@@ -586,7 +610,13 @@ public class create_store3 extends Activity {
 		prgDialog.setMessage("Invoking Php");		
 		AsyncHttpClient client = new AsyncHttpClient();
 		// Don't forget to change the IP address to your LAN address. Port no as well.
-		client.post("http://122.155.187.27:9876/create_store.php",
+		String client_post_url = "http://122.155.187.27:9876/create_store.php";
+		if(SID!=-1)
+		{
+			params.put("SID", Integer.toString(SID));
+			client_post_url = "http://122.155.187.27:9876/edit_store_image.php";
+		}
+		client.post(client_post_url,
 				params, new AsyncHttpResponseHandler() {
 					// When the response returned by REST has Http
 					// response code '200'
