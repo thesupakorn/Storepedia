@@ -84,13 +84,16 @@ public class create_store3 extends Activity {
 		//final TextView choose_store_image = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
 				
+		TextView select_category = (TextView) findViewById(R.id.textView4);
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.category); 
 		radioGroup.setVisibility(View.INVISIBLE);
+		select_category.setVisibility(View.INVISIBLE);
 		 
 		cat = "";
 		if(SID==-1)			
 		{
 			radioGroup.setVisibility(View.VISIBLE);
+			select_category.setVisibility(View.VISIBLE);
 			cat = "Food";		
 			radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 		    {
