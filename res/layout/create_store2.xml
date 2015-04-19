@@ -25,7 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            android:text="Enter Address" />
+            android:text="Enter Store Address" />
 
         <EditText
             android:id="@+id/store_address"

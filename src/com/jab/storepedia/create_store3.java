@@ -84,19 +84,29 @@ public class create_store3 extends Activity {
 		//final TextView choose_store_image = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
 				
-		cat = "Food";
-		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.category);        
-	    radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
-	    {
-	        @Override
-	        public void onCheckedChanged(RadioGroup group, int checkedId) {
-	            // checkedId is the RadioButton selected
-	        	RadioButton rb=(RadioButton)findViewById(checkedId);	        	
-	        	cat = rb.getText().toString();
-	        	//choose_store_image.setText(cat);
-	        	
-	        }
-	    });
+		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.category); 
+		radioGroup.setVisibility(View.INVISIBLE);
+		 
+		cat = "";
+		if(SID==-1)			
+		{
+			radioGroup.setVisibility(View.VISIBLE);
+			cat = "Food";		
+			radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+		    {
+		        @Override
+		        public void onCheckedChanged(RadioGroup group, int checkedId) {
+		            // checkedId is the RadioButton selected
+		        	RadioButton rb=(RadioButton)findViewById(checkedId);	        	
+		        	cat = rb.getText().toString();
+		        	//choose_store_image.setText(cat);
+		        	
+		        }
+		    });
+			
+		}
+		
+	    
 		
 		
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		

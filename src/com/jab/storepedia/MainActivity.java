@@ -92,8 +92,10 @@ public class MainActivity extends ActionBarActivity {
         			String url = "http://122.155.187.27:9876/add_user.php";
         			List<NameValuePair> params = new ArrayList<NameValuePair>();
         			params.add(new BasicNameValuePair("username",user.getName().toString()));
-        	        params.add(new BasicNameValuePair("email",user.getProperty("email").toString()));
-        	        params.add(new BasicNameValuePair("image",user.getId().toString()));
+        			Object userEmail = user.getProperty("email");
+        			String email = (userEmail != null)? userEmail.toString() : "";
+        	        params.add(new BasicNameValuePair("email",email));
+        	        params.add(new BasicNameValuePair("fbid",user.getId().toString()));
         	        try{
                     	JSONArray data = new JSONArray(getHttpPost(url,params));
                     	JSONObject c = data.getJSONObject(0);

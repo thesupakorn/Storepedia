@@ -351,7 +351,7 @@ public class store_detail extends Activity{
 	
 	public void setting(View view)
 	{		        
-		CharSequence choices[] = new CharSequence[] {"Edit name & detail", "Edit information", "Edit images & category","Delete store" ,"Cancel"};
+		CharSequence choices[] = new CharSequence[] {"Edit name & detail", "Edit information","Edit category", "Edit images","Delete store" ,"Cancel"};
 		AlertDialog.Builder OptionDialog = new AlertDialog.Builder(this);
 		OptionDialog.setTitle("Setting");
 		OptionDialog.setItems(choices, new DialogInterface.OnClickListener() {
@@ -417,9 +417,66 @@ public class store_detail extends Activity{
 		            		e.printStackTrace();
 		            	}
 		    	}
-		    	
-		    	//select edit images & category
+		    	//select edit category
 		    	else if(which == 2)
+		    	{
+		    		CharSequence choices[] = new CharSequence[] {"Food", "Books", "Clothings", "Electronics", "Entertainments", "Health", "Others", "Cancel"};
+		    		AlertDialog.Builder OptionDialog2 = new AlertDialog.Builder(store_detail.this);
+		    		OptionDialog2.setTitle("Select Category");    		
+		    		OptionDialog2.setItems(choices, new DialogInterface.OnClickListener() {
+		    			 @Override
+		    			    public void onClick(DialogInterface dialog, int which) {
+		    			        // the user clicked on colors[which]
+		    				 String cat = "";
+		    			    	if(which == 0)
+		    			    	{
+		    			    	    cat = "Food";
+		    			    	}
+		    			    	else if(which == 1)
+		    			    	{
+		    			    		cat = "Books";
+		    			    	}
+		    			    	else if(which == 2)
+		    			    	{
+		    			    		cat = "Clothings";
+		    			    	}
+		    			    	else if(which == 3)
+		    			    	{
+		    			    		cat = "Electronics";
+		    			    	}
+		    			    	else if(which == 4)
+		    			    	{
+		    			    		cat = "Entertainments";
+		    			    	}
+		    			    	else if(which == 5)
+		    			    	{
+		    			    		cat = "Health";
+		    			    	}
+		    			    	else if(which == 6)
+		    			    	{
+		    			    		cat = "Others";
+		    			    	}
+		    			    	else if(which == 7)
+		    			    	{
+		    			    	  dialog.dismiss();
+		    			    	}
+		    			    	String url1 = "http://122.155.187.27:9876/edit_store_cat.php";
+	    						List<NameValuePair> params = new ArrayList<NameValuePair>();
+	    				        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+	    				        params.add(new BasicNameValuePair("store_cat", cat));
+	    				        try{
+	    				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+	    				            JSONObject c = data.getJSONObject(0);
+	    				        }catch(JSONException e){
+	    				        	e.printStackTrace();
+	    				        }
+	    				        refresh();
+		    		}
+		    			});		
+		    		OptionDialog2.show();
+		    		}
+		    	//select edit images
+		    	else if(which == 3)
 		    	{	  
 		    		TextView store_name_view = (TextView) findViewById(R.id.store_name);
                     Intent i = new Intent(store_detail.this,create_store3.class);
@@ -433,7 +490,7 @@ public class store_detail extends Activity{
 
 		    	}
 		    	//select delete store
-		    	else if(which == 3)
+		    	else if(which == 4)
 		    	{
 		    		CharSequence choices[] = new CharSequence[] {"Yes", "Cancel"};
 		    		AlertDialog.Builder OptionDialog2 = new AlertDialog.Builder(store_detail.this);
@@ -469,7 +526,7 @@ public class store_detail extends Activity{
 		    		OptionDialog2.show();
 		    		}
 		    	//select cancel
-		    	else if(which == 4)
+		    	else if(which == 5)
 		    	{
 		    		 dialog.dismiss();
 		    	}
@@ -507,5 +564,16 @@ public class store_detail extends Activity{
 			e.printStackTrace();
 		}
 		return str.toString();
+	}
+	
+public void refresh(){
+		
+		Intent intent = getIntent();
+		overridePendingTransition(0, 0);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	    finish();
+	    
+	    overridePendingTransition(0, 0);
+	    startActivity(intent);
 	}
 }
