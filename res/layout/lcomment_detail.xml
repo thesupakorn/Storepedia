@@ -88,6 +88,7 @@
             android:layout_marginTop="30dp"
             android:layout_toRightOf="@+id/image"
             android:text="User Name"
+            android:textSize="23dp"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <ImageView
@@ -102,12 +103,17 @@
 
     </RelativeLayout>
 
+     <ScrollView 
+         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relativeLayout1">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="290dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout1"
+       
+        
         android:orientation="horizontal" >
 
         <TextView
@@ -125,8 +131,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="38dp"
-            android:adjustViewBounds="true" 
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/pic2"
@@ -136,8 +141,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="110dp" 
-            android:adjustViewBounds="true"
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true"/>
 
         <ImageView
             android:id="@+id/pic3"
@@ -147,8 +151,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="172dp"
-            android:adjustViewBounds="true" 
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/pic4"
@@ -158,8 +161,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="234dp" 
-            android:adjustViewBounds="true"
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true"/>
     </RelativeLayout>
-
+</ScrollView>
 </RelativeLayout>

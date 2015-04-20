@@ -129,22 +129,13 @@ public class store_map extends ActionBarActivity {
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(120,120);
-                    //pic1layout.setMargins(76, 0, 0, 60);
-                    //pic1layout.addRule(RelativeLayout.);
-                    //pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);  
-                    
-                    map.setLayoutParams(pic1layout);
+            	if(isImageFitToScreen) {
+                    isImageFitToScreen=false;
+                    map.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     map.setAdjustViewBounds(true);
                 }else{
                     isImageFitToScreen=true;
-
-                    
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    map.setLayoutParams(pic1layout);
+                    map.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                     map.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
             }
