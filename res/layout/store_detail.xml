@@ -120,8 +120,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="38dp"
-            android:adjustViewBounds="true" 
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/pic2"
@@ -131,8 +130,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="110dp" 
-            android:adjustViewBounds="true"
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true"/>
 
         <ImageView
             android:id="@+id/pic3"
@@ -142,8 +140,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="172dp"
-            android:adjustViewBounds="true" 
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/pic4"
@@ -153,8 +150,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="234dp" 
-            android:adjustViewBounds="true"
-            android:src="@drawable/no_image"/>
+            android:adjustViewBounds="true"/>
     </RelativeLayout>
 
 </LinearLayout>

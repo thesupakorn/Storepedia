@@ -51,8 +51,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.RelativeLayout.LayoutParams;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,7 +65,7 @@ import android.app.Activity;
 
 
 public class store_map extends ActionBarActivity {
-
+	boolean isImageFitToScreen;
 	@SuppressLint("NewApi")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class store_map extends ActionBarActivity {
         }
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.store_map);
-        ImageView map = (ImageView) findViewById(R.id.map);
+        final ImageView map = (ImageView) findViewById(R.id.map);
         
         Intent intent = getIntent();
         
@@ -123,6 +126,29 @@ public class store_map extends ActionBarActivity {
 	{
 		e.printStackTrace();
 	}
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;  
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(120,120);
+                    //pic1layout.setMargins(76, 0, 0, 60);
+                    //pic1layout.addRule(RelativeLayout.);
+                    //pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);  
+                    
+                    map.setLayoutParams(pic1layout);
+                    map.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+
+                    
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    map.setLayoutParams(pic1layout);
+                    map.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+            }
+        });
 	}
 
 

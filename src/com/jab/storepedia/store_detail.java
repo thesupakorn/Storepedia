@@ -144,6 +144,7 @@ public class store_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		store_image_view.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
@@ -151,6 +152,7 @@ public class store_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic1.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
@@ -158,6 +160,7 @@ public class store_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic2.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
@@ -165,6 +168,7 @@ public class store_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic3.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
@@ -172,6 +176,7 @@ public class store_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic4.setVisibility(View.INVISIBLE);
         	}
         }catch(JSONException e){
         	e.printStackTrace();

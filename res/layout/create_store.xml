@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
             android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp"
             android:layout_toLeftOf="@+id/store_name"
             android:text="Store Name" />
 
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textView2"
             android:layout_below="@+id/store_name"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="15dp"
             android:text="Store detail" />
 

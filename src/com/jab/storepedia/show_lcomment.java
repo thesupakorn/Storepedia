@@ -146,7 +146,7 @@ public class show_lcomment extends Activity {
         lcomment_list.setAdapter(adapter);
         
         
-		store_name_textview.setText("Location Comments For: "+store_name);
+		store_name_textview.setText("Comments For: "+store_name);
 
 		        String url = "http://122.155.187.27:9876/lcomment_list.php";
             	lcommentList.clear();

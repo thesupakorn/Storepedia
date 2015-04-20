@@ -32,13 +32,13 @@
         android:paddingLeft="10dp"
         android:paddingTop="20dp"
         android:text="Username"
-        android:textSize="15sp" />
+        android:textSize="23dp" />
 
     <ImageView
         android:id="@+id/vote_up"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_above="@+id/comment"
+        android:layout_below="@+id/username"
         android:layout_toLeftOf="@+id/agreed"
         android:src="@drawable/vote_up" />
 
@@ -46,9 +46,9 @@
         android:id="@+id/agreed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/comment"
-        android:layout_marginLeft="2dp"
-        
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="2dp"    
+        android:layout_marginTop="12dp"    
         android:layout_centerHorizontal="true"
         android:text="yes" />
 
@@ -56,7 +56,7 @@
         android:id="@+id/vote_down"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_above="@+id/comment"
+        android:layout_below="@+id/username"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/agreed"
         android:src="@drawable/vote_down" />
@@ -65,8 +65,9 @@
         android:id="@+id/disagreed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/comment"
+        android:layout_below="@+id/username"
         android:layout_marginLeft="2dp"
+        android:layout_marginTop="12dp"
         android:layout_toRightOf="@+id/vote_down"
         android:text="no" />
 

@@ -152,6 +152,7 @@ public class lcomment_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic1.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
@@ -159,6 +160,7 @@ public class lcomment_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic2.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
@@ -166,6 +168,7 @@ public class lcomment_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic3.setVisibility(View.INVISIBLE);
         	}
         	try{
         		Bitmap bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
@@ -173,6 +176,7 @@ public class lcomment_detail extends Activity{
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
+        		pic4.setVisibility(View.INVISIBLE);
         	}
         	//comment.setText(Integer.toString(UID));
         }catch(JSONException e){
