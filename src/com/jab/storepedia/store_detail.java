@@ -23,6 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.Session;
+import com.jab.storepedia.adater.Lcomment_adapter;
+import com.jab.storepedia.model.Lcomment;
 import com.jab.storepedia.model.Store;
 
 import android.annotation.SuppressLint;
@@ -37,22 +40,26 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class store_detail extends Activity{
 	boolean isImageFitToScreen;
-	ImageView pic1;
-	ImageView pic2;
-	ImageView pic3;
-	ImageView pic4;
+	ImageView pic1,pic2,pic3,pic4,info_yes,info_no,gallery_no,gallery_yes,comments_no,comments_yes, map;
 	int SID,LID,UID;
 	String store_name,place_name;
+	private Lcomment_adapter adapter;
+	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
+	String flag = "create";
+	int PCID;
 	@SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,18 +83,73 @@ public class store_detail extends Activity{
         pic3 = (ImageView) findViewById(R.id.pic3);
         pic4 = (ImageView) findViewById(R.id.pic4);
         ImageView setting_button = (ImageView) findViewById(R.id.setting_button);
-        setting_button.setVisibility(View.GONE);
+        setting_button.setVisibility(View.INVISIBLE);
 		ImageView store_image_view = (ImageView) findViewById(R.id.store_image);
 		TextView store_name_view = (TextView) findViewById(R.id.store_name);
 		TextView place_name_view = (TextView) findViewById(R.id.place_name); 
 		TextView category_view = (TextView) findViewById(R.id.category_text);
+		TextView detail_info = (TextView) findViewById(R.id.detail_info);
+		TextView address_info = (TextView) findViewById(R.id.address_info);
+		TextView contact_info = (TextView) findViewById(R.id.contact_info);
 		//TextView score_view = (TextView) findViewById(R.id.score);
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-        ImageView where = (ImageView) findViewById(R.id.comment_button);
-        ImageView info = (ImageView) findViewById(R.id.info_button);
-        ImageView map = (ImageView) findViewById(R.id.map_button);
-        //ImageButton info = (ImageButton) findViewById(R.id.info_button);
-        //ImageButton review = (ImageButton) findViewById(R.id.review_button);
+        gallery_no = (ImageView) findViewById(R.id.gallery_button_no);
+        comments_no = (ImageView) findViewById(R.id.comment_button_no);
+        info_no = (ImageView) findViewById(R.id.info_button_no);
+        gallery_yes = (ImageView) findViewById(R.id.gallery_button_yes);
+        comments_yes = (ImageView) findViewById(R.id.comment_button_yes);
+        info_yes = (ImageView) findViewById(R.id.info_button_yes);
+        map = (ImageView) findViewById(R.id.map_button);
+        
+		gallery_yes.setVisibility(View.INVISIBLE);
+		comments_yes.setVisibility(View.INVISIBLE);
+		
+        ImageButton create_comment = (ImageButton) findViewById(R.id.create_comment_button);
+        ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
+    	edit_comment.setVisibility(View.INVISIBLE);
+        create_comment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(store_detail.this,create_comment.class);;
+                //i.putExtra("place_name", place_name);
+                //i.putExtra("LID", LID);
+				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+				startActivity(i);
+				finish();
+			}
+        });
+        edit_comment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String url1 = "http://122.155.187.27:9876/find_PCID.php";
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+		        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+		        try{
+		        	JSONArray data = new JSONArray(getHttpPost(url1,params));
+		            JSONObject c = data.getJSONObject(0);
+		            PCID = Integer.parseInt(c.getString("PCID"));
+		        }catch(JSONException e){
+		        	e.printStackTrace();
+		     }
+				Intent i = new Intent(store_detail.this,lcomment_detail.class);;
+                //i.putExtra("place_name", place_name);
+                //i.putExtra("LID", LID);
+				i.putExtra("UID", UID);
+				i.putExtra("LID", LID);
+				i.putExtra("SID", SID);
+				i.putExtra("PCID", PCID);
+				i.putExtra("place_name", place_name);
+				i.putExtra("store_name", store_name);
+				startActivity(i);
+				finish();
+			}
+        });
+        
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -99,7 +161,83 @@ public class store_detail extends Activity{
 				finish();
 			}
         });
+        final TextView text = (TextView)findViewById(R.id.status); 
+        final ListView lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
+        final TextView store_name_textview = (TextView)findViewById(R.id.textView1); 
+        //ImageButton write_comment = (ImageButton) findViewById(R.id.create_comment_button);
+        //ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
+        final TextView write_comment_text = (TextView)findViewById(R.id.textView2); 
+        if(!isLoggedIn()){
+        	create_comment.setVisibility(View.INVISIBLE);
+        	edit_comment.setVisibility(View.INVISIBLE);
+        }
         
+        adapter = new Lcomment_adapter(store_detail.this,lcommentList);
+        lcomment_list.setAdapter(adapter);
+        
+        
+		//store_name_textview.setText("Comments For: "+store_name);
+
+		        String url = "http://122.155.187.27:9876/lcomment_list.php";
+            	lcommentList.clear();
+        		List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+                try{
+                	JSONArray data = new JSONArray(getHttpPost(url,params));
+                	text.setText("Result Found: 0");
+                	for(int i = 0; i < data.length(); i++){
+                	JSONObject c = data.getJSONObject(i);
+                	Lcomment lcomment = new Lcomment();
+                	lcomment.setPCID(c.getInt("PCID"));
+                	lcomment.setUsername(c.getString("username"));
+                	lcomment.setThumbnailUrl(c.getString("image"));
+                	lcomment.setagreed(c.getInt("agreed"));
+                	lcomment.setdisagreed(c.getInt("disagreed"));
+                	lcomment.setcomment(c.getString("comment"));
+                	lcommentList.add(lcomment);
+                	text.setText("Result Found: "+(i+1));
+                	} 
+                
+                	adapter.notifyDataSetChanged();
+                }catch(JSONException e){
+                	e.printStackTrace();
+                	text.setText("Connection FAIL. Please check your internet connection!");
+                }      
+                
+                String url2 = "http://122.155.187.27:9876/check_if_comment.php";
+                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                params2.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+                params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+                try{
+                	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+                	for(int i = 0; i < data.length(); i++){
+                    	JSONObject c = data.getJSONObject(i);
+                    	create_comment.setVisibility(View.INVISIBLE);
+                    	edit_comment.setVisibility(View.VISIBLE);
+                    	flag = "edit";
+                	}
+                }catch(JSONException e){
+                	e.printStackTrace();  
+                	write_comment_text.setText("FAIL TO GET PCID");
+                }      
+                
+        lcomment_list.setOnItemClickListener(new OnItemClickListener(){
+        	@Override
+        	public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id){
+        		Intent intent = new Intent(store_detail.this, lcomment_detail.class);
+        		int PCID = lcommentList.get(position).getPCID();
+        		intent.putExtra("PCID", PCID);
+        		intent.putExtra("SID", SID);
+        		intent.putExtra("LID", LID);
+        		intent.putExtra("place_name", place_name);
+        		intent.putExtra("UID", UID);
+        		intent.putExtra("store_name", store_name);
+                startActivity(intent);
+                finish();
+        	}
+        }); 
+    
         
         String url0 = "http://122.155.187.27:9876/check_if_owner_store.php";
 
@@ -122,16 +260,29 @@ public class store_detail extends Activity{
     	}
         
         
-        
-        String url = "http://122.155.187.27:9876/store_detail.php";
+        String url3 = "http://122.155.187.27:9876/store_info.php";
+        List<NameValuePair> params3 = new ArrayList<NameValuePair>();
+        params3.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        try{
+        	JSONArray data = new JSONArray(getHttpPost(url3,params3));
+        	JSONObject c = data.getJSONObject(0);	  
+        	detail_info.setText(c.getString("detail"));
+        	address_info.setText(c.getString("address"));
+        	contact_info.setText(c.getString("contact"));          	
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        	}
+	
+        String url4 = "http://122.155.187.27:9876/store_detail.php";
 
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        List<NameValuePair> params4 = new ArrayList<NameValuePair>();
+        params4.add(new BasicNameValuePair("SID", Integer.toString(SID)));
         category_view.setText(Integer.toString(SID));
         //store_name_view.setText(store_name);
         try{
-        	JSONArray data = new JSONArray(getHttpPost(url,params));
-            	JSONObject c = data.getJSONObject(0);
+        	JSONArray data = new JSONArray(getHttpPost(url4,params4));
+            JSONObject c = data.getJSONObject(0);
         	store_name_view.setText(c.getString("Name"));
         	store_name = c.getString("Name");
         	place_name_view.setText(c.getString("Location_Name"));
@@ -194,10 +345,9 @@ public class store_detail extends Activity{
             public void onClick(View v) {
                 if(isImageFitToScreen) {
                     isImageFitToScreen=false;  
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(120,120);
-                    pic1layout.setMargins(76, 0, 0, 60);
-                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(150,150);
+                    pic1layout.setMargins(120, 50, 0, 0);
+                
                     
                     pic2.setVisibility(View.VISIBLE);
                     pic3.setVisibility(View.VISIBLE);
@@ -208,9 +358,9 @@ public class store_detail extends Activity{
                 }else{
                     isImageFitToScreen=true;
                     
-                    pic2.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
+                    pic2.setVisibility(View.INVISIBLE);
+                    pic3.setVisibility(View.INVISIBLE);
+                    pic4.setVisibility(View.INVISIBLE);
                     
                     LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -224,10 +374,8 @@ public class store_detail extends Activity{
             public void onClick(View v) {
                 if(isImageFitToScreen) {
                     isImageFitToScreen=false;  
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(120,120);
-                    pic2layout.setMargins(220, 0, 0, 60);
-                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(150,150);
+                    pic2layout.setMargins(0, 100, 120, 0);
                     
                     pic1.setVisibility(View.VISIBLE);
                     pic3.setVisibility(View.VISIBLE);
@@ -238,9 +386,9 @@ public class store_detail extends Activity{
                 }else{
                     isImageFitToScreen=true;
                     
-                    pic1.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
+                    pic1.setVisibility(View.INVISIBLE);
+                    pic3.setVisibility(View.INVISIBLE);
+                    pic4.setVisibility(View.INVISIBLE);
                     
                     LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -254,10 +402,9 @@ public class store_detail extends Activity{
             public void onClick(View v) {
                 if(isImageFitToScreen) {
                     isImageFitToScreen=false;  
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(120,120);
-                    pic3layout.setMargins(344, 0, 0, 60);
-                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(150,150);
+                    pic3layout.addRule(RelativeLayout.ALIGN_LEFT, R.id.pic1);
+                    pic3layout.addRule(RelativeLayout.BELOW, R.id.pic1);
                     
                     pic2.setVisibility(View.VISIBLE);
                     pic1.setVisibility(View.VISIBLE);
@@ -268,9 +415,9 @@ public class store_detail extends Activity{
                 }else{
                     isImageFitToScreen=true;
                     
-                    pic2.setVisibility(View.GONE);
-                    pic1.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
+                    pic2.setVisibility(View.INVISIBLE);
+                    pic1.setVisibility(View.INVISIBLE);
+                    pic4.setVisibility(View.INVISIBLE);
                     
                     LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -284,10 +431,9 @@ public class store_detail extends Activity{
             public void onClick(View v) {
                 if(isImageFitToScreen) {
                     isImageFitToScreen=false;  
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(120,120);
-                    pic4layout.setMargins(468, 0, 0, 60);
-                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(150,150);
+                    pic4layout.addRule(RelativeLayout.BELOW, R.id.pic2);
+                    pic4layout.addRule(RelativeLayout.ALIGN_RIGHT, R.id.pic2);
                     
                     pic2.setVisibility(View.VISIBLE);
                     pic3.setVisibility(View.VISIBLE);
@@ -299,9 +445,9 @@ public class store_detail extends Activity{
                     isImageFitToScreen=true;
                     
 
-                    pic2.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic1.setVisibility(View.GONE);
+                    pic2.setVisibility(View.INVISIBLE);
+                    pic3.setVisibility(View.INVISIBLE);
+                    pic1.setVisibility(View.INVISIBLE);
                     
                     LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -311,31 +457,63 @@ public class store_detail extends Activity{
             }
         });
         
-        where.setOnClickListener(new View.OnClickListener() {
+        gallery_no.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
-    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
-    			Intent i = new Intent(store_detail.this,show_lcomment.class);
-        		i.putExtra("SID", SID);
-        		i.putExtra("UID", UID);
-        		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name_view.getText().toString());
-        		i.putExtra("place_name",place_name);
-    			startActivity(i);
-    			finish();
+    			RelativeLayout gallery_layout = (RelativeLayout) findViewById(R.id.gallery_layout);
+    			RelativeLayout info_layout = (RelativeLayout) findViewById(R.id.info_layout);
+    			RelativeLayout comments_layout = (RelativeLayout) findViewById(R.id.comments_layout);
+    			info_layout.setVisibility(View.INVISIBLE);
+    			comments_layout.setVisibility(View.INVISIBLE);
+    			gallery_layout.setVisibility(View.VISIBLE);
+    			
+    			info_no.setVisibility(View.VISIBLE);
+    			gallery_no.setVisibility(View.INVISIBLE);
+    			comments_no.setVisibility(View.VISIBLE);
+    			
+    			info_yes.setVisibility(View.INVISIBLE);
+    			comments_yes.setVisibility(View.INVISIBLE);
+    			
+    			
+    			gallery_yes.setVisibility(View.VISIBLE);
+    		}
+        });        
+        
+        info_no.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v) {
+    			RelativeLayout gallery_layout = (RelativeLayout) findViewById(R.id.gallery_layout);
+    			RelativeLayout info_layout = (RelativeLayout) findViewById(R.id.info_layout);
+    			RelativeLayout comments_layout = (RelativeLayout) findViewById(R.id.comments_layout);
+    			info_layout.setVisibility(View.VISIBLE);
+    			comments_layout.setVisibility(View.INVISIBLE);
+    			gallery_layout.setVisibility(View.INVISIBLE);
+    			
+    			info_no.setVisibility(View.INVISIBLE);
+    			gallery_no.setVisibility(View.VISIBLE);
+    			comments_no.setVisibility(View.VISIBLE);
+    			
+    			gallery_yes.setVisibility(View.INVISIBLE);
+    			comments_yes.setVisibility(View.INVISIBLE);
+    			
+    			info_yes.setVisibility(View.VISIBLE);
     		}
         });
-        
-        info.setOnClickListener(new View.OnClickListener() {
+        comments_no.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
-    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
-    			Intent i = new Intent(store_detail.this,store_info.class);
-        		i.putExtra("SID", SID);
-        		i.putExtra("UID", UID);
-        		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name_view.getText().toString());
-        		i.putExtra("place_name",place_name);
-    			startActivity(i);
-    			finish();
+    			RelativeLayout gallery_layout = (RelativeLayout) findViewById(R.id.gallery_layout);
+    			RelativeLayout info_layout = (RelativeLayout) findViewById(R.id.info_layout);
+    			RelativeLayout comments_layout = (RelativeLayout) findViewById(R.id.comments_layout);
+    			info_layout.setVisibility(View.INVISIBLE);
+    			comments_layout.setVisibility(View.VISIBLE);
+    			gallery_layout.setVisibility(View.INVISIBLE);
+    			
+    			info_no.setVisibility(View.VISIBLE);
+    			gallery_no.setVisibility(View.VISIBLE);
+    			comments_no.setVisibility(View.INVISIBLE);
+    			
+    			gallery_yes.setVisibility(View.INVISIBLE);
+    			info_yes.setVisibility(View.INVISIBLE);
+    			
+    			comments_yes.setVisibility(View.VISIBLE);
     		}
         });
         
@@ -581,4 +759,8 @@ public void refresh(){
 	    overridePendingTransition(0, 0);
 	    startActivity(intent);
 	}
+public static boolean isLoggedIn() {
+    Session session = Session.getActiveSession();
+    return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
+}
 }
