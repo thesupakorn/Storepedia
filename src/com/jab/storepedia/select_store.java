@@ -32,6 +32,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -76,21 +78,21 @@ public class select_store extends Activity{
             others_no = (ImageView) findViewById(R.id.others_no);
             others_yes = (ImageView) findViewById(R.id.others_yes);
             
-            all_no.setVisibility(View.GONE);
-            //food_no.setVisibility(View.GONE);
-            food_yes.setVisibility(View.GONE);
-            //books_no.setVisibility(View.GONE);
-            books_yes.setVisibility(View.GONE);
-            //clothings_no.setVisibility(View.GONE);
-            clothings_yes.setVisibility(View.GONE);
-            //electronics_no.setVisibility(View.GONE);
-            electronics_yes.setVisibility(View.GONE);
-            //entertainments_no.setVisibility(View.GONE);
-            entertainments_yes.setVisibility(View.GONE);
-            //health_no.setVisibility(View.GONE);
-            health_yes.setVisibility(View.GONE);
-            //others_no.setVisibility(View.GONE);
-            others_yes.setVisibility(View.GONE);
+            all_no.setVisibility(View.INVISIBLE);
+            //food_no.setVisibility(View.INVISIBLE);
+            food_yes.setVisibility(View.INVISIBLE);
+            //books_no.setVisibility(View.INVISIBLE);
+            books_yes.setVisibility(View.INVISIBLE);
+            //clothings_no.setVisibility(View.INVISIBLE);
+            clothings_yes.setVisibility(View.INVISIBLE);
+            //electronics_no.setVisibility(View.INVISIBLE);
+            electronics_yes.setVisibility(View.INVISIBLE);
+            //entertainments_no.setVisibility(View.INVISIBLE);
+            entertainments_yes.setVisibility(View.INVISIBLE);
+            //health_no.setVisibility(View.INVISIBLE);
+            health_yes.setVisibility(View.INVISIBLE);
+            //others_no.setVisibility(View.INVISIBLE);
+            others_yes.setVisibility(View.INVISIBLE);
             
             
             final TextView status_text2 = (TextView)findViewById(R.id.status_text2); 
@@ -130,19 +132,56 @@ public class select_store extends Activity{
 					e.printStackTrace();
 				}
             
+            String url = "http://122.155.187.27:9876/select_store.php";
+        	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
+        	storeList.clear();                 	
+    		List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
+        	//String resultServer  = getHttpPost(url,params);
+        	//text.setText(resultServer);
+            try{
+            	JSONArray data = new JSONArray(getHttpPost(url,params));
+            	//status_text2.setText("Result Found: 0");
+            	for(int i = 0; i < data.length(); i++){
+            	JSONObject c = data.getJSONObject(i);
+            	Store store = new Store();
+            	store.setTitle(c.getString("Name"));
+            	store.setThumbnailUrl(c.getString("Image"));
+            	store.setSID(c.getInt("SID"));
+            	store.setGenre(c.getString("Category"));
+            	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+               // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
+                //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
+                //JSONObject c2 = data2.getJSONObject(0);
+                //location.setNum(c2.getInt("COUNT(*)"));
+                
+            	//location.setNum(c.getInt("Number_of_store"));
+            	 //text.setText(Integer.toString(c.getInt("LID")));
+            	//text.setText(c.getString("Name"));
+            	//text.setText("Result Found: " + (i+1));
+            	storeList.add(store);
+            	//status_text2.setText("Result Found: "+(i+1));
+            	} 
+            
+            	adapter.notifyDataSetChanged();
+            }catch(JSONException e){
+            	e.printStackTrace();
+            	status_text.setText("Connection FAIL. Please check your internet connection!");
+            } 
+            
             
             all_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                  food_yes.setVisibility(View.GONE);
+                  food_yes.setVisibility(View.INVISIBLE);
                   all_yes.setVisibility(View.VISIBLE);
-                  books_yes.setVisibility(View.GONE);
-                  clothings_yes.setVisibility(View.GONE);
-                  electronics_yes.setVisibility(View.GONE);
-                  entertainments_yes.setVisibility(View.GONE);
-                  health_yes.setVisibility(View.GONE);
-                  others_yes.setVisibility(View.GONE);
+                  books_yes.setVisibility(View.INVISIBLE);
+                  clothings_yes.setVisibility(View.INVISIBLE);
+                  electronics_yes.setVisibility(View.INVISIBLE);
+                  entertainments_yes.setVisibility(View.INVISIBLE);
+                  health_yes.setVisibility(View.INVISIBLE);
+                  others_yes.setVisibility(View.INVISIBLE);
                 	  
-              	  all_no.setVisibility(View.GONE);
+              	  all_no.setVisibility(View.INVISIBLE);
               	  food_no.setVisibility(View.VISIBLE);
               	  books_no.setVisibility(View.VISIBLE);
               	  clothings_no.setVisibility(View.VISIBLE);
@@ -159,16 +198,16 @@ public class select_store extends Activity{
             food_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
               	  food_yes.setVisibility(View.VISIBLE);
-              	  all_yes.setVisibility(View.GONE);
-              	  books_yes.setVisibility(View.GONE);
-              	  clothings_yes.setVisibility(View.GONE);
-              	  electronics_yes.setVisibility(View.GONE);
-              	  entertainments_yes.setVisibility(View.GONE);
-              	  health_yes.setVisibility(View.GONE);
-              	  others_yes.setVisibility(View.GONE);
+              	  all_yes.setVisibility(View.INVISIBLE);
+              	  books_yes.setVisibility(View.INVISIBLE);
+              	  clothings_yes.setVisibility(View.INVISIBLE);
+              	  electronics_yes.setVisibility(View.INVISIBLE);
+              	  entertainments_yes.setVisibility(View.INVISIBLE);
+              	  health_yes.setVisibility(View.INVISIBLE);
+              	  others_yes.setVisibility(View.INVISIBLE);
               	  
             	  all_no.setVisibility(View.VISIBLE);
-            	  food_no.setVisibility(View.GONE);
+            	  food_no.setVisibility(View.INVISIBLE);
             	  books_no.setVisibility(View.VISIBLE);
             	  clothings_no.setVisibility(View.VISIBLE);
             	  electronics_no.setVisibility(View.VISIBLE);
@@ -182,18 +221,18 @@ public class select_store extends Activity{
             
             books_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
                     books_yes.setVisibility(View.VISIBLE);
-                    clothings_yes.setVisibility(View.GONE);
-                    electronics_yes.setVisibility(View.GONE);
-                    entertainments_yes.setVisibility(View.GONE);
-                    health_yes.setVisibility(View.GONE);
-                    others_yes.setVisibility(View.GONE);
+                    clothings_yes.setVisibility(View.INVISIBLE);
+                    electronics_yes.setVisibility(View.INVISIBLE);
+                    entertainments_yes.setVisibility(View.INVISIBLE);
+                    health_yes.setVisibility(View.INVISIBLE);
+                    others_yes.setVisibility(View.INVISIBLE);
                   	  
                     all_no.setVisibility(View.VISIBLE);
                     food_no.setVisibility(View.VISIBLE);
-                    books_no.setVisibility(View.GONE);
+                    books_no.setVisibility(View.INVISIBLE);
                     clothings_no.setVisibility(View.VISIBLE);
                     electronics_no.setVisibility(View.VISIBLE);
                 	entertainments_no.setVisibility(View.VISIBLE);
@@ -205,19 +244,19 @@ public class select_store extends Activity{
                 });
             clothings_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
-                    books_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
+                    books_yes.setVisibility(View.INVISIBLE);
                     clothings_yes.setVisibility(View.VISIBLE);
-                    electronics_yes.setVisibility(View.GONE);
-                    entertainments_yes.setVisibility(View.GONE);
-                    health_yes.setVisibility(View.GONE);
-                    others_yes.setVisibility(View.GONE);
+                    electronics_yes.setVisibility(View.INVISIBLE);
+                    entertainments_yes.setVisibility(View.INVISIBLE);
+                    health_yes.setVisibility(View.INVISIBLE);
+                    others_yes.setVisibility(View.INVISIBLE);
                   	  
                 	all_no.setVisibility(View.VISIBLE);
                 	food_no.setVisibility(View.VISIBLE);
                 	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.GONE);
+                	clothings_no.setVisibility(View.INVISIBLE);
                 	electronics_no.setVisibility(View.VISIBLE);
                 	entertainments_no.setVisibility(View.VISIBLE);
                 	health_no.setVisibility(View.VISIBLE);
@@ -228,20 +267,20 @@ public class select_store extends Activity{
                 });
             electronics_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
-                    books_yes.setVisibility(View.GONE);
-                    clothings_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
+                    books_yes.setVisibility(View.INVISIBLE);
+                    clothings_yes.setVisibility(View.INVISIBLE);
                     electronics_yes.setVisibility(View.VISIBLE);
-                    entertainments_yes.setVisibility(View.GONE);
-                    health_yes.setVisibility(View.GONE);
-                    others_yes.setVisibility(View.GONE);
+                    entertainments_yes.setVisibility(View.INVISIBLE);
+                    health_yes.setVisibility(View.INVISIBLE);
+                    others_yes.setVisibility(View.INVISIBLE);
                   	  
                 	all_no.setVisibility(View.VISIBLE);
                 	food_no.setVisibility(View.VISIBLE);
                 	books_no.setVisibility(View.VISIBLE);
                 	clothings_no.setVisibility(View.VISIBLE);
-                	electronics_no.setVisibility(View.GONE);
+                	electronics_no.setVisibility(View.INVISIBLE);
                 	entertainments_no.setVisibility(View.VISIBLE);
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
@@ -251,21 +290,21 @@ public class select_store extends Activity{
                 });
             entertainments_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
-                    books_yes.setVisibility(View.GONE);
-                    clothings_yes.setVisibility(View.GONE);
-                    electronics_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
+                    books_yes.setVisibility(View.INVISIBLE);
+                    clothings_yes.setVisibility(View.INVISIBLE);
+                    electronics_yes.setVisibility(View.INVISIBLE);
                     entertainments_yes.setVisibility(View.VISIBLE);
-                    health_yes.setVisibility(View.GONE);
-                    others_yes.setVisibility(View.GONE);
+                    health_yes.setVisibility(View.INVISIBLE);
+                    others_yes.setVisibility(View.INVISIBLE);
                   	  
                 	all_no.setVisibility(View.VISIBLE);
                 	food_no.setVisibility(View.VISIBLE);
                 	books_no.setVisibility(View.VISIBLE);
                 	clothings_no.setVisibility(View.VISIBLE);
                 	electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.GONE);
+                	entertainments_no.setVisibility(View.INVISIBLE);
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "entertainments";
@@ -274,14 +313,14 @@ public class select_store extends Activity{
                 });
             health_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
-                    books_yes.setVisibility(View.GONE);
-                    clothings_yes.setVisibility(View.GONE);
-                    electronics_yes.setVisibility(View.GONE);
-                    entertainments_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
+                    books_yes.setVisibility(View.INVISIBLE);
+                    clothings_yes.setVisibility(View.INVISIBLE);
+                    electronics_yes.setVisibility(View.INVISIBLE);
+                    entertainments_yes.setVisibility(View.INVISIBLE);
                     health_yes.setVisibility(View.VISIBLE);
-                    others_yes.setVisibility(View.GONE);
+                    others_yes.setVisibility(View.INVISIBLE);
                   	  
                 	all_no.setVisibility(View.VISIBLE);
                 	food_no.setVisibility(View.VISIBLE);
@@ -289,7 +328,7 @@ public class select_store extends Activity{
                 	clothings_no.setVisibility(View.VISIBLE);
                 	electronics_no.setVisibility(View.VISIBLE);
                 	entertainments_no.setVisibility(View.VISIBLE);
-                	health_no.setVisibility(View.GONE);
+                	health_no.setVisibility(View.INVISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "health";
 //                    getData.performClick();
@@ -297,13 +336,13 @@ public class select_store extends Activity{
                 });
             others_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.GONE);
-                    all_yes.setVisibility(View.GONE);
-                    books_yes.setVisibility(View.GONE);
-                    clothings_yes.setVisibility(View.GONE);
-                    electronics_yes.setVisibility(View.GONE);
-                    entertainments_yes.setVisibility(View.GONE);
-                    health_yes.setVisibility(View.GONE);
+                    food_yes.setVisibility(View.INVISIBLE);
+                    all_yes.setVisibility(View.INVISIBLE);
+                    books_yes.setVisibility(View.INVISIBLE);
+                    clothings_yes.setVisibility(View.INVISIBLE);
+                    electronics_yes.setVisibility(View.INVISIBLE);
+                    entertainments_yes.setVisibility(View.INVISIBLE);
+                    health_yes.setVisibility(View.INVISIBLE);
                     others_yes.setVisibility(View.VISIBLE);
                   	  
                 	all_no.setVisibility(View.VISIBLE);
@@ -313,7 +352,7 @@ public class select_store extends Activity{
                 	electronics_no.setVisibility(View.VISIBLE);
                 	entertainments_no.setVisibility(View.VISIBLE);
                 	health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.GONE);
+                	others_no.setVisibility(View.INVISIBLE);
                     cat = "others";
 //                    getData.performClick();
 
@@ -323,21 +362,32 @@ public class select_store extends Activity{
                 }
                 });
             
-            
-            getData.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                	//GGGGGG
+            input.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 	if(storeList.size()==0){
                 		Log.d("GGGGGG","set Data");
-                		final String store_search = input.getText().toString();
+                		String store_search = input.getText().toString();
                         //status_text.setText("Search Results From: "+place_name);
                         String url = "http://122.155.187.27:9876/select_store.php";
                     	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
                     	storeList.clear();                 	
                 		List<NameValuePair> params = new ArrayList<NameValuePair>();
                         params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
-                        params.add(new BasicNameValuePair("store_search", store_search));
-                        params.add(new BasicNameValuePair("cat", cat));
                     	//String resultServer  = getHttpPost(url,params);
                     	//text.setText(resultServer);
                         try{
@@ -368,7 +418,24 @@ public class select_store extends Activity{
                         }catch(JSONException e){
                         	e.printStackTrace();
                         	status_text.setText("Connection FAIL. Please check your internet connection!");
-                        }                 //placename.setText(cat);           
+                        }       
+
+
+
+                } else{
+            		FilterData();
+            	}
+                }
+            });
+            
+            getData.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	//GGGGGG
+                	if(storeList.size()==0){
+                		Log.d("GGGGGG","set Data");
+                		final String store_search = input.getText().toString();                                             
+                        	adapter.notifyDataSetChanged();
+                       
                         InputMethodManager inputManager = (InputMethodManager)
                                 getSystemService(Context.INPUT_METHOD_SERVICE); 
 
@@ -416,8 +483,8 @@ public class select_store extends Activity{
   		String name = "";
   		if(input.getText()!=null)
   			name = input.getText().toString();
-  		String catatgory = cat;
-  		Log.d("GGGGGG","name:" + name + " cat:" + catatgory);
+  		String catagory = cat;
+  		Log.d("GGGGGG","name:" + name + " cat:" + catagory);
   		adapter.getFilter().filter(name+"<:>"+cat);
       }
       

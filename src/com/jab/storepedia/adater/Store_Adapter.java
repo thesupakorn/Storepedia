@@ -58,7 +58,7 @@ public class Store_Adapter extends BaseAdapter implements Filterable{
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                Log.d("GGGGGG", "**** PUBLISHING RESULTS for: " + constraint + " datasize:" + movieItems.size());
+                Log.d("GGGGGG", "**** PUBLISHING RESULTS for: " + constraint + " datasize:" );
                 movieItems = (List<Store>) results.values;
                 Store_Adapter.this.notifyDataSetChanged();
             }
