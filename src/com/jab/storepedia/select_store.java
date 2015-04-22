@@ -46,7 +46,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class select_store extends Activity{
 	private Store_Adapter adapter;
 	int LID;
-	String cat ="all";
+	String cat ="";
 	TextView status_text;
 	EditText input;
 	private ImageView all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
@@ -97,7 +97,7 @@ public class select_store extends Activity{
             final TextView status_text = (TextView)findViewById(R.id.status_text); 
             final ListView store_list = (ListView)findViewById(R.id.store_list); 
             final TextView placename = (TextView)findViewById(R.id.placename); 
-            final EditText input = (EditText)findViewById(R.id.store_search);  
+            input = (EditText)findViewById(R.id.store_search);  
             
             final String place_name = intent.getStringExtra("place_name");
             final int LID = intent.getIntExtra("LID", -1);
@@ -150,7 +150,8 @@ public class select_store extends Activity{
               	  entertainments_no.setVisibility(View.VISIBLE);
               	  health_no.setVisibility(View.VISIBLE);
               	  others_no.setVisibility(View.VISIBLE);
-                  cat = "all";
+//                  cat = "all";
+              	  cat = "";
                   getData.performClick();
                 }
                 });
@@ -268,7 +269,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "entertainments";
-                    getData.performClick();
+//                    getData.performClick();
                 }
                 });
             health_no.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +292,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.GONE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "health";
-                    getData.performClick();
+//                    getData.performClick();
                 }
                 });
             others_no.setOnClickListener(new View.OnClickListener() {
@@ -314,57 +315,68 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.GONE);
                     cat = "others";
-                    getData.performClick();
+//                    getData.performClick();
+
+//            		adapter.resetData(storeList);
+//            		adapter.getFilter().filter(cat);
+
                 }
                 });
             
+            
             getData.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                	 final String store_search = input.getText().toString();
-                     //status_text.setText("Search Results From: "+place_name);
-                     String url = "http://122.155.187.27:9876/select_store.php";
-                 	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
-                 	storeList.clear();                 	
-             		List<NameValuePair> params = new ArrayList<NameValuePair>();
-                     params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
-                     params.add(new BasicNameValuePair("store_search", store_search));
-                     params.add(new BasicNameValuePair("cat", cat));
-                 	//String resultServer  = getHttpPost(url,params);
-                 	//text.setText(resultServer);
-                     try{
-                     	JSONArray data = new JSONArray(getHttpPost(url,params));
-                     	//status_text2.setText("Result Found: 0");
-                     	for(int i = 0; i < data.length(); i++){
-                     	JSONObject c = data.getJSONObject(i);
-                     	Store store = new Store();
-                     	store.setTitle(c.getString("Name"));
-                     	store.setThumbnailUrl(c.getString("Image"));
-                     	store.setSID(c.getInt("SID"));
-                     	store.setGenre(c.getString("Category"));
-                     	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-                        // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
-                         //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
-                         //JSONObject c2 = data2.getJSONObject(0);
-                         //location.setNum(c2.getInt("COUNT(*)"));
-                         
-                     	//location.setNum(c.getInt("Number_of_store"));
-                     	 //text.setText(Integer.toString(c.getInt("LID")));
-                     	//text.setText(c.getString("Name"));
-                     	//text.setText("Result Found: " + (i+1));
-                     	storeList.add(store);
-                     	//status_text2.setText("Result Found: "+(i+1));
-                     	} 
-                     
-                     	adapter.notifyDataSetChanged();
-                     }catch(JSONException e){
-                     	e.printStackTrace();
-                     	status_text.setText("Connection FAIL. Please check your internet connection!");
-                     }                 //placename.setText(cat);           
-                     InputMethodManager inputManager = (InputMethodManager)
-                             getSystemService(Context.INPUT_METHOD_SERVICE); 
+                	//GGGGGG
+                	if(storeList.size()==0){
+                		Log.d("GGGGGG","set Data");
+                		final String store_search = input.getText().toString();
+                        //status_text.setText("Search Results From: "+place_name);
+                        String url = "http://122.155.187.27:9876/select_store.php";
+                    	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
+                    	storeList.clear();                 	
+                		List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
+                        params.add(new BasicNameValuePair("store_search", store_search));
+                        params.add(new BasicNameValuePair("cat", cat));
+                    	//String resultServer  = getHttpPost(url,params);
+                    	//text.setText(resultServer);
+                        try{
+                        	JSONArray data = new JSONArray(getHttpPost(url,params));
+                        	//status_text2.setText("Result Found: 0");
+                        	for(int i = 0; i < data.length(); i++){
+                        	JSONObject c = data.getJSONObject(i);
+                        	Store store = new Store();
+                        	store.setTitle(c.getString("Name"));
+                        	store.setThumbnailUrl(c.getString("Image"));
+                        	store.setSID(c.getInt("SID"));
+                        	store.setGenre(c.getString("Category"));
+                        	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                           // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
+                            //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
+                            //JSONObject c2 = data2.getJSONObject(0);
+                            //location.setNum(c2.getInt("COUNT(*)"));
+                            
+                        	//location.setNum(c.getInt("Number_of_store"));
+                        	 //text.setText(Integer.toString(c.getInt("LID")));
+                        	//text.setText(c.getString("Name"));
+                        	//text.setText("Result Found: " + (i+1));
+                        	storeList.add(store);
+                        	//status_text2.setText("Result Found: "+(i+1));
+                        	} 
+                        
+                        	adapter.notifyDataSetChanged();
+                        }catch(JSONException e){
+                        	e.printStackTrace();
+                        	status_text.setText("Connection FAIL. Please check your internet connection!");
+                        }                 //placename.setText(cat);           
+                        InputMethodManager inputManager = (InputMethodManager)
+                                getSystemService(Context.INPUT_METHOD_SERVICE); 
 
-inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
+              inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                                   InputMethodManager.HIDE_NOT_ALWAYS);
+                	}else{
+                		FilterData();
+                	}
                 }
             });                      
             
@@ -395,7 +407,21 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     finish();
             	}
             });  
-        }                
+            
+        }   
+      
+
+      private void FilterData(){
+  		adapter.resetData(storeList);
+  		String name = "";
+  		if(input.getText()!=null)
+  			name = input.getText().toString();
+  		String catatgory = cat;
+  		Log.d("GGGGGG","name:" + name + " cat:" + catatgory);
+  		adapter.getFilter().filter(name+"<:>"+cat);
+      }
+      
+      
       public void newstore(View v)
       {
     	  Intent intent = getIntent();
