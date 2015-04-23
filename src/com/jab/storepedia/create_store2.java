@@ -121,13 +121,13 @@ public class create_store2 extends Activity {
 				place_name = intent.getStringExtra("place_name");
 				if(SID!=-1)
 				{
-					Intent i = new Intent(create_store2.this,store_detail.class);
+					/*Intent i = new Intent(create_store2.this,store_detail.class);
 					i.putExtra("SID", SID);
 					i.putExtra("UID", UID);
 				    i.putExtra("LID", LID);
 				    i.putExtra("place_name", place_name);
 				    i.putExtra("store_name", store_name);
-				    startActivity(i);
+				    startActivity(i);*/
 	                finish();
 				}
 				else{

@@ -110,13 +110,13 @@ public class store_map extends ActionBarActivity {
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {		        
-				Intent i = new Intent(store_map.this,store_detail.class);
+				/*Intent i = new Intent(store_map.this,store_detail.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
-				startActivity(i);
+				startActivity(i);*/
 				finish();
 			}
         });

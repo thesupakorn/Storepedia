@@ -95,13 +95,13 @@ public class create_comment extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(create_comment.this,show_lcomment.class);
+				/*Intent i = new Intent(create_comment.this,show_lcomment.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
-	            startActivity(i);
+	            startActivity(i);*/
 	            finish();
 			}
 	    });

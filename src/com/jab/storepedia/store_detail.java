@@ -31,11 +31,14 @@ import com.jab.storepedia.model.Store;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -61,6 +64,7 @@ public class store_detail extends Activity{
 	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
 	String flag = "create";
 	int PCID;
+	Bitmap map_bitmap;
 	
 	@Override
 	public void onBackPressed() {
@@ -135,7 +139,7 @@ public class store_detail extends Activity{
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				startActivity(i);
-				finish();
+				//finish();
 			}
         });
         edit_comment.setOnClickListener(new View.OnClickListener() {
@@ -162,18 +166,18 @@ public class store_detail extends Activity{
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				startActivity(i);
-				finish();
+				//finish();
 			}
         });
         
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(store_detail.this,select_store.class);
+				/*Intent i = new Intent(store_detail.this,select_store.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("place_name", place_name);
-				startActivity(i);
+				startActivity(i);*/
 				finish();
 			}
         });
@@ -250,7 +254,7 @@ public class store_detail extends Activity{
         		intent.putExtra("UID", UID);
         		intent.putExtra("store_name", store_name);
                 startActivity(intent);
-                finish();
+                //finish();
         	}
         }); 
     
@@ -345,6 +349,13 @@ public class store_detail extends Activity{
         		e.printStackTrace();
         		pic4.setVisibility(View.INVISIBLE);
         	}
+        	try{
+        		map_bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("map")).getContent());
+        	}catch(JSONException e)
+        	{
+        		e.printStackTrace();
+        		map.setVisibility(View.INVISIBLE);
+        	}
         }catch(JSONException e){
         	e.printStackTrace();
         	place_name_view.setText(e.toString());
@@ -359,122 +370,127 @@ public class store_detail extends Activity{
         pic1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(150,150);
-                    pic1layout.setMargins(120, 100, 0, 0);
-                
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic1.setLayoutParams(pic1layout);
-                    pic1.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic2.setVisibility(View.INVISIBLE);
-                    pic3.setVisibility(View.INVISIBLE);
-                    pic4.setVisibility(View.INVISIBLE);
-                    
-                    //LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(700,700);
-                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic1.setLayoutParams(pic1layout);
-                    pic1.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+            	OpenPhoto(((BitmapDrawable)pic1.getDrawable()).getBitmap());
+//                if(isImageFitToScreen) {
+//                    isImageFitToScreen=false;  
+//                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(150,150);
+//                    pic1layout.setMargins(120, 100, 0, 0);
+//                
+//                    
+//                    pic2.setVisibility(View.VISIBLE);
+//                    pic3.setVisibility(View.VISIBLE);
+//                    pic4.setVisibility(View.VISIBLE);
+//                    
+//                    pic1.setLayoutParams(pic1layout);
+//                    pic1.setAdjustViewBounds(true);
+//                }else{
+//                    isImageFitToScreen=true;
+//                    
+//                    pic2.setVisibility(View.INVISIBLE);
+//                    pic3.setVisibility(View.INVISIBLE);
+//                    pic4.setVisibility(View.INVISIBLE);
+//                    
+//                    //LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(700,700);
+//                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//                    pic1.setLayoutParams(pic1layout);
+//                    pic1.setScaleType(ImageView.ScaleType.FIT_XY);
+//                }
             }
         });
         pic2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(150,150);
-                    pic2layout.setMargins(0, 100, 120, 0);
-                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    
-                    pic1.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic2.setLayoutParams(pic2layout);
-                    pic2.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic1.setVisibility(View.INVISIBLE);
-                    pic3.setVisibility(View.INVISIBLE);
-                    pic4.setVisibility(View.INVISIBLE);
-                    
-                    //LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(700,700);
-                    pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic2.setLayoutParams(pic2layout);
-                    pic2.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+            	OpenPhoto(((BitmapDrawable)pic2.getDrawable()).getBitmap());
+//                if(isImageFitToScreen) {
+//                    isImageFitToScreen=false;  
+//                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(150,150);
+//                    pic2layout.setMargins(0, 100, 120, 0);
+//                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//                    
+//                    pic1.setVisibility(View.VISIBLE);
+//                    pic3.setVisibility(View.VISIBLE);
+//                    pic4.setVisibility(View.VISIBLE);
+//                    
+//                    pic2.setLayoutParams(pic2layout);
+//                    pic2.setAdjustViewBounds(true);
+//                }else{
+//                    isImageFitToScreen=true;
+//                    
+//                    pic1.setVisibility(View.INVISIBLE);
+//                    pic3.setVisibility(View.INVISIBLE);
+//                    pic4.setVisibility(View.INVISIBLE);
+//                    
+//                    //LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(700,700);
+//                    pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//                    pic2.setLayoutParams(pic2layout);
+//                    pic2.setScaleType(ImageView.ScaleType.FIT_XY);
+//                }
             }
         });
         pic3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(150,150);
-                    pic3layout.addRule(RelativeLayout.ALIGN_LEFT, R.id.pic1);
-                    pic3layout.addRule(RelativeLayout.BELOW, R.id.pic1);
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic1.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic3.setLayoutParams(pic3layout);
-                    pic3.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic2.setVisibility(View.INVISIBLE);
-                    pic1.setVisibility(View.INVISIBLE);
-                    pic4.setVisibility(View.INVISIBLE);
-                    
-                    //LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(700,700);
-                    pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic3.setLayoutParams(pic3layout);
-                    pic3.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+            	OpenPhoto(((BitmapDrawable)pic3.getDrawable()).getBitmap());
+//                if(isImageFitToScreen) {
+//                    isImageFitToScreen=false;  
+//                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(150,150);
+//                    pic3layout.addRule(RelativeLayout.ALIGN_LEFT, R.id.pic1);
+//                    pic3layout.addRule(RelativeLayout.BELOW, R.id.pic1);
+//                    
+//                    pic2.setVisibility(View.VISIBLE);
+//                    pic1.setVisibility(View.VISIBLE);
+//                    pic4.setVisibility(View.VISIBLE);
+//                    
+//                    pic3.setLayoutParams(pic3layout);
+//                    pic3.setAdjustViewBounds(true);
+//                }else{
+//                    isImageFitToScreen=true;
+//                    
+//                    pic2.setVisibility(View.INVISIBLE);
+//                    pic1.setVisibility(View.INVISIBLE);
+//                    pic4.setVisibility(View.INVISIBLE);
+//                    
+//                    //LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(700,700);
+//                    pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//                    pic3.setLayoutParams(pic3layout);
+//                    pic3.setScaleType(ImageView.ScaleType.FIT_XY);
+//                }
             }
         });
         pic4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(150,150);
-                    pic4layout.addRule(RelativeLayout.BELOW, R.id.pic2);
-                    pic4layout.addRule(RelativeLayout.ALIGN_RIGHT, R.id.pic2);
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic1.setVisibility(View.VISIBLE);
-                    
-                    pic4.setLayoutParams(pic4layout);
-                    pic4.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-
-                    pic2.setVisibility(View.INVISIBLE);
-                    pic3.setVisibility(View.INVISIBLE);
-                    pic1.setVisibility(View.INVISIBLE);
-                    
-                    //LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(700,700);
-                    pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic4.setLayoutParams(pic4layout);
-                    pic4.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+//                if(isImageFitToScreen) {
+//                    isImageFitToScreen=false;  
+//                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(150,150);
+//                    pic4layout.addRule(RelativeLayout.BELOW, R.id.pic2);
+//                    pic4layout.addRule(RelativeLayout.ALIGN_RIGHT, R.id.pic2);
+//                    
+//                    pic2.setVisibility(View.VISIBLE);
+//                    pic3.setVisibility(View.VISIBLE);
+//                    pic1.setVisibility(View.VISIBLE);
+//                    
+//                    pic4.setLayoutParams(pic4layout);
+//                    pic4.setAdjustViewBounds(true);
+//                }else{
+//                    isImageFitToScreen=true;
+//                    
+//
+//                    pic2.setVisibility(View.INVISIBLE);
+//                    pic3.setVisibility(View.INVISIBLE);
+//                    pic1.setVisibility(View.INVISIBLE);
+//                    
+//                    //LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(700,700);
+//                    pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//                    pic4.setLayoutParams(pic4layout);
+//                    pic4.setScaleType(ImageView.ScaleType.FIT_XY);
+//                }
+            	
+            	OpenPhoto(((BitmapDrawable)pic4.getDrawable()).getBitmap());
             }
         });
         
@@ -540,15 +556,16 @@ public class store_detail extends Activity{
         
         map.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
-    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
-    			Intent i = new Intent(store_detail.this,store_map.class);
-        		i.putExtra("SID", SID);
-        		i.putExtra("UID", UID);
-        		i.putExtra("LID", LID);
-        		i.putExtra("store_name",store_name_view.getText().toString());
-        		i.putExtra("place_name",place_name);
-    			startActivity(i);
-    			finish();
+//    			TextView store_name_view = (TextView) findViewById(R.id.store_name);
+//    			Intent i = new Intent(store_detail.this,store_map.class);
+//        		i.putExtra("SID", SID);
+//        		i.putExtra("UID", UID);
+//        		i.putExtra("LID", LID);
+//        		i.putExtra("store_name",store_name_view.getText().toString());
+//        		i.putExtra("place_name",place_name);
+//    			startActivity(i);
+//    			//finish();
+    			OpenPhoto(map_bitmap);
     		}
         });
 }	
@@ -589,7 +606,7 @@ public class store_detail extends Activity{
 						i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
-						finish();
+						//finish();
 		            	}catch(JSONException e)
 		            	{
 		            		e.printStackTrace();
@@ -615,7 +632,7 @@ public class store_detail extends Activity{
 						i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
-						finish();
+						//finish();
 		            	}catch(JSONException e)
 		            	{
 		            		e.printStackTrace();
@@ -768,6 +785,20 @@ public class store_detail extends Activity{
 			e.printStackTrace();
 		}
 		return str.toString();
+	}
+	
+	@SuppressLint("NewApi")
+	public void OpenPhoto(Bitmap mBitmap){
+	// custom dialog
+				final Dialog dialog = new Dialog(this,R.style.NoTitleDialog);
+				dialog.setContentView(R.layout.photo_dialog);
+				//dialog.setTitle("Photo");
+	 
+				// set the custom dialog components - text, image and button
+				ImageView image = (ImageView) dialog.findViewById(R.id.photoDialogimg);
+//				image.setBackground(mBitmap);
+				image.setImageBitmap(mBitmap);
+				dialog.show();
 	}
 	
 public void refresh(){

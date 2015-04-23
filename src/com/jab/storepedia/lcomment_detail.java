@@ -109,13 +109,13 @@ public class lcomment_detail extends Activity{
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
+				/*Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
-				startActivity(i);
+				startActivity(i);*/
 				finish();
 			}
         });       
@@ -450,7 +450,7 @@ public class lcomment_detail extends Activity{
 					i.putExtra("place_name", place_name);
 					i.putExtra("store_name", store_name);
 					startActivity(i);
-					finish();
+					//finish();
 		    	}
 		    	else if(which == 1)
 		    	{	  
@@ -463,7 +463,7 @@ public class lcomment_detail extends Activity{
 					i.putExtra("place_name", place_name);
 					i.putExtra("store_name", store_name);
 					startActivity(i);
-					finish();
+					//finish();
 		    	}
 		    	else if(which == 2)
 		    	{
@@ -488,12 +488,12 @@ public class lcomment_detail extends Activity{
 		    				        Toast.makeText(getApplicationContext(), "Your comment has been deleted!",
 		    								Toast.LENGTH_LONG).show();
 		    				        Intent i = new Intent(lcomment_detail.this,show_lcomment.class);
-		    						i.putExtra("UID", UID);
+		    						/*i.putExtra("UID", UID);
 		    						i.putExtra("LID", LID);
 		    						i.putExtra("SID", SID);
 		    						i.putExtra("place_name", place_name);
 		    						i.putExtra("store_name", store_name);
-		    						startActivity(i);
+		    						startActivity(i);*/
 		    						finish();
 		    			    	}
 		    			    	else if(which == 1)

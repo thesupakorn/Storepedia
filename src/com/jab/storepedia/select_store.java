@@ -54,7 +54,7 @@ public class select_store extends Activity{
 	String cat ="";
 	TextView status_text;
 	EditText input;
-	private ImageView all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
+	private ImageView new_store,all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
 		
 	private List<Store> storeList = new ArrayList<Store>();
 	
@@ -122,6 +122,11 @@ public class select_store extends Activity{
             final String place_name = intent.getStringExtra("place_name");
             final int LID = intent.getIntExtra("LID", -1);
             final int UID = intent.getIntExtra("UID" , -1);
+            if(UID==-1)
+            {
+            	ImageView create_store = (ImageView) findViewById(R.id.newstore_button);
+            	create_store.setVisibility(View.INVISIBLE);
+            }
             
             placename.setText(place_name);
            
@@ -469,10 +474,10 @@ public class select_store extends Activity{
             back.setOnClickListener(new View.OnClickListener() {
     			@Override
     			public void onClick(View v) {
-    				Intent i = new Intent(select_store.this,select_location.class);
-    				i.putExtra("UID", UID);
-    				i.putExtra("LID", LID);
-                    startActivity(i);
+    				//Intent i = new Intent(select_store.this,select_location.class);
+    				//i.putExtra("UID", UID);
+    				//i.putExtra("LID", LID);
+                   // startActivity(i);
                     finish();
     			}
             });
@@ -489,7 +494,7 @@ public class select_store extends Activity{
             		intent.putExtra("store_name", store_name);
             		intent.putExtra("place_name", place_name);
                     startActivity(intent);
-                    finish();
+                    //finish();
             	}
             });  
             
@@ -520,7 +525,7 @@ public class select_store extends Activity{
 		  i.putExtra("LID", LID);
 		  i.putExtra("place_name", place_name);
           startActivity(i);
-          finish();
+          //finish();
           
       }
       public String getHttpPost(String url,List<NameValuePair> params) {

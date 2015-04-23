@@ -2,6 +2,8 @@ package com.jab.storepedia;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +35,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -140,13 +144,13 @@ public class create_store3 extends Activity {
 				place_name = intent.getStringExtra("place_name");
 				if(SID!=-1)
 				{
-					Intent i = new Intent(create_store3.this,store_detail.class);
+					/*Intent i = new Intent(create_store3.this,store_detail.class);
 					i.putExtra("SID", SID);
 					i.putExtra("UID", UID);
 				    i.putExtra("LID", LID);
 				    i.putExtra("place_name", place_name);
 				    i.putExtra("store_name", store_name);
-				    startActivity(i);
+				    startActivity(i);*/
 	                finish();
 				}
 				else
@@ -506,7 +510,7 @@ public class create_store3 extends Activity {
 			protected void onPreExecute() {
 
 			};
-
+			
 			@Override
 			protected String doInBackground(Void... params) {
 				BitmapFactory.Options options = null;
@@ -514,10 +518,13 @@ public class create_store3 extends Activity {
 				options.inSampleSize = 3;
 				if (imgPath1 != null && !imgPath1.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath1,
-						options);
+//				Log.d("GGGGG","pic1 is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath1,
+//						options);
+				bitmap = DecodeGGGGG(imgPath1);
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
+				
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
 				byte[] byte_arr = stream.toByteArray();
 				// Encode Image to String
@@ -525,8 +532,12 @@ public class create_store3 extends Activity {
 				}
 				if (imgPath2 != null && !imgPath2.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath2,
-						options);
+//					Log.d("GGGGG","pic2 is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath2,
+//						options);
+					bitmap = DecodeGGGGG(imgPath2);
+
+				
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
@@ -536,8 +547,10 @@ public class create_store3 extends Activity {
 				}
 				if (imgPath3 != null && !imgPath3.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath3,
-						options);
+//					Log.d("GGGGG","pic3 is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath3,
+//						options);
+				bitmap = DecodeGGGGG(imgPath3);
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
@@ -547,8 +560,12 @@ public class create_store3 extends Activity {
 				}
 				if (imgPath4 != null && !imgPath4.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath4,
-						options);
+//					Log.d("GGGGG","pic4 is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath4,
+//						options);
+				/////GGGGG/////
+		        bitmap = DecodeGGGGG(imgPath4);
+				/////GGGGG/////
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
@@ -558,19 +575,25 @@ public class create_store3 extends Activity {
 				}
 				if (imgPath5 != null && !imgPath5.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath5,
-						options);
+//					Log.d("GGGGG","store image is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath5,options);
+					bitmap = DecodeGGGGG(imgPath5);
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
 				byte[] byte_arr = stream.toByteArray();
 				// Encode Image to String
 				encodedString5 = Base64.encodeToString(byte_arr, 0);
+				
+					
+					
 				}
 				if (imgPath6 != null && !imgPath6.isEmpty())
 				{
-				bitmap = BitmapFactory.decodeFile(imgPath6,
-						options);
+//					Log.d("GGGGG","map is not empty");
+//				bitmap = BitmapFactory.decodeFile(imgPath6,
+//						options);
+					bitmap = DecodeGGGGG(imgPath6);
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 				// Must compress the Image to reduce image size to make upload easy
 				bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream); 
@@ -578,6 +601,13 @@ public class create_store3 extends Activity {
 				// Encode Image to String
 				encodedString6 = Base64.encodeToString(byte_arr, 0);
 				}
+				
+				Log.d("GGGGGG","pic1 decoded size:" + encodedString1.length());
+				Log.d("GGGGGG","pic2 decoded size:" + encodedString2.length());
+				Log.d("GGGGGG","pic3 decoded size:" + encodedString3.length());
+				Log.d("GGGGGG","pic4 decoded size:" + encodedString4.length());
+				Log.d("GGGGGG","store image decoded size:" + encodedString5.length());
+				Log.d("GGGGGG","map decoded size:" + encodedString6.length());
 				return "";
 			}
 
@@ -743,6 +773,56 @@ public class create_store3 extends Activity {
 			e.printStackTrace();
 		}
 		return str.toString();
+	}
+	
+	private Bitmap DecodeGGGGG(String pathOfInputImage){
+		int dstWidth = 280;
+		int dstHeight = 200;
+		// resize bitmap
+	    Bitmap resizedBitmap = null;
+		try
+		{
+		    int inWidth = 0;
+		    int inHeight = 0;
+
+		    InputStream in = new FileInputStream(pathOfInputImage);
+
+		    // decode image size (decode metadata only, not the whole image)
+		    BitmapFactory.Options options = new BitmapFactory.Options();
+		    options.inJustDecodeBounds = true;
+		    BitmapFactory.decodeStream(in, null, options);
+		    in.close();
+		    in = null;
+
+		    // save width and height
+		    inWidth = options.outWidth;
+		    inHeight = options.outHeight;
+
+		    // decode full image pre-resized
+		    in = new FileInputStream(pathOfInputImage);
+		    options = new BitmapFactory.Options();
+		    // calc rought re-size (this is no exact resize)
+		    options.inSampleSize = Math.max(inWidth/dstWidth, inHeight/dstHeight);
+		    // decode full image
+		    Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
+
+		    // calc exact destination size
+		    Matrix m = new Matrix();
+		    RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
+		    RectF outRect = new RectF(0, 0, dstWidth, dstHeight);
+		    m.setRectToRect(inRect, outRect, Matrix.ScaleToFit.CENTER);
+		    float[] values = new float[9];
+		    m.getValues(values);
+
+		    // resize bitmap
+		    resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]), (int) (roughBitmap.getHeight() * values[4]), true);
+
+		}
+		catch (IOException e)
+		{
+		    Log.e("Image", e.getMessage(), e);
+		}
+		return resizedBitmap;
 	}
 	
 }

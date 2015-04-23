@@ -225,7 +225,7 @@ public class select_location extends Activity {
         		intent.putExtra("UID", UID);
         		intent.putExtra("place_name", place_name);
                 startActivity(intent);
-                finish();
+                //finish();
         	}
         });   
     }
