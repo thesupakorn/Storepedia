@@ -790,6 +790,7 @@ int style Theme_AppCompat_DialogWhenLarge 0x7f09007d
 int style Theme_AppCompat_Light 0x7f09007b
 int style Theme_AppCompat_Light_DarkActionBar 0x7f09007c
 int style Theme_AppCompat_Light_DialogWhenLarge 0x7f09007e
+int style Theme_AppCompat_Light_NoActionBar_FullScreen 0x7f090090
 int style Theme_Base 0x7f090081
 int style Theme_Base_AppCompat 0x7f090083
 int style Theme_Base_AppCompat_Dialog_FixedSize 0x7f09008a

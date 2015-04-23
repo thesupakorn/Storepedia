@@ -362,7 +362,7 @@ public class store_detail extends Activity{
                 if(isImageFitToScreen) {
                     isImageFitToScreen=false;  
                     LayoutParams pic1layout = new RelativeLayout.LayoutParams(150,150);
-                    pic1layout.setMargins(120, 50, 0, 0);
+                    pic1layout.setMargins(120, 100, 0, 0);
                 
                     
                     pic2.setVisibility(View.VISIBLE);
@@ -392,6 +392,7 @@ public class store_detail extends Activity{
                     isImageFitToScreen=false;  
                     LayoutParams pic2layout = new RelativeLayout.LayoutParams(150,150);
                     pic2layout.setMargins(0, 100, 120, 0);
+                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     
                     pic1.setVisibility(View.VISIBLE);
                     pic3.setVisibility(View.VISIBLE);

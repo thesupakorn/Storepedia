@@ -1915,6 +1915,7 @@ containing a value of this type.
          */
         public static final int Theme_AppCompat_Light_DarkActionBar=0x7f09007c;
         public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f09007e;
+        public static final int Theme_AppCompat_Light_NoActionBar_FullScreen=0x7f090090;
         /**  Base platform-dependent theme  
          */
         public static final int Theme_Base=0x7f090081;
