@@ -378,7 +378,8 @@ public class store_detail extends Activity{
                     pic3.setVisibility(View.INVISIBLE);
                     pic4.setVisibility(View.INVISIBLE);
                     
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(700,700);
                     pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     pic1.setLayoutParams(pic1layout);
                     pic1.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -407,7 +408,8 @@ public class store_detail extends Activity{
                     pic3.setVisibility(View.INVISIBLE);
                     pic4.setVisibility(View.INVISIBLE);
                     
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(700,700);
                     pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     pic2.setLayoutParams(pic2layout);
                     pic2.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -436,7 +438,8 @@ public class store_detail extends Activity{
                     pic1.setVisibility(View.INVISIBLE);
                     pic4.setVisibility(View.INVISIBLE);
                     
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(700,700);
                     pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     pic3.setLayoutParams(pic3layout);
                     pic3.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -466,7 +469,8 @@ public class store_detail extends Activity{
                     pic3.setVisibility(View.INVISIBLE);
                     pic1.setVisibility(View.INVISIBLE);
                     
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(700,700);
                     pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                     pic4.setLayoutParams(pic4layout);
                     pic4.setScaleType(ImageView.ScaleType.FIT_XY);
