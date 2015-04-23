@@ -33,7 +33,7 @@
             android:name=".select_location"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter >
                 <action  android:name="in.wptrafficanalyzer.select_location"/>
                 <category  android:name="android.intent.category.DEFAULT"/>
