@@ -29,6 +29,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -58,6 +59,19 @@ public class create_store extends Activity {
 	EditText store_name, store_detail;
 	String place_name, ex_store_name = "", ex_store_detail="";
 
+	@Override
+	public void onBackPressed() {
+	    new AlertDialog.Builder(this)
+	        .setTitle("Really Exit?")
+	        .setMessage("Are you sure you want to exit?")
+	        .setNegativeButton(android.R.string.no, null)
+	        .setPositiveButton(android.R.string.yes, new OnClickListener() {
+
+	            public void onClick(DialogInterface arg0, int arg1) {
+	            	create_store.super.onBackPressed();
+	            }
+	        }).create().show();
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

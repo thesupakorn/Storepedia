@@ -27,8 +27,11 @@ import com.jab.storepedia.model.Location;
 import com.jab.storepedia.model.Store;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -52,8 +55,23 @@ public class select_store extends Activity{
 	TextView status_text;
 	EditText input;
 	private ImageView all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
-	
+		
 	private List<Store> storeList = new ArrayList<Store>();
+	
+	@Override
+	public void onBackPressed() {
+	    new AlertDialog.Builder(this)
+	        .setTitle("Really Exit?")
+	        .setMessage("Are you sure you want to exit?")
+	        .setNegativeButton(android.R.string.no, null)
+	        .setPositiveButton(android.R.string.yes, new OnClickListener() {
+
+	            public void onClick(DialogInterface arg0, int arg1) {
+	            	select_store.super.onBackPressed();
+	            }
+	        }).create().show();
+	}
+	
       @Override
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -308,7 +326,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "entertainments";
-//                    getData.performClick();
+                    getData.performClick();
                 }
                 });
             health_no.setOnClickListener(new View.OnClickListener() {
@@ -331,7 +349,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.INVISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "health";
-//                    getData.performClick();
+                    getData.performClick();
                 }
                 });
             others_no.setOnClickListener(new View.OnClickListener() {
@@ -354,7 +372,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.INVISIBLE);
                     cat = "others";
-//                    getData.performClick();
+                    getData.performClick();
 
 //            		adapter.resetData(storeList);
 //            		adapter.getFilter().filter(cat);
@@ -479,6 +497,7 @@ public class select_store extends Activity{
       
 
       private void FilterData(){
+    	 Log.d("GGGGGG","storeList.size(): " + storeList.size());
   		adapter.resetData(storeList);
   		String name = "";
   		if(input.getText()!=null)

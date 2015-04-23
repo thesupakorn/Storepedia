@@ -33,6 +33,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -60,6 +61,21 @@ public class store_detail extends Activity{
 	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
 	String flag = "create";
 	int PCID;
+	
+	@Override
+	public void onBackPressed() {
+	    new AlertDialog.Builder(this)
+	        .setTitle("Really Exit?")
+	        .setMessage("Are you sure you want to exit?")
+	        .setNegativeButton(android.R.string.no, null)
+	        .setPositiveButton(android.R.string.yes, new OnClickListener() {
+
+	            public void onClick(DialogInterface arg0, int arg1) {
+	            	store_detail.super.onBackPressed();
+	            }
+	        }).create().show();
+	}
+	
 	@SuppressLint("NewApi")
 	@Override
     public void onCreate(Bundle savedInstanceState) {

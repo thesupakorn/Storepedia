@@ -34,7 +34,9 @@ import com.facebook.model.GraphUser;
 
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -54,6 +56,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -63,6 +66,20 @@ public class MainActivity extends ActionBarActivity {
 	private ProfilePictureView profilePictureView;
 	public int UID;
 
+	@Override
+	public void onBackPressed() {
+	    new AlertDialog.Builder(this)
+	        .setTitle("Really Exit?")
+	        .setMessage("Are you sure you want to exit?")
+	        .setNegativeButton(android.R.string.no, null)
+	        .setPositiveButton(android.R.string.yes, new OnClickListener() {
+
+	            public void onClick(DialogInterface arg0, int arg1) {
+	            	MainActivity.super.onBackPressed();
+	            }
+	        }).create().show();
+	}
+	
 	@SuppressLint("NewApi")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

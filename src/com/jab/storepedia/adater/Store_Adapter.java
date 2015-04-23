@@ -10,6 +10,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.provider.SyncStateContract.Constants;
+import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,13 @@ public class Store_Adapter extends BaseAdapter implements Filterable{
  
     @Override
     public int getCount() {
-        return movieItems.size();
+    	if(movieItems==null)
+    	{
+    		Log.d("GGGGGG", "movieItems == NULL!!");
+         	return 0;
+    	}
+    	else
+            return movieItems.size();
     }
  
     @Override
@@ -77,22 +84,27 @@ public class Store_Adapter extends BaseAdapter implements Filterable{
 
 			private List<Store> getFilteredResults(CharSequence constraint) {
 				// TODO Auto-generated method stub
-				String filterString = constraint.toString().toLowerCase();
-				
-				String name = constraint.toString().split("<:>")[0];
-				String cat = constraint.toString().split("<:>")[1];
+				Log.d("GGGGGG","111111" + constraint);
 
+				//String filterString = constraint.toString().toLowerCase();
+				String name = "";
+				String cat = "";
+				if(!constraint.equals("<:>")){
+					name = constraint.toString().toLowerCase().split("<:>")[0];
+					cat = constraint.toString().toLowerCase().split("<:>")[1];
+				}
+				Log.d("GGGGGG","222222movieItems.size(): " + movieItems.size());
 	            FilterResults results = new FilterResults();
 	            int count = movieItems.size();
 	            final ArrayList<Store> nlist = new ArrayList<Store>(count);
-
-
+	            Log.d("GGGGGG","333333movieItems.size(): " + movieItems.size());
 	            for(Store mStore:movieItems){
-	            	Log.d("GGGGGG","Genre:" + mStore.getGenre() + " filter_string:" + filterString);
+	            	//Log.d("GGGGGG","Genre:" + mStore.getGenre() + " filter_string:" + filterString);
+	            	Log.d("GGGGGG","Genre:" + mStore.getGenre() + " Name:" + name + " Cat: " + cat);
 	            	if(mStore.getTitle().toLowerCase().contains(name)&&mStore.getGenre().toLowerCase().contains(cat))
 	            			nlist.add(mStore);
 	            }
-
+                
 	            results.values = nlist;
 	            results.count = nlist.size();
 
