@@ -101,13 +101,13 @@ public class store_detail extends Activity{
         SID = intent.getIntExtra("SID", -1);
         LID = intent.getIntExtra("LID", -1);
         UID = intent.getIntExtra("UID", -1);
-        store_name = intent.getStringExtra("store_name");
-        place_name = intent.getStringExtra("place_name");
+        //store_name = intent.getStringExtra("store_name");
+        //place_name = intent.getStringExtra("place_name");
         
         
         ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
         
-        MatchLayoutToID(place_name);
+        MatchLayoutToID();
         
         new DownloadData().execute();
         
@@ -120,10 +120,10 @@ public class store_detail extends Activity{
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
-				i.putExtra("place_name", place_name);
-				i.putExtra("store_name", store_name);
+				//i.putExtra("place_name", place_name);
+				//i.putExtra("store_name", store_name);
 				startActivity(i);
-				//finish();
+				finish();
 			}
         });
         edit_comment.setOnClickListener(new View.OnClickListener() {
@@ -148,21 +148,21 @@ public class store_detail extends Activity{
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("PCID", PCID);
-				i.putExtra("place_name", place_name);
-				i.putExtra("store_name", store_name);
+				//i.putExtra("place_name", place_name);
+				//i.putExtra("store_name", store_name);
 				startActivity(i);
-				//finish();
+				finish();
 			}
         });
         
         back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*Intent i = new Intent(store_detail.this,select_store.class);
+				Intent i = new Intent(store_detail.this,select_store.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
-				i.putExtra("place_name", place_name);
-				startActivity(i);*/
+				//i.putExtra("place_name", place_name);
+				startActivity(i);
 				finish();
 			}
         });
@@ -192,11 +192,11 @@ public class store_detail extends Activity{
         		intent.putExtra("PCID", PCID);
         		intent.putExtra("SID", SID);
         		intent.putExtra("LID", LID);
-        		intent.putExtra("place_name", place_name);
+        		//intent.putExtra("place_name", place_name);
         		intent.putExtra("UID", UID);
-        		intent.putExtra("store_name", store_name);
+        		//intent.putExtra("store_name", store_name);
                 startActivity(intent);
-                //finish();
+                finish();
         	}
         }); 
 	
@@ -399,13 +399,13 @@ public class store_detail extends Activity{
 //        		i.putExtra("store_name",store_name_view.getText().toString());
 //        		i.putExtra("place_name",place_name);
 //    			startActivity(i);
-//    			//finish();
+    			//finish();
     			OpenPhoto(map_bitmap);
     		}
         });
 }	
 	
-	private void MatchLayoutToID(String place_name2) {
+	private void MatchLayoutToID() {
 		// TODO Auto-generated method stub
 		pic1 = (ImageView) findViewById(R.id.pic1);
         pic2 = (ImageView) findViewById(R.id.pic2);
@@ -451,8 +451,8 @@ public class store_detail extends Activity{
 		        UID = intent.getIntExtra("UID" , -1);
 		        SID = intent.getIntExtra("SID" , -1);
 		        LID = intent.getIntExtra("LID" , -1);
-		        store_name = intent.getStringExtra("store_name");
-		        place_name = intent.getStringExtra("place_name");
+		        //store_name = intent.getStringExtra("store_name");
+		        //place_name = intent.getStringExtra("place_name");
 		    	
 		        // the user clicked on colors[which]
 		        
@@ -472,10 +472,10 @@ public class store_detail extends Activity{
 		            	i.putExtra("UID", UID);
 		            	i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
-						i.putExtra("place_name", place_name);
+						//i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
-						//finish();
+						finish();
 		            	}catch(JSONException e)
 		            	{
 		            		Log.d("GGGGGG", "ERROR AT LINE: 481");
@@ -499,10 +499,10 @@ public class store_detail extends Activity{
 		            	i.putExtra("UID", UID);
 		            	i.putExtra("LID", LID);
 						i.putExtra("SID", SID);
-						i.putExtra("place_name", place_name);
+						//i.putExtra("place_name", place_name);
 						i.putExtra("store_name", store_name_view.getText().toString());
 						startActivity(i);
-						//finish();
+						finish();
 		            	}catch(JSONException e)
 		            	{
 		            		Log.d("GGGGGG", "ERROR AT LINE:508");
@@ -576,7 +576,7 @@ public class store_detail extends Activity{
 		            i.putExtra("UID", UID);
 		            i.putExtra("LID", LID);
 					i.putExtra("SID", SID);
-					i.putExtra("place_name", place_name);
+					//i.putExtra("place_name", place_name);
 					i.putExtra("store_name", store_name_view.getText().toString());
 					startActivity(i);
 					finish();
@@ -607,7 +607,7 @@ public class store_detail extends Activity{
 		    				        Intent i = new Intent(store_detail.this,select_store.class);
 		    						i.putExtra("UID", UID);
 		    						i.putExtra("LID", LID);
-		    						i.putExtra("place_name", place_name);
+		    						//i.putExtra("place_name", place_name);
 		    						startActivity(i);
 		    						finish();
 		    			    	}

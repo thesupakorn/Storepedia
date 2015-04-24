@@ -650,7 +650,7 @@ int id status_text 0x7f0500ab
 int id status_text2 0x7f0500aa
 int id store_address 0x7f050074
 int id store_contact 0x7f050075
-int id store_detail 0x7f05006f
+int id store_detail 0x7f050070
 int id store_image 0x7f0500b1
 int id store_list 0x7f0500ac
 int id store_name 0x7f05006e
@@ -658,7 +658,7 @@ int id store_search 0x7f050090
 int id submit_area 0x7f050044
 int id tabMode 0x7f05000d
 int id textView1 0x7f050047
-int id textView2 0x7f050070
+int id textView2 0x7f05006f
 int id textView3 0x7f050071
 int id textView4 0x7f050078
 int id thumbnail 0x7f050081

@@ -85,9 +85,10 @@ public class edit_comment_text extends Activity {
 		SID = intent.getIntExtra("SID" , -1);
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
+		PCID = intent.getIntExtra("PCID", -1);
 		isedit = UID = intent.getIntExtra("UID" , -1);
-		final String store_name = intent.getStringExtra("store_name");
-		final String place_name = intent.getStringExtra("place_name");
+		//final String store_name = intent.getStringExtra("store_name");
+		//final String place_name = intent.getStringExtra("place_name");
 		comment_field = (EditText) findViewById(R.id.comment);
 		TextView textView1 = (TextView) findViewById(R.id.textView1);
         //textView1.setText("SID = " + SID + " UID = " + UID);
@@ -97,23 +98,12 @@ public class edit_comment_text extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(edit_comment_text.this,lcomment_detail.class);
-				String url1 = "http://122.155.187.27:9876/find_PCID.php";
-				List<NameValuePair> params = new ArrayList<NameValuePair>();
-		        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-		        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-		        try{
-		        	JSONArray data = new JSONArray(getHttpPost(url1,params));
-		            JSONObject c = data.getJSONObject(0);
-		            PCID = Integer.parseInt(c.getString("PCID"));
-		        }catch(JSONException e){
-		        	e.printStackTrace();
-		     }
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("PCID", PCID);
-				i.putExtra("place_name", place_name);
-				i.putExtra("store_name", store_name);
+				//i.putExtra("place_name", place_name);
+				//i.putExtra("store_name", store_name);
 	            startActivity(i);
 	            finish();
 			}
@@ -140,19 +130,7 @@ public class edit_comment_text extends Activity {
 	public void upload_text(View v)
 	{
 		final EditText comment_field = (EditText) findViewById(R.id.comment);
-		String url1 = "http://122.155.187.27:9876/find_PCID.php";
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-             
-        try{
-        	JSONArray data = new JSONArray(getHttpPost(url1,params));
-            JSONObject c = data.getJSONObject(0);
-            PCID = Integer.parseInt(c.getString("PCID"));
-                    
-        }catch(JSONException e){
-        	e.printStackTrace();
-     }
+		
 		String url = "http://122.155.187.27:9876/edit_comment_text.php";
 		
 		List<NameValuePair> params2 = new ArrayList<NameValuePair>();
@@ -176,8 +154,8 @@ public class edit_comment_text extends Activity {
 			i.putExtra("LID", LID);
 			i.putExtra("SID", SID);
 			i.putExtra("PCID", PCID);
-			i.putExtra("place_name", place_name);
-			i.putExtra("store_name", store_name);
+			//i.putExtra("place_name", place_name);
+			//i.putExtra("store_name", store_name);
 			startActivity(i);
 			finish();
 	}

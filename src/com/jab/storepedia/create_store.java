@@ -85,7 +85,7 @@ public class create_store extends Activity {
 		LID = intent.getIntExtra("LID" , -1);
 		SID = intent.getIntExtra("SID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
-		place_name = intent.getStringExtra("place_name");
+		//place_name = intent.getStringExtra("place_name");
 		ex_store_name = intent.getStringExtra("store_name");
 		ex_store_detail = intent.getStringExtra("store_detail");
 		
@@ -110,32 +110,32 @@ public class create_store extends Activity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//SID = -1;
-				//Intent intent = getIntent();
-				//LID = intent.getIntExtra("LID" , -1);
-				//SID = intent.getIntExtra("SID" , -1);
-				//UID = intent.getIntExtra("UID" , -1);
+				SID = -1;
+				Intent intent = getIntent();
+				LID = intent.getIntExtra("LID" , -1);
+				SID = intent.getIntExtra("SID" , -1);
+				UID = intent.getIntExtra("UID" , -1);
 				//store_name = intent.getStringExtra("store_name");
 				//place_name = intent.getStringExtra("place_name");
-				//if(SID!=-1)
-				//{
-				//	Intent i = new Intent(create_store.this,store_detail.class);
-				//	i.putExtra("SID", SID);
-				//	i.putExtra("UID", UID);
-				//    i.putExtra("LID", LID);
-				//    i.putExtra("place_name", place_name);				  
-				///    startActivity(i);
-	            /*    finish();
+				if(SID!=-1)
+				{
+					Intent i = new Intent(create_store.this,store_detail.class);
+					i.putExtra("SID", SID);
+					i.putExtra("UID", UID);
+				    i.putExtra("LID", LID);
+				    //i.putExtra("place_name", place_name);				  
+				    startActivity(i);
+	                finish();
 				}
 				else
 				{
 				Intent i = new Intent(create_store.this,select_store.class);				
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
-				i.putExtra("place_name", place_name);
-	            startActivity(i); */
+				//i.putExtra("place_name", place_name);
+	            startActivity(i); 
 	            finish();
-			//}
+			}
 			}
 	    });
 	}		
@@ -151,7 +151,7 @@ public class create_store extends Activity {
 	        Intent i = new Intent(create_store.this,create_store2.class);
 			i.putExtra("UID", UID);
 			i.putExtra("LID", LID);
-			i.putExtra("place_name", place_name);
+			//i.putExtra("place_name", place_name);
 			i.putExtra("store_name", store_name.getText().toString());
 			i.putExtra("store_detail", store_detail.getText().toString());
 			startActivity(i);
@@ -159,7 +159,7 @@ public class create_store extends Activity {
 	}
 	public void edited(View v)
 	{		
-		Intent i = new Intent(create_store.this,store_info.class);
+		Intent i = new Intent(create_store.this,store_detail.class);
 		String url = "http://122.155.187.27:9876/edit_store_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
@@ -170,8 +170,8 @@ public class create_store extends Activity {
         	i.putExtra("UID", UID);
 			i.putExtra("LID", LID);
 			i.putExtra("SID", SID);
-			i.putExtra("place_name", place_name);
-			i.putExtra("store_name", store_name.getText().toString());
+			//i.putExtra("place_name", place_name);
+			//i.putExtra("store_name", store_name.getText().toString());
 			startActivity(i);
 			finish();
         	}catch(Exception e)

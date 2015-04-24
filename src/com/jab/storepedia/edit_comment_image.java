@@ -87,35 +87,26 @@ public class edit_comment_image extends Activity {
 		SID = intent.getIntExtra("SID" , -1);
 		LID = intent.getIntExtra("LID" , -1);
 		UID = intent.getIntExtra("UID" , -1);
-		store_name = intent.getStringExtra("store_name");
-		place_name = intent.getStringExtra("place_name");
+		PCID = intent.getIntExtra("PCID", -1);
+		//store_name = intent.getStringExtra("store_name");
+		//place_name = intent.getStringExtra("place_name");
 		comment_field = (TextView) findViewById(R.id.comment);
 		TextView debug_text = (TextView) findViewById(R.id.textView1);
 		ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
 		
-		String url1 = "http://122.155.187.27:9876/find_PCID.php";
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-        params.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-        try{
-        	JSONArray data = new JSONArray(getHttpPost(url1,params));
-            JSONObject c = data.getJSONObject(0);
-            PCID = Integer.parseInt(c.getString("PCID"));
-        }catch(JSONException e){
-        	e.printStackTrace();
-     }
+	
 		//debug_text.setText("SID = "+SID + ";  UID = " +UID + "; LID = " + LID +";");		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);
+				Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
 				i.putExtra("SID", SID);
 				i.putExtra("PCID", PCID);
-				i.putExtra("place_name", place_name);
-				i.putExtra("store_name", store_name);
-	            startActivity(i);*/
+				//i.putExtra("place_name", place_name);
+				//i.putExtra("store_name", store_name);
+	            startActivity(i);
 	            finish();
 			}
 	    });
@@ -485,19 +476,10 @@ public class edit_comment_image extends Activity {
 						SID = intent.getIntExtra("SID" , -1);
 						LID = intent.getIntExtra("LID" , -1);
 						UID = intent.getIntExtra("UID" , -1);
-						store_name = intent.getStringExtra("store_name");
-						place_name = intent.getStringExtra("place_name");
-						String url1 = "http://122.155.187.27:9876/find_PCID.php";
-						List<NameValuePair> params1 = new ArrayList<NameValuePair>();
-				        params1.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-				        params1.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-				        try{
-				        	JSONArray data = new JSONArray(getHttpPost(url1,params1));
-				            JSONObject c = data.getJSONObject(0);
-				            PCID = Integer.parseInt(c.getString("PCID"));
-				        }catch(JSONException e){
-				        	e.printStackTrace();
-				     }
+						PCID = intent.getIntExtra("PCID" , -1);
+						//store_name = intent.getStringExtra("store_name");
+						//place_name = intent.getStringExtra("place_name");
+						
 						
 						//comment_field.setText("PCID: " + Integer.toString(PCID)+ " UID: "+UID+" SID = "+SID + "place_name = "+ place_name+"store_name = "+store_name);
 				        Intent i = new Intent(edit_comment_image.this,lcomment_detail.class);;
@@ -507,8 +489,8 @@ public class edit_comment_image extends Activity {
 							i.putExtra("LID", LID);
 							i.putExtra("SID", SID);
 							i.putExtra("PCID", PCID);
-							i.putExtra("place_name", place_name);
-							i.putExtra("store_name", store_name);
+							//i.putExtra("place_name", place_name);
+							//i.putExtra("store_name", store_name);
 							startActivity(i);
 							finish();
 					}

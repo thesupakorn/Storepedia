@@ -87,7 +87,7 @@ public class create_store2 extends Activity {
 		UID = intent.getIntExtra("UID" , -1);
 		store_name = intent.getStringExtra("store_name");
 		store_detail = intent.getStringExtra("store_detail");
-		place_name = intent.getStringExtra("place_name");
+		//place_name = intent.getStringExtra("place_name");
 		ex_store_address = intent.getStringExtra("store_address");
 		ex_store_contact = intent.getStringExtra("store_contact");
 
@@ -118,23 +118,23 @@ public class create_store2 extends Activity {
 				SID = intent.getIntExtra("SID" , -1);
 				UID = intent.getIntExtra("UID" , -1);
 				store_name = intent.getStringExtra("store_name");
-				place_name = intent.getStringExtra("place_name");
+				//place_name = intent.getStringExtra("place_name");
 				if(SID!=-1)
 				{
-					/*Intent i = new Intent(create_store2.this,store_detail.class);
+					Intent i = new Intent(create_store2.this,store_detail.class);
 					i.putExtra("SID", SID);
 					i.putExtra("UID", UID);
 				    i.putExtra("LID", LID);
-				    i.putExtra("place_name", place_name);
-				    i.putExtra("store_name", store_name);
-				    startActivity(i);*/
+				    //i.putExtra("place_name", place_name);
+				    //i.putExtra("store_name", store_name);
+				    startActivity(i);
 	                finish();
 				}
 				else{
 				Intent i = new Intent(create_store2.this,create_store.class);				
 				i.putExtra("UID", UID);
 				i.putExtra("LID", LID);
-				i.putExtra("place_name", place_name);
+				//i.putExtra("place_name", place_name);
 				i.putExtra("store_name", store_name);
 				i.putExtra("store_detail", store_detail);
 	            startActivity(i);
@@ -155,7 +155,7 @@ public class create_store2 extends Activity {
 	     Intent i = new Intent(create_store2.this,create_store3.class);;
 			i.putExtra("UID", UID);
 			i.putExtra("LID", LID);
-			i.putExtra("place_name", place_name);
+			//i.putExtra("place_name", place_name);
 			i.putExtra("store_name", store_name);
 			i.putExtra("store_detail", store_detail);
 			i.putExtra("store_address", store_address.getText().toString());
@@ -165,7 +165,7 @@ public class create_store2 extends Activity {
 	}	
 	public void edited(View v)
 	{		
-		Intent i = new Intent(create_store2.this,store_info.class);
+		Intent i = new Intent(create_store2.this,store_detail.class);
 		String url = "http://122.155.187.27:9876/edit_store_detail.php";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
@@ -176,8 +176,8 @@ public class create_store2 extends Activity {
         	i.putExtra("UID", UID);
 			i.putExtra("LID", LID);
 			i.putExtra("SID", SID);
-			i.putExtra("place_name", place_name);
-			i.putExtra("store_name", store_name);
+			//i.putExtra("place_name", place_name);
+			//i.putExtra("store_name", store_name);
 			startActivity(i);
 			finish();
         	}catch(Exception e)

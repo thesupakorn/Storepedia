@@ -53,7 +53,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 public class select_store extends Activity{
 	private Store_Adapter adapter;
-	int LID;
+	int LID,UID;
 	String cat ="";
 	EditText input;
 	private ImageView new_store,all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
@@ -85,7 +85,7 @@ public class select_store extends Activity{
             
             Intent intent = getIntent();
             LID = intent.getIntExtra("LID", -1);
-            final int UID = intent.getIntExtra("UID" , -1);
+            UID = intent.getIntExtra("UID" , -1);
             //place_name = intent.getStringExtra("place_name");
             
             
@@ -279,10 +279,9 @@ public class select_store extends Activity{
             back.setOnClickListener(new View.OnClickListener() {
     			@Override
     			public void onClick(View v) {
-    				//Intent i = new Intent(select_store.this,select_location.class);
-    				//i.putExtra("UID", UID);
-    				//i.putExtra("LID", LID);
-                   // startActivity(i);
+    				Intent i = new Intent(select_store.this,select_location.class);
+    				i.putExtra("UID", UID);
+                    startActivity(i);
                     finish();
     			}
             });
@@ -313,9 +312,9 @@ public class select_store extends Activity{
           		intent.putExtra("LID", LID);
           		intent.putExtra("UID", UID);
           		//intent.putExtra("store_name", store_name);
-          		intent.putExtra("place_name", place_name);
-                  startActivity(intent);
-                  //finish();
+          		//intent.putExtra("place_name", place_name);
+                startActivity(intent);
+                finish();
 
           	}
           });  
@@ -399,15 +398,15 @@ public class select_store extends Activity{
       {
     	  Intent intent = getIntent();
     	  //final String place_name = intent.getStringExtra("place_name");
-          final int LID = intent.getIntExtra("LID", -1);
-          final int UID = intent.getIntExtra("UID" , -1);
+          LID = intent.getIntExtra("LID", -1);
+          UID = intent.getIntExtra("UID" , -1);
           
           Intent i = new Intent(select_store.this,create_store.class);
 		  i.putExtra("UID", UID);
 		  i.putExtra("LID", LID);
-		  i.putExtra("place_name", place_name);
+		  //i.putExtra("place_name", place_name);
           startActivity(i);
-          //finish();
+          finish();
           
       }
       public String getHttpPost(String url,List<NameValuePair> params) {
