@@ -92,6 +92,8 @@ public class Store_Adapter extends BaseAdapter implements Filterable{
 				if(!constraint.equals("<:>")){
 					name = constraint.toString().toLowerCase().split("<:>")[0];
 					cat = constraint.toString().toLowerCase().split("<:>")[1];
+					if(cat.equals("all"))
+						cat = "";
 				}
 				Log.d("GGGGGG","222222movieItems.size(): " + movieItems.size());
 	            FilterResults results = new FilterResults();

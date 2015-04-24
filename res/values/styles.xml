@@ -28,4 +28,7 @@
     <item name="android:windowContentOverlay">@null</item>
 </style>
 
+    <style name="noTitle" parent="@style/Theme.AppCompat.Light">
+    <item name="android:windowNoTitle">true</item>
+</style>
 </resources>

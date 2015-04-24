@@ -132,7 +132,7 @@ public class select_store extends Activity{
            
             adapter = new Store_Adapter(select_store.this,storeList);
             store_list.setAdapter(adapter);
-            final ImageView getData = (ImageView) findViewById(R.id.search);
+           // final ImageView getData = (ImageView) findViewById(R.id.search);
             ImageView place_image = (ImageView) findViewById(R.id.place_image);
             
             String url2 = "http://122.155.187.27:9876/select_location.php";
@@ -214,7 +214,7 @@ public class select_store extends Activity{
               	  others_no.setVisibility(View.VISIBLE);
 //                  cat = "all";
               	  cat = "";
-                  getData.performClick();
+                  getData();
                 }
                 });
             
@@ -238,7 +238,7 @@ public class select_store extends Activity{
             	  health_no.setVisibility(View.VISIBLE);
             	  others_no.setVisibility(View.VISIBLE);
               	  cat = "food";             	
-              	  getData.performClick();
+              	  getData();
                 }
                 });
             
@@ -262,7 +262,7 @@ public class select_store extends Activity{
                     health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "books";
-                    getData.performClick();
+                    getData();
                 }
                 });
             clothings_no.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +285,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "clothings";
-                    getData.performClick();
+                    getData();
                 }
                 });
             electronics_no.setOnClickListener(new View.OnClickListener() {
@@ -308,7 +308,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "electronics";
-                    getData.performClick();
+                    getData();
                 }
                 });
             entertainments_no.setOnClickListener(new View.OnClickListener() {
@@ -331,7 +331,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "entertainments";
-                    getData.performClick();
+                    getData();
                 }
                 });
             health_no.setOnClickListener(new View.OnClickListener() {
@@ -354,7 +354,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.INVISIBLE);
                 	others_no.setVisibility(View.VISIBLE);
                     cat = "health";
-                    getData.performClick();
+                    getData();
                 }
                 });
             others_no.setOnClickListener(new View.OnClickListener() {
@@ -377,7 +377,7 @@ public class select_store extends Activity{
                 	health_no.setVisibility(View.VISIBLE);
                 	others_no.setVisibility(View.INVISIBLE);
                     cat = "others";
-                    getData.performClick();
+                    getData();
 
 //            		adapter.resetData(storeList);
 //            		adapter.getFilter().filter(cat);
@@ -451,24 +451,25 @@ public class select_store extends Activity{
                 }
             });
             
-            getData.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                	//GGGGGG
-                	if(storeList.size()==0){
-                		Log.d("GGGGGG","set Data");
-                		final String store_search = input.getText().toString();                                             
-                        	adapter.notifyDataSetChanged();
-                       
-                        InputMethodManager inputManager = (InputMethodManager)
-                                getSystemService(Context.INPUT_METHOD_SERVICE); 
-
-              inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                   InputMethodManager.HIDE_NOT_ALWAYS);
-                	}else{
-                		FilterData();
-                	}
-                }
-            });                      
+            
+//            getData.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//                	//GGGGGG
+//                	if(storeList.size()==0){
+//                		Log.d("GGGGGG","set Data");
+//                		final String store_search = input.getText().toString();                                             
+//                        	adapter.notifyDataSetChanged();
+//                       
+//                        InputMethodManager inputManager = (InputMethodManager)
+//                                getSystemService(Context.INPUT_METHOD_SERVICE); 
+//
+//              inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+//                                   InputMethodManager.HIDE_NOT_ALWAYS);
+//                	}else{
+//                		FilterData();
+//                	}
+//                }
+//            });                      
             
             //text.setText(Integer.toString(LID));
             back.setOnClickListener(new View.OnClickListener() {
@@ -509,10 +510,28 @@ public class select_store extends Activity{
   			name = input.getText().toString();
   		String catagory = cat;
   		Log.d("GGGGGG","name:" + name + " cat:" + catagory);
-  		adapter.getFilter().filter(name+"<:>"+cat);
+  		if(name!="" && cat == "")
+  			adapter.getFilter().filter(name+"<:>all");
+  		else
+  		    adapter.getFilter().filter(name+"<:>"+cat);
       }
       
-      
+      public void getData()
+      {
+    	  if(storeList.size()==0){
+      		Log.d("GGGGGG","set Data");
+      		final String store_search = input.getText().toString();                                             
+              	adapter.notifyDataSetChanged();
+             
+              InputMethodManager inputManager = (InputMethodManager)
+                      getSystemService(Context.INPUT_METHOD_SERVICE); 
+
+    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                         InputMethodManager.HIDE_NOT_ALWAYS);
+      	}else{
+      		FilterData();
+      	}
+      }
       public void newstore(View v)
       {
     	  Intent intent = getIntent();

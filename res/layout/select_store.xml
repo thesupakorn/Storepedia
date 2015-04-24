@@ -10,31 +10,23 @@
         android:layout_height="wrap_content"
         layout="@layout/top_action_bar" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/grey">
-
-        <ImageView
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            
+            <ImageView
             android:id="@+id/place_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="10dp" />
-
-        <EditText
-            android:id="@+id/store_search"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/place_image"
-            android:layout_below="@+id/place_image"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="  Search for Store"
-            android:inputType="text"
-            android:padding="8dp" >
-
-            <requestFocus />
-        </EditText>
+            android:layout_margin="10dp" 
+            android:layout_gravity="center_vertical" />
 
         <TextView
             android:id="@+id/placename"
@@ -44,27 +36,46 @@
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/place_image"
             android:text="Place Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_vertical" />
+        
+        </LinearLayout>
+    
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            
+            <EditText
+            android:id="@+id/store_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:layout_margin="5dp"
+            android:hint="  Search for Store"
+            android:inputType="text"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical" >
 
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/store_search"
-            android:layout_marginTop="73dp"
-            android:src="@drawable/magnifying_glass113" />
+            		<requestFocus />
+        	</EditText>
 
-        <ImageView
+        
+        <Button
             android:id="@+id/newstore_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/store_search"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="73dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:onClick="newstore"
-            android:src="@drawable/newstore_button" />
-
-    </RelativeLayout>
+            android:background="@drawable/newstorebutton"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical" />
+        
+        
+        </LinearLayout>
+    
+    </LinearLayout>
 
     <ScrollView      
         android:layout_width="fill_parent"

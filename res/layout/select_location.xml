@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
     <include
         android:id="@+id/topbar"
         android:layout_width="match_parent"
@@ -16,6 +15,7 @@
         android:orientation="horizontal" 
         android:padding="15dp">
 
+        
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -41,6 +41,7 @@
             android:src="@drawable/magnifying_glass113" />
 
     </RelativeLayout>
+
 
     <TextView
         android:id="@+id/status"
