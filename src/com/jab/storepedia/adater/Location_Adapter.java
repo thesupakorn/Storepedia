@@ -48,6 +48,11 @@ public class Location_Adapter extends BaseAdapter implements Filterable {
         return position;
     }
  
+    public int getIDKub(int position){
+    	return this.movieItems.get(position).getLID();
+    	
+    }
+    
     public void resetData(List<Location> Location){
     	this.movieItems = Location;
     }

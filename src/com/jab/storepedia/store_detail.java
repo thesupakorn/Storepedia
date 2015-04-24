@@ -32,6 +32,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
@@ -40,6 +41,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -57,14 +59,18 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class store_detail extends Activity{
 	boolean isImageFitToScreen;
-	ImageView pic1,pic2,pic3,pic4,info_yes,info_no,gallery_no,gallery_yes,comments_no,comments_yes, map;
+	ImageView pic1,pic2,pic3,pic4,info_yes,info_no,gallery_no,gallery_yes,comments_no,comments_yes, map, setting_button,store_image_view;
+	ImageButton create_comment,edit_comment;
 	int SID,LID,UID;
-	String store_name,place_name;
+	String store_name,place_name,result2;
 	private Lcomment_adapter adapter;
 	private List<Lcomment> lcommentList = new ArrayList<Lcomment>();
 	String flag = "create";
 	int PCID;
-	Bitmap map_bitmap;
+	Bitmap map_bitmap=null,bitmap=null,bitmap1=null,bitmap2=null,bitmap3=null,bitmap4=null;
+	JSONArray data,data2,data3,data4,data5;
+	ListView lcomment_list;
+	TextView store_name_view, place_name_view,category_view,detail_info,address_info, contact_info,text,store_name_textview,write_comment_text;
 	
 	@Override
 	public void onBackPressed() {
@@ -98,36 +104,13 @@ public class store_detail extends Activity{
         store_name = intent.getStringExtra("store_name");
         place_name = intent.getStringExtra("place_name");
         
-        pic1 = (ImageView) findViewById(R.id.pic1);
-        pic2 = (ImageView) findViewById(R.id.pic2);
-        pic3 = (ImageView) findViewById(R.id.pic3);
-        pic4 = (ImageView) findViewById(R.id.pic4);
-        ImageView setting_button = (ImageView) findViewById(R.id.setting_button);
-        setting_button.setVisibility(View.INVISIBLE);
-		ImageView store_image_view = (ImageView) findViewById(R.id.store_image);
-		TextView store_name_view = (TextView) findViewById(R.id.store_name);
-		TextView place_name_view = (TextView) findViewById(R.id.place_name); 
-		TextView category_view = (TextView) findViewById(R.id.category_text);
-		TextView detail_info = (TextView) findViewById(R.id.detail_info);
-		TextView address_info = (TextView) findViewById(R.id.address_info);
-		TextView contact_info = (TextView) findViewById(R.id.contact_info);
-		//TextView score_view = (TextView) findViewById(R.id.score);
-        ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
-        gallery_no = (ImageView) findViewById(R.id.gallery_button_no);
-        comments_no = (ImageView) findViewById(R.id.comment_button_no);
-        info_no = (ImageView) findViewById(R.id.info_button_no);
-        gallery_yes = (ImageView) findViewById(R.id.gallery_button_yes);
-        comments_yes = (ImageView) findViewById(R.id.comment_button_yes);
-        info_yes = (ImageView) findViewById(R.id.info_button_yes);
-        map = (ImageView) findViewById(R.id.map_button);
         
-		gallery_yes.setVisibility(View.INVISIBLE);
-		comments_yes.setVisibility(View.INVISIBLE);
-		map.setVisibility(View.INVISIBLE);
-		
-        ImageButton create_comment = (ImageButton) findViewById(R.id.create_comment_button);
-        ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
-    	edit_comment.setVisibility(View.INVISIBLE);
+        ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+        
+        MatchLayoutToID(place_name);
+        
+        new DownloadData().execute();
+        
         create_comment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -155,6 +138,7 @@ public class store_detail extends Activity{
 		            JSONObject c = data.getJSONObject(0);
 		            PCID = Integer.parseInt(c.getString("PCID"));
 		        }catch(JSONException e){
+		        	Log.d("GGGGGG", "ERROR AT LINE: 141");
 		        	e.printStackTrace();
 		     }
 				Intent i = new Intent(store_detail.this,lcomment_detail.class);;
@@ -182,9 +166,9 @@ public class store_detail extends Activity{
 				finish();
 			}
         });
-        final TextView text = (TextView)findViewById(R.id.status); 
-        final ListView lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
-        final TextView store_name_textview = (TextView)findViewById(R.id.textView1); 
+        text = (TextView)findViewById(R.id.status); 
+        lcomment_list = (ListView)findViewById(R.id.lcomment_list); 
+        store_name_textview = (TextView)findViewById(R.id.textView1); 
         //ImageButton write_comment = (ImageButton) findViewById(R.id.create_comment_button);
         //ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
         final TextView write_comment_text = (TextView)findViewById(R.id.textView2); 
@@ -197,50 +181,7 @@ public class store_detail extends Activity{
         lcomment_list.setAdapter(adapter);
         
         
-		//store_name_textview.setText("Comments For: "+store_name);
-
-		        String url = "http://122.155.187.27:9876/lcomment_list.php";
-            	lcommentList.clear();
-        		List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-                try{
-                	JSONArray data = new JSONArray(getHttpPost(url,params));
-                	text.setText("Result Found: 0");
-                	for(int i = 0; i < data.length(); i++){
-                	JSONObject c = data.getJSONObject(i);
-                	Lcomment lcomment = new Lcomment();
-                	lcomment.setPCID(c.getInt("PCID"));
-                	lcomment.setUsername(c.getString("username"));
-                	lcomment.setThumbnailUrl(c.getString("image"));
-                	lcomment.setagreed(c.getInt("agreed"));
-                	lcomment.setdisagreed(c.getInt("disagreed"));
-                	lcomment.setcomment(c.getString("comment"));
-                	lcommentList.add(lcomment);
-                	text.setText("Result Found: "+(i+1));
-                	} 
-                
-                	adapter.notifyDataSetChanged();
-                }catch(JSONException e){
-                	e.printStackTrace();
-                	text.setText("Connection FAIL. Please check your internet connection!");
-                }      
-                
-                String url2 = "http://122.155.187.27:9876/check_if_comment.php";
-                List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-                params2.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-                params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-                try{
-                	JSONArray data = new JSONArray(getHttpPost(url2,params2));
-                	for(int i = 0; i < data.length(); i++){
-                    	JSONObject c = data.getJSONObject(i);
-                    	create_comment.setVisibility(View.INVISIBLE);
-                    	edit_comment.setVisibility(View.VISIBLE);
-                    	flag = "edit";
-                	}
-                }catch(JSONException e){
-                	e.printStackTrace();  
-                	write_comment_text.setText("FAIL TO GET PCID");
-                }      
+		//store_name_textview.setText("Comments For: "+store_name);	            
                 
         lcomment_list.setOnItemClickListener(new OnItemClickListener(){
         	@Override
@@ -258,117 +199,8 @@ public class store_detail extends Activity{
                 //finish();
         	}
         }); 
-    
-        
-        String url0 = "http://122.155.187.27:9876/check_if_owner_store.php";
-
-        List<NameValuePair> params0 = new ArrayList<NameValuePair>();
-        params0.add(new BasicNameValuePair("UID", Integer.toString(UID)));
-        params0.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-        //comment.setText("UID: "+UID+" PCID: "+PCID);
-        try{
-        	JSONArray data = new JSONArray(getHttpPost(url0,params0));
-        	JSONObject c = data.getJSONObject(0);
-        	String result = c.getString("result");
-        	//comment.setText(result);
-        	if(result.equals("yes"))
-        	{
-        		setting_button.setVisibility(View.VISIBLE);
-        	}
-        }catch(JSONException e)
-    	{
-    		e.printStackTrace();
-    	}
-        
-        
-        String url3 = "http://122.155.187.27:9876/store_info.php";
-        List<NameValuePair> params3 = new ArrayList<NameValuePair>();
-        params3.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-        try{
-        	JSONArray data = new JSONArray(getHttpPost(url3,params3));
-        	JSONObject c = data.getJSONObject(0);	  
-        	detail_info.setText(c.getString("detail"));
-        	address_info.setText(c.getString("address"));
-        	contact_info.setText(c.getString("contact"));          	
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        	}
 	
-        String url4 = "http://122.155.187.27:9876/store_detail.php";
-
-        List<NameValuePair> params4 = new ArrayList<NameValuePair>();
-        params4.add(new BasicNameValuePair("SID", Integer.toString(SID)));
-        category_view.setText(Integer.toString(SID));
-        //store_name_view.setText(store_name);
-        try{
-        	JSONArray data = new JSONArray(getHttpPost(url4,params4));
-            JSONObject c = data.getJSONObject(0);
-        	store_name_view.setText(c.getString("Name"));
-        	store_name = c.getString("Name");
-        	place_name_view.setText(c.getString("Location_Name"));
-        	category_view.setText(c.getString("Category"));
-        	//score_view.setText("Rating: "+c.getString("Rating"));
-        	//score_view.setText(c.getString("Image"));
-        	try{
-        	    Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent());
-        	    store_image_view.setImageBitmap(bitmap); 
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		store_image_view.setVisibility(View.INVISIBLE);
-        	}
-        	try{
-        		Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
-        		pic1.setImageBitmap(bitmap1);
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		pic1.setVisibility(View.INVISIBLE);
-        	}
-        	try{
-        		Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
-        		pic2.setImageBitmap(bitmap2);
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		pic2.setVisibility(View.INVISIBLE);
-        	}
-        	try{
-        		Bitmap bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
-        		pic3.setImageBitmap(bitmap3);
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		pic3.setVisibility(View.INVISIBLE);
-        	}
-        	try{
-        		Bitmap bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
-        		pic4.setImageBitmap(bitmap4);
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		pic4.setVisibility(View.INVISIBLE);
-        	}
-        	try{
-        		map_bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("map")).getContent());
-        	    Log.d("GGGGGG", map_bitmap.toString());
-        	    map.setVisibility(View.VISIBLE);
-        	}catch(JSONException e)
-        	{
-        		e.printStackTrace();
-        		
-        	}
-        }catch(JSONException e){
-        	e.printStackTrace();
-        	place_name_view.setText(e.toString());
-        } catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
         
         pic1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -573,6 +405,40 @@ public class store_detail extends Activity{
         });
 }	
 	
+	private void MatchLayoutToID(String place_name2) {
+		// TODO Auto-generated method stub
+		pic1 = (ImageView) findViewById(R.id.pic1);
+        pic2 = (ImageView) findViewById(R.id.pic2);
+        pic3 = (ImageView) findViewById(R.id.pic3);
+        pic4 = (ImageView) findViewById(R.id.pic4);
+        setting_button = (ImageView) findViewById(R.id.setting_button);
+        setting_button.setVisibility(View.INVISIBLE);
+		store_image_view = (ImageView) findViewById(R.id.store_image);
+		store_name_view = (TextView) findViewById(R.id.store_name);
+		place_name_view = (TextView) findViewById(R.id.place_name); 
+		category_view = (TextView) findViewById(R.id.category_text);
+		detail_info = (TextView) findViewById(R.id.detail_info);
+		address_info = (TextView) findViewById(R.id.address_info);
+		contact_info = (TextView) findViewById(R.id.contact_info);
+		//TextView score_view = (TextView) findViewById(R.id.score);
+        
+        gallery_no = (ImageView) findViewById(R.id.gallery_button_no);
+        comments_no = (ImageView) findViewById(R.id.comment_button_no);
+        info_no = (ImageView) findViewById(R.id.info_button_no);
+        gallery_yes = (ImageView) findViewById(R.id.gallery_button_yes);
+        comments_yes = (ImageView) findViewById(R.id.comment_button_yes);
+        info_yes = (ImageView) findViewById(R.id.info_button_yes);
+        map = (ImageView) findViewById(R.id.map_button);
+        
+		gallery_yes.setVisibility(View.INVISIBLE);
+		comments_yes.setVisibility(View.INVISIBLE);
+		map.setVisibility(View.INVISIBLE);
+		
+        create_comment = (ImageButton) findViewById(R.id.create_comment_button);
+        edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
+    	edit_comment.setVisibility(View.INVISIBLE);
+	}
+
 	public void setting(View view)
 	{		        
 		CharSequence choices[] = new CharSequence[] {"Edit name & detail", "Edit information","Edit category", "Edit images","Delete store" ,"Cancel"};
@@ -612,6 +478,7 @@ public class store_detail extends Activity{
 						//finish();
 		            	}catch(JSONException e)
 		            	{
+		            		Log.d("GGGGGG", "ERROR AT LINE: 481");
 		            		e.printStackTrace();
 		            	}		    											
 		    	}
@@ -638,6 +505,7 @@ public class store_detail extends Activity{
 						//finish();
 		            	}catch(JSONException e)
 		            	{
+		            		Log.d("GGGGGG", "ERROR AT LINE:508");
 		            		e.printStackTrace();
 		            	}
 		    	}
@@ -692,6 +560,7 @@ public class store_detail extends Activity{
 	    				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
 	    				            JSONObject c = data.getJSONObject(0);
 	    				        }catch(JSONException e){
+	    				        	Log.d("GGGGGG", "ERROR AT LINE: 563");
 	    				        	e.printStackTrace();
 	    				        }
 	    				        refresh();
@@ -732,6 +601,7 @@ public class store_detail extends Activity{
 		    				        	JSONArray data = new JSONArray(getHttpPost(url1,params));
 		    				            JSONObject c = data.getJSONObject(0);
 		    				        }catch(JSONException e){
+		    				        	Log.d("GGGGGG", "ERROR AT LINE: 604");
 		    				        	e.printStackTrace();
 		    				     }
 		    				        Intent i = new Intent(store_detail.this,select_store.class);
@@ -818,4 +688,238 @@ public static boolean isLoggedIn() {
     Session session = Session.getActiveSession();
     return (session != null && session.getAccessToken() != null && session.getAccessToken().length() > 1);
 }
+private class DownloadData extends AsyncTask<Void, Void, Void>{
+	Bitmap bitmap;
+	JSONArray data;
+	ProgressDialog dialog;
+	@Override
+	protected void onPreExecute() {
+		// TODO Auto-generated method stub
+		super.onPreExecute();
+		dialog = ProgressDialog.show(store_detail.this, "", "Loading. Please wait...", true);
+		dialog.setCancelable(false);
+	}
+	@Override
+	protected Void doInBackground(Void... params) {
+		// TODO Auto-generated method stub
+		
+		String url = "http://122.155.187.27:9876/lcomment_list.php";
+    	lcommentList.clear();
+		List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+        params1.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        try{
+        	data = new JSONArray(getHttpPost(url,params1));
+        }catch(JSONException e){
+        	Log.d("GGGGGG", "ERROR AT LINE: 713");
+        	e.printStackTrace();
+        }
+        
+        
+        String url2 = "http://122.155.187.27:9876/check_if_comment.php";
+        List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+        params2.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        params2.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+        try{
+        	data2 = new JSONArray(getHttpPost(url2,params2));
+        	for(int i = 0; i < data2.length(); i++){
+            	JSONObject c = data2.getJSONObject(i);
+            	flag = "edit";
+        	}
+        }catch(JSONException e){
+        	Log.d("GGGGGG", "ERROR AT LINE: 729");
+        	e.printStackTrace();  
+        }      
+        
+        
+        String url0 = "http://122.155.187.27:9876/check_if_owner_store.php";
+
+        List<NameValuePair> params0 = new ArrayList<NameValuePair>();
+        params0.add(new BasicNameValuePair("UID", Integer.toString(UID)));
+        params0.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        //comment.setText("UID: "+UID+" PCID: "+PCID);
+        try{
+        	data3 = new JSONArray(getHttpPost(url0,params0));
+        	JSONObject c = data3.getJSONObject(0);
+        	result2 = c.getString("result");
+        	//comment.setText(result);
+        	
+        }catch(JSONException e)
+    	{
+        	Log.d("GGGGGG", "ERROR AT LINE: 748");
+    		e.printStackTrace();
+    	}       
+        
+        String url3 = "http://122.155.187.27:9876/store_info.php";
+        List<NameValuePair> params3 = new ArrayList<NameValuePair>();
+        params3.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        try{
+        	data4 = new JSONArray(getHttpPost(url3,params3));
+        	        	
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 760");
+        		e.printStackTrace();
+        	}
+        
+        
+        String url4 = "http://122.155.187.27:9876/store_detail.php";
+
+        List<NameValuePair> params4 = new ArrayList<NameValuePair>();
+        params4.add(new BasicNameValuePair("SID", Integer.toString(SID)));
+        Log.d("GGGGGG","SID: "+Integer.toString(SID));
+        //store_name_view.setText(store_name);
+        try{
+        	data5 = new JSONArray(getHttpPost(url4,params4));
+            JSONObject c = data5.getJSONObject(0);
+        	try{
+        	    bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("Image")).getContent()); 
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 777");
+        		e.printStackTrace();        		
+        	}
+        	try{
+        		bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("1")).getContent());     		
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 784");
+        		e.printStackTrace();
+        	}
+        	try{
+        		bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("2")).getContent());
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 791");
+        		e.printStackTrace();
+        	}
+        	try{
+        		bitmap3 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("3")).getContent());
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 798");
+        		e.printStackTrace();
+        	}
+        	try{
+        		bitmap4 = BitmapFactory.decodeStream((InputStream)new URL(c.getString("4")).getContent());
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 805");
+        		e.printStackTrace();
+        	}
+        	try{
+        		map_bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("map")).getContent());
+        	}catch(JSONException e)
+        	{
+        		Log.d("GGGGGG", "ERROR AT LINE: 812");
+        		e.printStackTrace();
+        		
+        	}
+        }catch(JSONException e){
+        	e.printStackTrace();
+        	Log.d("GGGGGG", "ERROR AT LINE: 818");
+        } catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+		return null;
+	}
+	@Override
+	protected void onPostExecute(Void result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		
+		try{
+			for(int i = 0; i < data.length(); i++){
+            	JSONObject c = data.getJSONObject(i);
+            	Lcomment lcomment = new Lcomment();
+            	lcomment.setPCID(c.getInt("PCID"));
+            	lcomment.setUsername(c.getString("username"));
+            	lcomment.setThumbnailUrl(c.getString("image"));
+            	lcomment.setagreed(c.getInt("agreed"));
+            	lcomment.setdisagreed(c.getInt("disagreed"));
+            	lcomment.setcomment(c.getString("comment"));
+            	lcommentList.add(lcomment);
+            	}
+			adapter.notifyDataSetChanged();
+			}catch(JSONException e){
+				Log.d("GGGGGG", "ERROR AT LINE: 849");
+                	e.printStackTrace();               	
+                }        
+		
+		if(flag=="edit")
+		{
+        	create_comment.setVisibility(View.INVISIBLE);
+        	edit_comment.setVisibility(View.VISIBLE);
+		}
+		
+		if(result2.equals("yes"))
+    	{
+    		setting_button.setVisibility(View.VISIBLE);
+    	}
+		
+		try{
+		JSONObject c = data4.getJSONObject(0);	  
+    	detail_info.setText(c.getString("detail"));
+    	address_info.setText(c.getString("address"));
+    	contact_info.setText(c.getString("contact"));  
+		}catch(JSONException e){
+			Log.d("GGGGGG", "ERROR AT LINE: 870");
+        	e.printStackTrace();               	
+        } 
+		
+		try{
+            JSONObject c = data5.getJSONObject(0);
+        	store_name_view.setText(c.getString("Name"));
+        	store_name = c.getString("Name");
+        	place_name_view.setText(c.getString("Location_Name"));
+        	category_view.setText(c.getString("Category"));
+        	//score_view.setText("Rating: "+c.getString("Rating"));
+        	//score_view.setText(c.getString("Image"));
+        	if(bitmap!=null)  {    	    
+        	    store_image_view.setImageBitmap(bitmap); 
+        	}else
+        	{
+        		store_image_view.setVisibility(View.INVISIBLE);
+        	}
+        	if(bitmap1!=null){    		
+        		pic1.setImageBitmap(bitmap1);
+        	}else
+        	{
+        		pic1.setVisibility(View.INVISIBLE);
+        	}
+        	if(bitmap2!=null){
+        		pic2.setImageBitmap(bitmap2);
+        	}else
+        	{
+        		pic2.setVisibility(View.INVISIBLE);
+        	}
+        	if(bitmap3!=null){
+        		pic3.setImageBitmap(bitmap3);
+        	}else
+        	{
+        		pic3.setVisibility(View.INVISIBLE);
+        	}
+        	if(bitmap4!=null){
+        		pic4.setImageBitmap(bitmap4);
+        	}else
+        	{
+        		pic4.setVisibility(View.INVISIBLE);
+        	}
+        	if(map_bitmap!=null){        		
+        	    map.setVisibility(View.VISIBLE);
+        	}
+        }catch(JSONException e){
+        	Log.d("GGGGGG", "ERROR AT LINE: 916");
+        	e.printStackTrace();
+        } 
+		
+		dialog.cancel();
+	}
+}
+
 }

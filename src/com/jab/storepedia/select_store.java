@@ -26,6 +26,7 @@ import com.jab.storepedia.adater.Store_Adapter;
 import com.jab.storepedia.model.Location;
 import com.jab.storepedia.model.Store;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -56,7 +57,7 @@ public class select_store extends Activity{
 	String cat ="";
 	EditText input;
 	private ImageView new_store,all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
-
+    TextView placename_text;
     ImageView place_image;
     String place_name;
     
@@ -85,8 +86,23 @@ public class select_store extends Activity{
             Intent intent = getIntent();
             LID = intent.getIntExtra("LID", -1);
             final int UID = intent.getIntExtra("UID" , -1);
-            place_name = intent.getStringExtra("place_name");
+            //place_name = intent.getStringExtra("place_name");
             
+            
+            String url2 = "http://122.155.187.27:9876/select_location.php";
+            List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+            params2.add(new BasicNameValuePair("LID", Integer.toString(LID)));
+            try{
+            	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+            	for(int i = 0; i < data.length(); i++){
+            	JSONObject c2 = data.getJSONObject(i);
+            	place_name = c2.getString("Name");
+            	}  	
+            	Log.d("GGGGGG", " place_name: "+place_name + " LID: "+Integer.toString(LID));
+            	}catch(JSONException e){
+            		Log.d("GGGGGG", " ERROR AT LINE: 102");
+                	e.printStackTrace();
+                }       
             
             MatchLayoutToID(place_name);
             SetListView(UID,place_name);
@@ -288,15 +304,19 @@ public class select_store extends Activity{
           	public void onItemClick(AdapterView<?> parent, View view,
                       int position, long id){
           		Intent intent = new Intent(select_store.this, store_detail.class);
-          		int SID = storeList.get(position).getSID();
-          		String store_name = storeList.get(position).getTitle();
+          		int SID = adapter.getIDKub(position);
+          		//Object SID_object = view.getId();
+          		//Log.d("GGGGGG", "ID: " + Integer.toString(SID));
+          		//int SID = (Integer) SID_object;
+          		//String store_name = storeList.get(position).getTitle();
           		intent.putExtra("SID", SID);
           		intent.putExtra("LID", LID);
           		intent.putExtra("UID", UID);
-          		intent.putExtra("store_name", store_name);
+          		//intent.putExtra("store_name", store_name);
           		intent.putExtra("place_name", place_name);
                   startActivity(intent);
                   //finish();
+
           	}
           });  
 	}
@@ -341,8 +361,8 @@ public class select_store extends Activity{
           others_yes.setVisibility(View.INVISIBLE);
           
 
-          TextView place_name = (TextView)findViewById(R.id.placename); 
-          place_name.setText(placename);
+          placename_text = (TextView)findViewById(R.id.placename); 
+          placename_text.setText(place_name);
 	}
 
 	private void FilterData(){
@@ -378,7 +398,7 @@ public class select_store extends Activity{
       public void newstore(View v)
       {
     	  Intent intent = getIntent();
-    	  final String place_name = intent.getStringExtra("place_name");
+    	  //final String place_name = intent.getStringExtra("place_name");
           final int LID = intent.getIntExtra("LID", -1);
           final int UID = intent.getIntExtra("UID" , -1);
           
@@ -495,21 +515,24 @@ public class select_store extends Activity{
 			// TODO Auto-generated method stub
 			String url2 = "http://122.155.187.27:9876/select_location.php";
             List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-            params2.add(new BasicNameValuePair("strA", place_name));
+            params2.add(new BasicNameValuePair("LID", Integer.toString(LID)));
             try{
             	JSONArray data = new JSONArray(getHttpPost(url2,params2));
             	for(int i = 0; i < data.length(); i++){
             	JSONObject c2 = data.getJSONObject(i);
             	bitmap = BitmapFactory.decodeStream((InputStream)new URL(c2.getString("Image")).getContent());
-            	   	
+            	Log.d("GGGGGG","bitmap: "+bitmap.toString());
             	}       
             	}catch(JSONException e){
                 	e.printStackTrace();
+                	Log.d("GGGGGG","ERROR AT LINE 527");
             	} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Log.d("GGGGGG","ERROR AT LINE 531");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					Log.d("GGGGGG","ERROR AT LINE 534");
 					e.printStackTrace();
 				}
             

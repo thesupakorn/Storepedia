@@ -219,11 +219,12 @@ public class select_location extends Activity {
         	public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id){
         		Intent intent = new Intent(select_location.this, select_store.class);
-        		int LID = locationList.get(position).getLID();
-        		String place_name = locationList.get(position).getTitle();
+        		//int LID = locationList.get(position).getLID();
+        		int LID = adapter.getIDKub(position);
+        		//String place_name = locationList.get(position).getTitle();
         		intent.putExtra("LID", LID);
         		intent.putExtra("UID", UID);
-        		intent.putExtra("place_name", place_name);
+        		//intent.putExtra("place_name", place_name);
                 startActivity(intent);
                 //finish();
         	}

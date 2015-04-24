@@ -52,9 +52,13 @@ public class Store_Adapter extends BaseAdapter implements Filterable{
  
     @Override
     public long getItemId(int position) {
-        return position;
+    	return movieItems.get(position).getSID();
     }
  
+    public int getIDKub(int position){
+    	return this.movieItems.get(position).getSID();
+    	
+    }
   
     public void resetData(List<Store> mStore){
     	this.movieItems = mStore;
