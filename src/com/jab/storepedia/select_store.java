@@ -28,12 +28,14 @@ import com.jab.storepedia.model.Store;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,10 +54,12 @@ public class select_store extends Activity{
 	private Store_Adapter adapter;
 	int LID;
 	String cat ="";
-	TextView status_text;
 	EditText input;
 	private ImageView new_store,all_no,all_yes,food_no,food_yes,books_no,books_yes,clothings_no, clothings_yes,electronics_no,electronics_yes,entertainments_no,entertainments_yes,health_no,health_yes,others_no,others_yes;
-		
+
+    ImageView place_image;
+    String place_name;
+    
 	private List<Store> storeList = new ArrayList<Store>();
 	
 	@Override
@@ -77,142 +81,32 @@ public class select_store extends Activity{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.select_store);
             ImageButton back = (ImageButton) findViewById(R.id.topbar).findViewById(R.id.back);
+            
             Intent intent = getIntent();
-            
-            all_no = (ImageView) findViewById(R.id.all_no);
-            all_yes = (ImageView) findViewById(R.id.all_yes);
-            food_no = (ImageView) findViewById(R.id.food_no);
-            food_yes = (ImageView) findViewById(R.id.food_yes);
-            books_no = (ImageView) findViewById(R.id.books_no);
-            books_yes = (ImageView) findViewById(R.id.books_yes);
-            clothings_no = (ImageView) findViewById(R.id.clothings_no);
-            clothings_yes = (ImageView) findViewById(R.id.clothings_yes);
-            electronics_no = (ImageView) findViewById(R.id.electronics_no);
-            electronics_yes = (ImageView) findViewById(R.id.electronics_yes);
-            entertainments_no = (ImageView) findViewById(R.id.entertainments_no);
-            entertainments_yes = (ImageView) findViewById(R.id.entertainments_yes);
-            health_no = (ImageView) findViewById(R.id.health_no);
-            health_yes = (ImageView) findViewById(R.id.health_yes);
-            others_no = (ImageView) findViewById(R.id.others_no);
-            others_yes = (ImageView) findViewById(R.id.others_yes);
-            
-            all_no.setVisibility(View.INVISIBLE);
-            //food_no.setVisibility(View.INVISIBLE);
-            food_yes.setVisibility(View.INVISIBLE);
-            //books_no.setVisibility(View.INVISIBLE);
-            books_yes.setVisibility(View.INVISIBLE);
-            //clothings_no.setVisibility(View.INVISIBLE);
-            clothings_yes.setVisibility(View.INVISIBLE);
-            //electronics_no.setVisibility(View.INVISIBLE);
-            electronics_yes.setVisibility(View.INVISIBLE);
-            //entertainments_no.setVisibility(View.INVISIBLE);
-            entertainments_yes.setVisibility(View.INVISIBLE);
-            //health_no.setVisibility(View.INVISIBLE);
-            health_yes.setVisibility(View.INVISIBLE);
-            //others_no.setVisibility(View.INVISIBLE);
-            others_yes.setVisibility(View.INVISIBLE);
-            
-            
-            final TextView status_text2 = (TextView)findViewById(R.id.status_text2); 
-            final TextView status_text = (TextView)findViewById(R.id.status_text); 
-            final ListView store_list = (ListView)findViewById(R.id.store_list); 
-            final TextView placename = (TextView)findViewById(R.id.placename); 
-            input = (EditText)findViewById(R.id.store_search);  
-            
-            final String place_name = intent.getStringExtra("place_name");
-            final int LID = intent.getIntExtra("LID", -1);
+            LID = intent.getIntExtra("LID", -1);
             final int UID = intent.getIntExtra("UID" , -1);
+            place_name = intent.getStringExtra("place_name");
+            
+            
+            MatchLayoutToID(place_name);
+            SetListView(UID,place_name);
+            
+            input = (EditText)findViewById(R.id.store_search);  
+    
             if(UID==-1)
             {
             	ImageView create_store = (ImageView) findViewById(R.id.newstore_button);
             	create_store.setVisibility(View.INVISIBLE);
             }
             
-            placename.setText(place_name);
            
-            adapter = new Store_Adapter(select_store.this,storeList);
-            store_list.setAdapter(adapter);
-           // final ImageView getData = (ImageView) findViewById(R.id.search);
-            ImageView place_image = (ImageView) findViewById(R.id.place_image);
             
-            String url2 = "http://122.155.187.27:9876/select_location.php";
-            List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-            params2.add(new BasicNameValuePair("strA", place_name));
-            try{
-            	JSONArray data = new JSONArray(getHttpPost(url2,params2));
-            	for(int i = 0; i < data.length(); i++){
-            	JSONObject c2 = data.getJSONObject(i);
-            	Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(c2.getString("Image")).getContent());
-            	place_image.setImageBitmap(bitmap);   	
-            	}       
-            	}catch(JSONException e){
-                	e.printStackTrace();
-            	} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
             
-            String url = "http://122.155.187.27:9876/select_store.php";
-        	//String url2 = "http://10.0.2.2/Storepedia/store_count.php";
-        	storeList.clear();                 	
-    		List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
-        	//String resultServer  = getHttpPost(url,params);
-        	//text.setText(resultServer);
-            try{
-            	JSONArray data = new JSONArray(getHttpPost(url,params));
-            	//status_text2.setText("Result Found: 0");
-            	for(int i = 0; i < data.length(); i++){
-            	JSONObject c = data.getJSONObject(i);
-            	Store store = new Store();
-            	store.setTitle(c.getString("Name"));
-            	store.setThumbnailUrl(c.getString("Image"));
-            	store.setSID(c.getInt("SID"));
-            	store.setGenre(c.getString("Category"));
-            	//List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-               // params2.add(new BasicNameValuePair("strB", Integer.toString(c.getInt("LID"))));
-                //JSONArray data2 = new JSONArray(getHttpPost(url2,params2));
-                //JSONObject c2 = data2.getJSONObject(0);
-                //location.setNum(c2.getInt("COUNT(*)"));
-                
-            	//location.setNum(c.getInt("Number_of_store"));
-            	 //text.setText(Integer.toString(c.getInt("LID")));
-            	//text.setText(c.getString("Name"));
-            	//text.setText("Result Found: " + (i+1));
-            	storeList.add(store);
-            	//status_text2.setText("Result Found: "+(i+1));
-            	} 
-            
-            	adapter.notifyDataSetChanged();
-            }catch(JSONException e){
-            	e.printStackTrace();
-            	status_text.setText("Connection FAIL. Please check your internet connection!");
-            } 
-            
+            new DownloadData().execute();
             
             all_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                  food_yes.setVisibility(View.INVISIBLE);
-                  all_yes.setVisibility(View.VISIBLE);
-                  books_yes.setVisibility(View.INVISIBLE);
-                  clothings_yes.setVisibility(View.INVISIBLE);
-                  electronics_yes.setVisibility(View.INVISIBLE);
-                  entertainments_yes.setVisibility(View.INVISIBLE);
-                  health_yes.setVisibility(View.INVISIBLE);
-                  others_yes.setVisibility(View.INVISIBLE);
-                	  
-              	  all_no.setVisibility(View.INVISIBLE);
-              	  food_no.setVisibility(View.VISIBLE);
-              	  books_no.setVisibility(View.VISIBLE);
-              	  clothings_no.setVisibility(View.VISIBLE);
-              	  electronics_no.setVisibility(View.VISIBLE);
-              	  entertainments_no.setVisibility(View.VISIBLE);
-              	  health_no.setVisibility(View.VISIBLE);
-              	  others_no.setVisibility(View.VISIBLE);
-//                  cat = "all";
+                	SetImgVisible(0);
               	  cat = "";
                   getData();
                 }
@@ -220,23 +114,8 @@ public class select_store extends Activity{
             
             food_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-              	  food_yes.setVisibility(View.VISIBLE);
-              	  all_yes.setVisibility(View.INVISIBLE);
-              	  books_yes.setVisibility(View.INVISIBLE);
-              	  clothings_yes.setVisibility(View.INVISIBLE);
-              	  electronics_yes.setVisibility(View.INVISIBLE);
-              	  entertainments_yes.setVisibility(View.INVISIBLE);
-              	  health_yes.setVisibility(View.INVISIBLE);
-              	  others_yes.setVisibility(View.INVISIBLE);
-              	  
-            	  all_no.setVisibility(View.VISIBLE);
-            	  food_no.setVisibility(View.INVISIBLE);
-            	  books_no.setVisibility(View.VISIBLE);
-            	  clothings_no.setVisibility(View.VISIBLE);
-            	  electronics_no.setVisibility(View.VISIBLE);
-            	  entertainments_no.setVisibility(View.VISIBLE);
-            	  health_no.setVisibility(View.VISIBLE);
-            	  others_no.setVisibility(View.VISIBLE);
+
+                	SetImgVisible(1);
               	  cat = "food";             	
               	  getData();
                 }
@@ -244,138 +123,48 @@ public class select_store extends Activity{
             
             books_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.VISIBLE);
-                    clothings_yes.setVisibility(View.INVISIBLE);
-                    electronics_yes.setVisibility(View.INVISIBLE);
-                    entertainments_yes.setVisibility(View.INVISIBLE);
-                    health_yes.setVisibility(View.INVISIBLE);
-                    others_yes.setVisibility(View.INVISIBLE);
-                  	  
-                    all_no.setVisibility(View.VISIBLE);
-                    food_no.setVisibility(View.VISIBLE);
-                    books_no.setVisibility(View.INVISIBLE);
-                    clothings_no.setVisibility(View.VISIBLE);
-                    electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.VISIBLE);
-                    health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.VISIBLE);
+
+                	SetImgVisible(2);
                     cat = "books";
                     getData();
                 }
                 });
             clothings_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.INVISIBLE);
-                    clothings_yes.setVisibility(View.VISIBLE);
-                    electronics_yes.setVisibility(View.INVISIBLE);
-                    entertainments_yes.setVisibility(View.INVISIBLE);
-                    health_yes.setVisibility(View.INVISIBLE);
-                    others_yes.setVisibility(View.INVISIBLE);
-                  	  
-                	all_no.setVisibility(View.VISIBLE);
-                	food_no.setVisibility(View.VISIBLE);
-                	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.INVISIBLE);
-                	electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.VISIBLE);
-                	health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.VISIBLE);
+
+                	SetImgVisible(3);
                     cat = "clothings";
                     getData();
                 }
                 });
             electronics_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.INVISIBLE);
-                    clothings_yes.setVisibility(View.INVISIBLE);
-                    electronics_yes.setVisibility(View.VISIBLE);
-                    entertainments_yes.setVisibility(View.INVISIBLE);
-                    health_yes.setVisibility(View.INVISIBLE);
-                    others_yes.setVisibility(View.INVISIBLE);
-                  	  
-                	all_no.setVisibility(View.VISIBLE);
-                	food_no.setVisibility(View.VISIBLE);
-                	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.VISIBLE);
-                	electronics_no.setVisibility(View.INVISIBLE);
-                	entertainments_no.setVisibility(View.VISIBLE);
-                	health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.VISIBLE);
+
+                	SetImgVisible(4);
                     cat = "electronics";
                     getData();
                 }
                 });
             entertainments_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.INVISIBLE);
-                    clothings_yes.setVisibility(View.INVISIBLE);
-                    electronics_yes.setVisibility(View.INVISIBLE);
-                    entertainments_yes.setVisibility(View.VISIBLE);
-                    health_yes.setVisibility(View.INVISIBLE);
-                    others_yes.setVisibility(View.INVISIBLE);
-                  	  
-                	all_no.setVisibility(View.VISIBLE);
-                	food_no.setVisibility(View.VISIBLE);
-                	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.VISIBLE);
-                	electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.INVISIBLE);
-                	health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.VISIBLE);
+                    
+                	SetImgVisible(5);
                     cat = "entertainments";
                     getData();
                 }
                 });
             health_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.INVISIBLE);
-                    clothings_yes.setVisibility(View.INVISIBLE);
-                    electronics_yes.setVisibility(View.INVISIBLE);
-                    entertainments_yes.setVisibility(View.INVISIBLE);
-                    health_yes.setVisibility(View.VISIBLE);
-                    others_yes.setVisibility(View.INVISIBLE);
-                  	  
-                	all_no.setVisibility(View.VISIBLE);
-                	food_no.setVisibility(View.VISIBLE);
-                	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.VISIBLE);
-                	electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.VISIBLE);
-                	health_no.setVisibility(View.INVISIBLE);
-                	others_no.setVisibility(View.VISIBLE);
+
+                	SetImgVisible(6);
                     cat = "health";
                     getData();
                 }
                 });
             others_no.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    food_yes.setVisibility(View.INVISIBLE);
-                    all_yes.setVisibility(View.INVISIBLE);
-                    books_yes.setVisibility(View.INVISIBLE);
-                    clothings_yes.setVisibility(View.INVISIBLE);
-                    electronics_yes.setVisibility(View.INVISIBLE);
-                    entertainments_yes.setVisibility(View.INVISIBLE);
-                    health_yes.setVisibility(View.INVISIBLE);
-                    others_yes.setVisibility(View.VISIBLE);
-                  	  
-                	all_no.setVisibility(View.VISIBLE);
-                	food_no.setVisibility(View.VISIBLE);
-                	books_no.setVisibility(View.VISIBLE);
-                	clothings_no.setVisibility(View.VISIBLE);
-                	electronics_no.setVisibility(View.VISIBLE);
-                	entertainments_no.setVisibility(View.VISIBLE);
-                	health_no.setVisibility(View.VISIBLE);
-                	others_no.setVisibility(View.INVISIBLE);
+
+                	SetImgVisible(7);
                     cat = "others";
                     getData();
 
@@ -440,7 +229,6 @@ public class select_store extends Activity{
                         	adapter.notifyDataSetChanged();
                         }catch(JSONException e){
                         	e.printStackTrace();
-                        	status_text.setText("Connection FAIL. Please check your internet connection!");
                         }       
 
 
@@ -482,27 +270,82 @@ public class select_store extends Activity{
                     finish();
     			}
             });
-            store_list.setOnItemClickListener(new OnItemClickListener(){
-            	@Override
-            	public void onItemClick(AdapterView<?> parent, View view,
-                        int position, long id){
-            		Intent intent = new Intent(select_store.this, store_detail.class);
-            		int SID = storeList.get(position).getSID();
-            		String store_name = storeList.get(position).getTitle();
-            		intent.putExtra("SID", SID);
-            		intent.putExtra("LID", LID);
-            		intent.putExtra("UID", UID);
-            		intent.putExtra("store_name", store_name);
-            		intent.putExtra("place_name", place_name);
-                    startActivity(intent);
-                    //finish();
-            	}
-            });  
+            
             
         }   
       
 
-      private void FilterData(){
+      private void SetListView(final Integer UID,final String place_name) {
+		// TODO Auto-generated method stub
+
+          final ListView store_list = (ListView)findViewById(R.id.store_list); 
+
+          adapter = new Store_Adapter(select_store.this,storeList);
+          store_list.setAdapter(adapter);
+          
+          store_list.setOnItemClickListener(new OnItemClickListener(){
+          	@Override
+          	public void onItemClick(AdapterView<?> parent, View view,
+                      int position, long id){
+          		Intent intent = new Intent(select_store.this, store_detail.class);
+          		int SID = storeList.get(position).getSID();
+          		String store_name = storeList.get(position).getTitle();
+          		intent.putExtra("SID", SID);
+          		intent.putExtra("LID", LID);
+          		intent.putExtra("UID", UID);
+          		intent.putExtra("store_name", store_name);
+          		intent.putExtra("place_name", place_name);
+                  startActivity(intent);
+                  //finish();
+          	}
+          });  
+	}
+
+	private void MatchLayoutToID(String placename) {
+		// TODO Auto-generated method stub
+
+        
+        	place_image = (ImageView) findViewById(R.id.place_image);
+          all_no = (ImageView) findViewById(R.id.all_no);
+          all_yes = (ImageView) findViewById(R.id.all_yes);
+          food_no = (ImageView) findViewById(R.id.food_no);
+          food_yes = (ImageView) findViewById(R.id.food_yes);
+          books_no = (ImageView) findViewById(R.id.books_no);
+          books_yes = (ImageView) findViewById(R.id.books_yes);
+          clothings_no = (ImageView) findViewById(R.id.clothings_no);
+          clothings_yes = (ImageView) findViewById(R.id.clothings_yes);
+          electronics_no = (ImageView) findViewById(R.id.electronics_no);
+          electronics_yes = (ImageView) findViewById(R.id.electronics_yes);
+          entertainments_no = (ImageView) findViewById(R.id.entertainments_no);
+          entertainments_yes = (ImageView) findViewById(R.id.entertainments_yes);
+          health_no = (ImageView) findViewById(R.id.health_no);
+          health_yes = (ImageView) findViewById(R.id.health_yes);
+          others_no = (ImageView) findViewById(R.id.others_no);
+          others_yes = (ImageView) findViewById(R.id.others_yes);
+          
+
+          all_no.setVisibility(View.INVISIBLE);
+          //food_no.setVisibility(View.INVISIBLE);
+          food_yes.setVisibility(View.INVISIBLE);
+          //books_no.setVisibility(View.INVISIBLE);
+          books_yes.setVisibility(View.INVISIBLE);
+          //clothings_no.setVisibility(View.INVISIBLE);
+          clothings_yes.setVisibility(View.INVISIBLE);
+          //electronics_no.setVisibility(View.INVISIBLE);
+          electronics_yes.setVisibility(View.INVISIBLE);
+          //entertainments_no.setVisibility(View.INVISIBLE);
+          entertainments_yes.setVisibility(View.INVISIBLE);
+          //health_no.setVisibility(View.INVISIBLE);
+          health_yes.setVisibility(View.INVISIBLE);
+          //others_no.setVisibility(View.INVISIBLE);
+          others_yes.setVisibility(View.INVISIBLE);
+          
+
+          TextView place_name = (TextView)findViewById(R.id.placename); 
+          place_name.setText(placename);
+	}
+
+	private void FilterData(){
     	 Log.d("GGGGGG","storeList.size(): " + storeList.size());
   		adapter.resetData(storeList);
   		String name = "";
@@ -577,4 +420,141 @@ public class select_store extends Activity{
   		return str.toString();
   	}
       
+      private void SetImgVisible(int position){
+
+          food_yes.setVisibility(View.INVISIBLE);
+          all_yes.setVisibility(View.INVISIBLE);
+          books_yes.setVisibility(View.INVISIBLE);
+          clothings_yes.setVisibility(View.INVISIBLE);
+          electronics_yes.setVisibility(View.INVISIBLE);
+          entertainments_yes.setVisibility(View.INVISIBLE);
+          health_yes.setVisibility(View.INVISIBLE);
+          others_yes.setVisibility(View.INVISIBLE);
+        	  
+      	  all_no.setVisibility(View.VISIBLE);
+      	  food_no.setVisibility(View.VISIBLE);
+      	  books_no.setVisibility(View.VISIBLE);
+      	  clothings_no.setVisibility(View.VISIBLE);
+      	  electronics_no.setVisibility(View.VISIBLE);
+      	  entertainments_no.setVisibility(View.VISIBLE);
+      	  health_no.setVisibility(View.VISIBLE);
+      	  others_no.setVisibility(View.VISIBLE);
+      	  
+      	  switch(position){
+      	  case 0:
+      		all_yes.setVisibility(View.VISIBLE);
+      		all_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 1:
+      		food_yes.setVisibility(View.VISIBLE);
+      		food_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 2:
+      		books_yes.setVisibility(View.VISIBLE);
+      		books_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 3:
+      		clothings_yes.setVisibility(View.VISIBLE);
+      		clothings_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 4:
+      		electronics_yes.setVisibility(View.VISIBLE);
+      		electronics_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 5:
+      		entertainments_yes.setVisibility(View.VISIBLE);
+      		entertainments_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 6:
+      		health_yes.setVisibility(View.VISIBLE);
+      		health_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	case 7:
+      		others_yes.setVisibility(View.VISIBLE);
+      		others_no.setVisibility(View.INVISIBLE);
+      		  break;
+      	  }
+      	  
       }
+      
+      
+      
+      private class DownloadData extends AsyncTask<Void, Void, Void>{
+    	Bitmap bitmap;
+    	JSONArray data;
+		ProgressDialog dialog;
+    	@Override
+    	protected void onPreExecute() {
+    		// TODO Auto-generated method stub
+    		super.onPreExecute();
+    		dialog = ProgressDialog.show(select_store.this, "", "Loading. Please wait...", true);
+    		dialog.setCancelable(false);
+    	}
+		@Override
+		protected Void doInBackground(Void... datagg) {
+			// TODO Auto-generated method stub
+			String url2 = "http://122.155.187.27:9876/select_location.php";
+            List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+            params2.add(new BasicNameValuePair("strA", place_name));
+            try{
+            	JSONArray data = new JSONArray(getHttpPost(url2,params2));
+            	for(int i = 0; i < data.length(); i++){
+            	JSONObject c2 = data.getJSONObject(i);
+            	bitmap = BitmapFactory.decodeStream((InputStream)new URL(c2.getString("Image")).getContent());
+            	   	
+            	}       
+            	}catch(JSONException e){
+                	e.printStackTrace();
+            	} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            
+            String url = "http://122.155.187.27:9876/select_store.php";
+        	//String url2 = "http://10.0.2.2/Storepedia/store_count.php"; 	
+    		List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("LID", Integer.toString(LID)));
+        	//String resultServer  = getHttpPost(url,params);
+        	//text.setText(resultServer);
+            try{
+            	data = new JSONArray(getHttpPost(url,params));
+            	Log.d("GGGGGG","data:" + data.toString());
+            }catch(JSONException e){
+            	e.printStackTrace();
+            } 
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			place_image.setImageBitmap(bitmap);
+			storeList.clear(); 
+			Log.d("GGGGGG","get Data " + data.length());
+			try {
+				for(int i = 0; i < data.length(); i++){
+	            	JSONObject c;
+					c = data.getJSONObject(i);
+	            	Store store = new Store();
+	            	store.setTitle(c.getString("Name"));
+	            	store.setThumbnailUrl(c.getString("Image"));
+	            	store.setSID(c.getInt("SID"));
+	            	store.setGenre(c.getString("Category"));
+	            	storeList.add(store);
+				}
+	        	adapter.notifyDataSetChanged();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			dialog.cancel();
+		}
+    	  
+      }
+      
+}
