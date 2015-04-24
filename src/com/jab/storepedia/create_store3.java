@@ -602,12 +602,12 @@ public class create_store3 extends Activity {
 				encodedString6 = Base64.encodeToString(byte_arr, 0);
 				}
 				
-				Log.d("GGGGGG","pic1 decoded size:" + encodedString1.length());
-				Log.d("GGGGGG","pic2 decoded size:" + encodedString2.length());
-				Log.d("GGGGGG","pic3 decoded size:" + encodedString3.length());
-				Log.d("GGGGGG","pic4 decoded size:" + encodedString4.length());
-				Log.d("GGGGGG","store image decoded size:" + encodedString5.length());
-				Log.d("GGGGGG","map decoded size:" + encodedString6.length());
+//				Log.d("GGGGGG","pic1 decoded size:" + encodedString1.length());
+//				Log.d("GGGGGG","pic2 decoded size:" + encodedString2.length());
+//				Log.d("GGGGGG","pic3 decoded size:" + encodedString3.length());
+//				Log.d("GGGGGG","pic4 decoded size:" + encodedString4.length());
+//				Log.d("GGGGGG","store image decoded size:" + encodedString5.length());
+//				Log.d("GGGGGG","map decoded size:" + encodedString6.length());
 				return "";
 			}
 

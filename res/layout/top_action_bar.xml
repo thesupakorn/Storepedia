@@ -10,7 +10,7 @@
             android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/back_arrow"
+            android:src="@drawable/back_arrow_bp"
             android:scaleType="fitStart"
             android:background="@null"
              />

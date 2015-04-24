@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/background_all">
 
     <include
         android:id="@+id/topbar"
@@ -45,7 +46,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="5dp"
             android:onClick="setting"
-            android:src="@drawable/setting_button" />
+            android:src="@drawable/settingbutton" />
 
             <TextView
                 android:id="@+id/store_name"
@@ -81,11 +82,10 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_toLeftOf="@+id/setting_button"
-                android:background="@null"
                 android:layout_margin="5dp"
                 android:scaleType="fitXY"
                 android:layout_alignBottom="@+id/setting_button"
-                android:src="@drawable/map"
+                android:background="@drawable/mapbutton"
                  />
 
         </RelativeLayout>
@@ -306,9 +306,8 @@
             android:layout_height="55dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@null"
             android:scaleType="fitXY"
-            android:src="@drawable/write_comment2" />
+            android:background="@drawable/createcommentbutton" />
         
         <ImageButton
             android:id="@+id/edit_comment_button"
@@ -316,10 +315,9 @@
             android:layout_height="55dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@null"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@drawable/edit_comment2" />
+            android:background="@drawable/editcommentbutton"/>
 
     </RelativeLayout>
     

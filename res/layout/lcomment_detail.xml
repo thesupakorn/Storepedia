@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/background_all">
 
     <include
         android:id="@+id/topbar"
@@ -25,7 +26,7 @@
             android:layout_below="@+id/user_name"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/to_vote_up" />
+            android:src="@drawable/tovoteup" />
 
         <ImageView
             android:id="@+id/current_vote_up"
@@ -52,7 +53,7 @@
             android:layout_below="@+id/user_name"
             android:layout_marginLeft="133dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/to_vote_down" />
+            android:src="@drawable/tovotedown" />
 
         <ImageView
             android:id="@+id/current_vote_down"

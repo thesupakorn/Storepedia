@@ -328,7 +328,7 @@ public class create_comment extends Activity {
 			e.printStackTrace();
 		}
 
-	}
+	}	
 	
 	// When Upload button is clicked
 	public void uploadImage(View v) {
@@ -512,6 +512,10 @@ public class create_comment extends Activity {
 		if (prgDialog != null) {
 			prgDialog.dismiss();
 		}		
+	}
+	public void clear_text(View v)
+	{
+		comment_field.setText("");
 	}
 	public String getHttpPost(String url,List<NameValuePair> params) {
 		StringBuilder str = new StringBuilder();

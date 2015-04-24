@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+     android:background="@drawable/background_all">
 
     <include
         android:id="@+id/topbar"
@@ -89,14 +90,26 @@
             android:hint="Write your comment here" />
 
         <Button
+            android:id="@+id/button1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignBaseline="@+id/upload"
+            android:layout_alignBottom="@+id/upload"
+            android:layout_alignLeft="@+id/comment"
+            android:layout_marginLeft="35dp"
+            android:onClick="clear_text"
+            android:background="@drawable/clear_bp" />
+
+        <Button
             android:id="@+id/upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="115dp"
-            android:layout_marginBottom="25dp"
-            android:onClick="uploadImage"
-            android:text="Submit" />
+            android:layout_marginBottom="18dp"
+            android:layout_alignRight="@+id/comment"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/done_bp"
+            android:onClick="uploadImage" />
 
     </RelativeLayout>
 

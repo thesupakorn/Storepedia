@@ -28,12 +28,14 @@ import com.facebook.Session;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -288,122 +290,27 @@ public class lcomment_detail extends Activity{
         pic1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(120,120);
-                    pic1layout.setMargins(76, 0, 0, 60);
-                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic1layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic1.setLayoutParams(pic1layout);
-                    pic1.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic2.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
-                    
-                    LayoutParams pic1layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    pic1layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic1.setLayoutParams(pic1layout);
-                    pic1.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+                
+                OpenPhoto(((BitmapDrawable)pic1.getDrawable()).getBitmap());
             }
         });
         pic2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(120,120);
-                    pic2layout.setMargins(220, 0, 0, 60);
-                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic2layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    
-                    pic1.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic2.setLayoutParams(pic2layout);
-                    pic2.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic1.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
-                    
-                    LayoutParams pic2layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    pic2layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic2.setLayoutParams(pic2layout);
-                    pic2.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+            	OpenPhoto(((BitmapDrawable)pic2.getDrawable()).getBitmap());
             }
         });
         pic3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(120,120);
-                    pic3layout.setMargins(344, 0, 0, 60);
-                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic3layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic1.setVisibility(View.VISIBLE);
-                    pic4.setVisibility(View.VISIBLE);
-                    
-                    pic3.setLayoutParams(pic3layout);
-                    pic3.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-                    pic2.setVisibility(View.GONE);
-                    pic1.setVisibility(View.GONE);
-                    pic4.setVisibility(View.GONE);
-                    
-                    LayoutParams pic3layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    pic3layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic3.setLayoutParams(pic3layout);
-                    pic3.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+            	OpenPhoto(((BitmapDrawable)pic3.getDrawable()).getBitmap());               
             }
         });
         pic4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isImageFitToScreen) {
-                    isImageFitToScreen=false;  
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(120,120);
-                    pic4layout.setMargins(468, 0, 0, 60);
-                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    pic4layout.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    
-                    pic2.setVisibility(View.VISIBLE);
-                    pic3.setVisibility(View.VISIBLE);
-                    pic1.setVisibility(View.VISIBLE);
-                    
-                    pic4.setLayoutParams(pic4layout);
-                    pic4.setAdjustViewBounds(true);
-                }else{
-                    isImageFitToScreen=true;
-                    
-
-                    pic2.setVisibility(View.GONE);
-                    pic3.setVisibility(View.GONE);
-                    pic1.setVisibility(View.GONE);
-                    
-                    LayoutParams pic4layout = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    pic4layout.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    pic4.setLayoutParams(pic4layout);
-                    pic4.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
+               
+            	OpenPhoto(((BitmapDrawable)pic4.getDrawable()).getBitmap());
             }
         });
     }
@@ -450,7 +357,7 @@ public class lcomment_detail extends Activity{
 					i.putExtra("place_name", place_name);
 					i.putExtra("store_name", store_name);
 					startActivity(i);
-					//finish();
+					finish();
 		    	}
 		    	else if(which == 1)
 		    	{	  
@@ -463,7 +370,7 @@ public class lcomment_detail extends Activity{
 					i.putExtra("place_name", place_name);
 					i.putExtra("store_name", store_name);
 					startActivity(i);
-					//finish();
+					finish();
 		    	}
 		    	else if(which == 2)
 		    	{
@@ -541,4 +448,16 @@ public class lcomment_detail extends Activity{
 		}
 		return str.toString();
 	}
+	public void OpenPhoto(Bitmap mBitmap){
+		// custom dialog
+					final Dialog dialog = new Dialog(this,R.style.NoTitleDialog);
+					dialog.setContentView(R.layout.photo_dialog);
+					//dialog.setTitle("Photo");
+		 
+					// set the custom dialog components - text, image and button
+					ImageView image = (ImageView) dialog.findViewById(R.id.photoDialogimg);
+//					image.setBackground(mBitmap);
+					image.setImageBitmap(mBitmap);
+					dialog.show();
+		}
 }
