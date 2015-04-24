@@ -123,6 +123,7 @@ public class store_detail extends Activity{
         
 		gallery_yes.setVisibility(View.INVISIBLE);
 		comments_yes.setVisibility(View.INVISIBLE);
+		map.setVisibility(View.INVISIBLE);
 		
         ImageButton create_comment = (ImageButton) findViewById(R.id.create_comment_button);
         ImageButton edit_comment = (ImageButton) findViewById(R.id.edit_comment_button);
@@ -351,10 +352,12 @@ public class store_detail extends Activity{
         	}
         	try{
         		map_bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("map")).getContent());
+        	    Log.d("GGGGGG", map_bitmap.toString());
+        	    map.setVisibility(View.VISIBLE);
         	}catch(JSONException e)
         	{
         		e.printStackTrace();
-        		map.setVisibility(View.INVISIBLE);
+        		
         	}
         }catch(JSONException e){
         	e.printStackTrace();

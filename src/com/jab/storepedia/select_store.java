@@ -521,7 +521,7 @@ public class select_store extends Activity{
         	//text.setText(resultServer);
             try{
             	data = new JSONArray(getHttpPost(url,params));
-            	Log.d("GGGGGG","data:" + data.toString());
+            	//Log.d("GGGGGG","data:" + data.toString());
             }catch(JSONException e){
             	e.printStackTrace();
             } 
