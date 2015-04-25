@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,12 +131,13 @@ public class edit_comment_text extends Activity {
 	
 	public void upload_text(View v)
 	{
-		final EditText comment_field = (EditText) findViewById(R.id.comment);
+		comment_field = (EditText) findViewById(R.id.comment);
 		
 		String url = "http://122.155.187.27:9876/edit_comment_text.php";
 		
 		List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-        params2.add(new BasicNameValuePair("comment", comment_field.getText().toString()));
+		params2.add(new BasicNameValuePair("comment", comment_field.getText().toString()));
+        
         params2.add(new BasicNameValuePair("PCID", Integer.toString(PCID)));
 	     try{
 	        	JSONArray data = new JSONArray(getHttpPost(url,params2));
@@ -166,7 +169,7 @@ public class edit_comment_text extends Activity {
 	 		HttpPost httpPost = new HttpPost(url);
 	 		
 	 		try {
-	 			httpPost.setEntity(new UrlEncodedFormEntity(params));
+	 			httpPost.setEntity(new UrlEncodedFormEntity(params,"UTF-8"));
 	 			HttpResponse response = client.execute(httpPost);
 	 			StatusLine statusLine = response.getStatusLine();
 	 			int statusCode = statusLine.getStatusCode();
