@@ -808,6 +808,7 @@ private class DownloadData extends AsyncTask<Void, Void, Void>{
         	}
         	try{
         		map_bitmap = BitmapFactory.decodeStream((InputStream)new URL(c.getString("map")).getContent());
+        		Log.d("GGGGGG", map_bitmap.toString());
         	}catch(JSONException e)
         	{
         		Log.d("GGGGGG", "ERROR AT LINE: 812");
@@ -910,7 +911,8 @@ private class DownloadData extends AsyncTask<Void, Void, Void>{
         	{
         		pic4.setVisibility(View.INVISIBLE);
         	}
-        	if(map_bitmap!=null){        		
+        	if(map_bitmap!=null){    
+        		//Log.d("GGGGGG", map_bitmap.toString());
         	    map.setVisibility(View.VISIBLE);
         	}
         }catch(JSONException e){

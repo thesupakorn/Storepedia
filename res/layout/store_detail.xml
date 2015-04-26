@@ -247,7 +247,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/address"
-                android:text="detail_info" />
+                android:text="No detail" />
 
             <TextView
                 android:id="@+id/address_info"
@@ -257,7 +257,7 @@
                 android:layout_below="@+id/detail_info"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
-                android:text="address_info" />
+                android:text="No address" />
 
             <TextView
                 android:id="@+id/contact_info"
@@ -267,7 +267,7 @@
                 android:layout_below="@+id/address_info"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
-                android:text="contact_info" />
+                android:text="No contact" />
         </RelativeLayout>
         </ScrollView>
         
