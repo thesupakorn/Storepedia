@@ -1173,6 +1173,7 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f060032;
         public static final int activity_vertical_margin=0x7f060033;
+        public static final int cat=0x7f060036;
         public static final int com_facebook_likeboxcountview_border_radius=0x7f060015;
         public static final int com_facebook_likeboxcountview_border_width=0x7f060016;
         public static final int com_facebook_likeboxcountview_caret_height=0x7f060014;
@@ -1234,10 +1235,12 @@ containing a value of this type.
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
         public static final int dialog_fixed_width_minor=0x7f06002f;
-        public static final int genre=0x7f060036;
-        public static final int rating=0x7f060035;
-        public static final int title=0x7f060034;
-        public static final int year=0x7f060037;
+        public static final int genre=0x7f060039;
+        public static final int place_name=0x7f060034;
+        public static final int rating=0x7f060038;
+        public static final int store_name=0x7f060035;
+        public static final int title=0x7f060037;
+        public static final int year=0x7f06003a;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;

@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Store Name"
-                android:textAppearance="?android:attr/textAppearanceLarge"                
+                android:textSize="@dimen/store_name"               
                 android:layout_alignParentTop="true" 
                 android:layout_marginTop="40dp"
                 android:layout_centerInParent="true"/>
@@ -62,11 +62,10 @@
                 android:id="@+id/place_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/store_name"
-                android:text="Place Name" 
-                android:paddingTop="5dp"  
-                android:paddingRight="15dp"            
-                android:layout_centerInParent="true"/>
+                android:text="Place Name"       
+                android:layout_below="@+id/store_name" 
+                android:textSize="@dimen/place_name"
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/category_text"
@@ -74,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/place_name"
                 android:layout_centerInParent="true"
+                android:textSize="@dimen/cat"
                 android:paddingTop="10dp"
                 android:text="Category" />
 
